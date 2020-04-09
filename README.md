@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Xmlfront
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
@@ -25,3 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+=======
+# xml-frontend
+Projekat iz predmeta XML i Web servisi
+>>>>>>> caf5527b126265661dcd43b7d60798d9c4d637b0
