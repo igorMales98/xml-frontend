@@ -7,12 +7,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NotifierModule, NotifierOptions} from 'angular-notifier';
 import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {AdminHomePageComponent} from './admin-home-page/admin-home-page.component';
-import { AgentHomePageComponent } from './agent-home-page/agent-home-page.component';
-import { CustomerHomePageComponent } from './customer-home-page/customer-home-page.component';
+import {AgentHomePageComponent} from './agent-home-page/agent-home-page.component';
+import {CustomerHomePageComponent} from './customer-home-page/customer-home-page.component';
+import {TokenInterceptor} from './security/tokenInterceptor';
 
 /**
  * Custom angular notifier options
@@ -77,7 +78,9 @@ const customNotifierOptions: NotifierOptions = {
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

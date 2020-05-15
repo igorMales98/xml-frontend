@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminHomePageService } from './admin-home-page.service';
+import {Component, OnInit} from '@angular/core';
+import {AdminHomePageService} from './admin-home-page.service';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -8,12 +8,17 @@ import { AdminHomePageService } from './admin-home-page.service';
 })
 export class AdminHomePageComponent implements OnInit {
 
-  constructor(private adminHomePageService: AdminHomePageService ) { }
+  constructor(private adminHomePageService: AdminHomePageService) {
+  }
 
   ngOnInit(): void {
   }
 
-  Test(){
+  test() {
     this.adminHomePageService.getTest().subscribe();
+  }
+
+  test2() {
+    this.adminHomePageService.getTest2().subscribe();
   }
 }
