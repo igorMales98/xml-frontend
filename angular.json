@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "xmlfront"
+    }
+  },
+  "defaultProject": "xmlfront",
+  "cli": {
+    "analytics": false
+  }
 }

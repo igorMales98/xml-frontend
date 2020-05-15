@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminHomePageService } from './admin-home-page.service';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adminHomePageService: AdminHomePageService ) { }
 
   ngOnInit(): void {
   }
 
+  Test(){
+    this.adminHomePageService.getTest().subscribe();
+  }
 }
