@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminHomePageService} from './admin-home-page.service';
+import {faComments} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -7,7 +8,7 @@ import {AdminHomePageService} from './admin-home-page.service';
   styleUrls: ['./admin-home-page.component.css']
 })
 export class AdminHomePageComponent implements OnInit {
-
+  faMessages = faComments;
   constructor(private adminHomePageService: AdminHomePageService) {
   }
 
