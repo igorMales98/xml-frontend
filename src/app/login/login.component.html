@@ -25,6 +25,8 @@
                        name="username"
                        placeholder="Enter your username"
                        required>
+                <span style="color: red; float: right"
+                *ngIf="loginFb.username.invalid && loginFb.username.touched">You can only use letters, numbers, dots and minuses.</span>
               </div>
 
               <div class="form-group">
@@ -35,7 +37,7 @@
                        name="password"
                        placeholder="Enter your password"
                        required>
-              </div>
+               </div>
 
               <div class="text-right">
                 <button type="submit" [disabled]="userData.invalid" id="loginbtn"

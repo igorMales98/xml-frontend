@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.pattern(/^[0-9A-Za-z.-]*$/), Validators.max(90), Validators.min(1)]],
       password: ['', [Validators.required]]
     });
   }
@@ -57,4 +57,7 @@ export class LoginComponent implements OnInit {
     this.notifier.notify(type, message);
   }
 
+  get loginFb() {
+    return this.userData.controls;
+  }
 }
