@@ -15,6 +15,7 @@ import {AgentHomePageComponent} from './agent-home-page/agent-home-page.componen
 import {CustomerHomePageComponent} from './customer-home-page/customer-home-page.component';
 import {TokenInterceptor} from './security/tokenInterceptor';
 import { MessagesComponent } from './messages/messages.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 /**
  * Custom angular notifier options
@@ -67,7 +68,8 @@ const customNotifierOptions: NotifierOptions = {
     AdminHomePageComponent,
     AgentHomePageComponent,
     CustomerHomePageComponent,
-    MessagesComponent
+    MessagesComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
