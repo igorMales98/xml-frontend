@@ -1,17 +1,18 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {AdminHomePageService} from './admin-home-page.service';
 import {faComments, faInfo, faCommentAlt, faUser} from '@fortawesome/free-solid-svg-icons';
-import {Advertisement} from '../model/advertisement';
-import {Comment} from '../model/comment';
+import {Advertisement} from '../../model/advertisement';
+import {Comment} from '../../model/comment';
+import {AgentAdvertisementsService} from './agent-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-admin-home-page',
-  templateUrl: './admin-home-page.component.html',
-  styleUrls: ['./admin-home-page.component.css']
+  selector: 'app-agent-advertisements',
+  templateUrl: './agent-advertisements.component.html',
+  styleUrls: ['./agent-advertisements.component.css']
 })
-export class AdminHomePageComponent implements OnInit {
+export class AgentAdvertisementsComponent implements OnInit {
+
   faMessages = faComments;
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
@@ -27,16 +28,17 @@ export class AdminHomePageComponent implements OnInit {
   clickedAuthor: string;
   isDisabled: boolean;
 
-  constructor(private adminHomePageService: AdminHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal) {
+  constructor(private agentAdvertisementsService: AgentAdvertisementsService, private domSanitizer: DomSanitizer,
+              private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    /*this.adminHomePageService.getAllAdvertisements().subscribe(data => {
+    /*this.agentAdvertisementsService.getAllAgentAdvertisements(this.id).subscribe(data => {
       this.allAdvertisements = data;
 
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
-        this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+        this.agentAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
           console.log(img as string);
           const images = img.toString();
           this.allImagesForAd = images.split(',');
@@ -73,7 +75,7 @@ export class AdminHomePageComponent implements OnInit {
 
   openComments(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
     this.comments = [];
-    this.adminHomePageService.getComments(advertisement.id).subscribe(data => {
+    this.agentAdvertisementsService.getComments(advertisement.id).subscribe(data => {
       this.comments = data;
     });
     this.modalService.open(myModalMoreInfo, {
@@ -101,7 +103,7 @@ export class AdminHomePageComponent implements OnInit {
     for (let i = 0; i < this.comments.length; i++) {
       if (this.comments[i].commenter.id === this.clickedAuthor) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
-        this.adminHomePageService.sendReply(this.comments[i]).subscribe();
+        this.agentAdvertisementsService.sendReply(this.comments[i]).subscribe();
       }
     }
   }
