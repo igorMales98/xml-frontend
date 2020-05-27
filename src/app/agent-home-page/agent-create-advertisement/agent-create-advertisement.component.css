@@ -1,0 +1,129 @@
+/* Form */
+#adForm {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#div1, #div2, #div3, #div4, #div5, #div6, #div7, #div8, #div9, #startDate, #endDate, #divUnlimited, #div10 {
+  padding-top: 20px;
+}
+
+.border-bottom {
+  border-width: 3px !important;
+}
+
+#btnPriceList {
+  width: 300px;
+  float: right;
+  margin-right: 20%;
+}
+
+/* Dropdown za brand*/
+#dropdownCarBrand {
+  width: 300px;
+}
+
+#carBrandSelect {
+  float: right;
+  padding-right: 20%;
+}
+
+/* Dropdown za model */
+#dropdownCarModel {
+  width: 300px;
+}
+
+#carModelSelect {
+  float: right;
+  padding-right: 20%;
+}
+
+/* Dropdown za fuel type */
+#dropdownFuelType {
+  width: 300px;
+}
+
+#fuelTypeSelect {
+  float: right;
+  padding-right: 20%;
+}
+
+/* Dropdown za transmission type */
+#dropdownTransmissionType {
+  width: 300px;
+}
+
+#transmissionTypeSelect {
+  float: right;
+  padding-right: 20%;
+}
+
+/* Dropdown za class */
+#dropdownCarClass {
+  width: 300px;
+}
+
+#carClassSelect {
+  float: right;
+  padding-right: 20%;
+}
+
+#mileage {
+  float: right;
+  width: 300px;
+  margin-right: 20%;
+}
+
+#childSeats, #allowedDistance {
+  float: right;
+  width: 300px;
+  margin-right: 20%;
+}
+
+#startRentDate {
+  margin-left: 24%;
+  width: 300px;
+}
+
+#endRentDate {
+  margin-left: 25%;
+  width: 300px;
+}
+
+#startRentDateButton, #endRentDateButton {
+  float: right;
+  width: 40px;
+  margin-right: 14.5%;
+  height: 45px;
+}
+
+#hasCDW {
+  margin-left: 30%;
+}
+
+#isUnlimited {
+  margin-left: 25%;
+}
+
+.mat-checkbox .mat-checkbox-frame {
+  transform: scale(1.8);
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+  transform: scale(1.8);
+}
+
+#images {
+  padding-top: 30px;
+}
+
+.img_wrp {
+  display: inline-block;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

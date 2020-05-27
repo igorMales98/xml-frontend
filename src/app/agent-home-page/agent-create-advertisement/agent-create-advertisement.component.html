@@ -1,0 +1,251 @@
+<notifier-container></notifier-container>
+
+<div id="adForm">
+  <h1 class="card-title text-center"> Create an advertisement </h1>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="align-items-center">
+            <div class="form-group col-lg">
+
+              <div id="div1" class="border-bottom"
+                   [ngClass]="{'border-success': !isBrandDropdownInvalid, 'border-danger': isBrandDropdownInvalid}">
+                <label for="carBrandSelect" class="col-form-label-lg">Select car brand : </label>
+                <div ngbDropdown class="d-lg-inline-block" id="carBrandSelect">
+                  <button class="btn btn-outline-primary" id="dropdownCarBrand"
+                          ngbDropdownToggle> {{ this.selectedCarBrand }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownCarBrand">
+                    <button ngbDropdownItem *ngFor="let carBrand of allCarBrands"
+                            (click)="getBrandModels(carBrand)"> {{ carBrand.name }} </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="div2" class="border-bottom"
+                   [ngClass]="{'border-success': !isModelDropdownInvalid, 'border-danger': isModelDropdownInvalid}">
+                <label for="carModelSelect" class="col-form-label-lg">Select car model : </label>
+                <div ngbDropdown class="d-lg-inline-block" id="carModelSelect">
+                  <button class="btn btn-outline-primary" id="dropdownCarModel" ngbDropdownToggle
+                          [disabled]="!isCarBrandSelected"> {{ this.selectedCarModel }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownCarModel">
+                    <button ngbDropdownItem *ngFor="let carModel of allCarBrandModels"
+                            (click)="selectModel(carModel)"> {{ carModel.name }} </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="div3" class="border-bottom"
+                   [ngClass]="{'border-success': !isFuelTypeDropDownInvalid, 'border-danger': isFuelTypeDropDownInvalid}">
+                <label for="fuelTypeSelect" class="col-form-label-lg">Select fuel type : </label>
+                <div ngbDropdown class="d-lg-inline-block" id="fuelTypeSelect">
+                  <button class="btn btn-outline-primary" id="dropdownFuelType"
+                          ngbDropdownToggle> {{ this.selectedFuelType }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownFuelType">
+                    <button ngbDropdownItem *ngFor="let fuelType of allFuelTypes"
+                            (click)="selectFuelType(fuelType)"> {{ fuelType.name }} </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="div4" class="border-bottom"
+                   [ngClass]="{'border-success': !isTransmissionTypeDropdownInvalid, 'border-danger': isTransmissionTypeDropdownInvalid}">
+                <label for="transmissionTypeSelect" class="col-form-label-lg">Select fuel type : </label>
+                <div ngbDropdown class="d-lg-inline-block" id="transmissionTypeSelect">
+                  <button class="btn btn-outline-primary" id="dropdownTransmissionType" ngbDropdownToggle
+                  > {{ this.selectedTransmissionType }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownTransmissionType">
+                    <button ngbDropdownItem *ngFor="let transmissionType of allTransmissionTypes"
+                            (click)="selectTransmissionType(transmissionType)"> {{ transmissionType.name }} </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="div5" class="border-bottom"
+                   [ngClass]="{'border-success': !isClassDropdownInvalid, 'border-danger': isClassDropdownInvalid}">
+                <label for="carClassSelect" class="col-form-label-lg">Select car class : </label>
+                <div ngbDropdown class="d-lg-inline-block" id="carClassSelect">
+                  <button class="btn btn-outline-primary" id="dropdownCarClass" ngbDropdownToggle
+                  > {{ this.selectedCarClass }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownCarClass">
+                    <button ngbDropdownItem *ngFor="let carClass of allCarClasses"
+                            (click)="selectCarClass(carClass)"> {{ carClass.name }} </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="div6" class="border-bottom"
+                   [ngClass]="{'border-success': !isPriceListNotSelected, 'border-danger': isPriceListNotSelected}">
+                <label for="btnPriceList" class="col-form-label-lg">Select price list : </label>
+                <button class="btn btn-outline-primary" id="btnPriceList"
+                        (click)="openPriceListsModal(myModalPriceList)"> {{ this.selectedPricelist }}
+                </button>
+              </div>
+
+              <form [formGroup]="advertisementForm">
+                <div id="div7" class="border-bottom"
+                     [ngClass]="{'border-success': adFb.mileage.valid, 'border-danger': adFb.mileage.invalid}">
+                  <label for="mileage" class="col-form-label-lg">Mileage : </label>
+                  <input class="form-control-lg" id="mileage" formControlName="mileage"
+                         placeholder="Enter mileage of car">
+                  <span style="color: red; float: right"
+                        *ngIf="adFb.mileage.invalid && adFb.mileage.touched">Mileage cannot be negative, or over 1000000000.</span>
+                </div>
+
+                <div id="div8" class="border-bottom"
+                     [ngClass]="{'border-success': adFb.childSeats.valid, 'border-danger': adFb.childSeats.invalid}">
+                  <label for="childSeats" class="col-form-label-lg">Number of child seats : </label>
+                  <input class="form-control-lg" id="childSeats" formControlName="childSeats"
+                         placeholder="Enter number of child seats">
+                  <span style="color: red; float: right"
+                        *ngIf="adFb.childSeats.invalid && adFb.childSeats.touched">There must be between 0 and 5 child seats.</span>
+                </div>
+
+                <div id="divUnlimited" class="border-bottom"
+                     [ngClass]="{'border-success': isUnlimited}">
+                  <label for="hasCDW" class="col-form-label-lg"> Allowed distance </label>
+                  <mat-checkbox color="primary" id="isUnlimited" [checked]="isUnlimited" (change)="changeIsUnlimited()">
+                    Unlimited
+                  </mat-checkbox>
+                </div>
+
+                <div id="div10" class="border-bottom" [hidden]="isUnlimited"
+                     [ngClass]="{'border-success': adFb.allowedDistance.valid, 'border-danger': adFb.allowedDistance.invalid}">
+                  <label for="allowedDistance" class="col-form-label-lg">Allowed distance: </label>
+                  <input class="form-control-lg" id="allowedDistance" formControlName="allowedDistance"
+                         placeholder="Enter limit on allowed distance">
+                  <span style="color: red; float: right"
+                        *ngIf="adFb.allowedDistance.invalid && adFb.allowedDistance.touched">Enter correct allowed distance.</span>
+                </div>
+
+              </form>
+
+
+              <div id="startDate" class="border-bottom"
+                   [ngClass]="{'border-success': isStartDateValid(), 'border-danger': !isStartDateValid()}">
+                <label for="startRentDate" class="col-form-label-lg">Start date of rent: </label>
+                <input id="startRentDate" class="form-control-lg" placeholder="Choose start date of rent"
+                       name="dp" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [(ngModel)]="selectedStartDate"
+                       (ngModelChange)="selectStartDate()" [ngModelOptions]="{standalone: true}" [readOnly]="true">
+                <button class="btn btn-outline-secondary calendar" id="startRentDateButton" (click)="d.toggle()"
+                        type="button">
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </button>
+              </div>
+
+              <div id="endDate" class="border-bottom"
+                   [ngClass]="{'border-success': isEndDateValid(), 'border-danger': !isEndDateValid()}">
+                <label for="endRentDate" class="col-form-label-lg">End date of rent: </label>
+                <input id="endRentDate" class="form-control-lg" placeholder="Choose end date of rent"
+                       name="dp" ngbDatepicker #d2="ngbDatepicker" [minDate]="minDate2" [(ngModel)]="selectedEndDate"
+                       (ngModelChange)="selectEndDate()" [ngModelOptions]="{standalone: true}" [readOnly]="true">
+                <button class="btn btn-outline-secondary calendar" id="endRentDateButton" (click)="d2.toggle()"
+                        type="button">
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </button>
+              </div>
+
+              <div id="divDiscounts" class="border-bottom border-success">
+                <label class="col-form-label-lg">Define discounts: </label>
+                <button (click)="addDiscountRow()" [hidden]="numberOfDiscounts === 3" style="margin-left: 20px;"
+                        class="btn-outline-primary">
+                  <fa-icon [icon]="faPlus"></fa-icon>
+                </button>
+                <button (click)="removeDiscountRow()" [hidden]="numberOfDiscounts === 0" style="margin-left: 20px;"
+                        class="btn-outline-danger">
+                  <fa-icon [icon]="faMinus"></fa-icon>
+                </button>
+                <p style="color: red;">If you enter invalid discount it will not be saved</p>
+                <form [formGroup]="discountForm">
+                  <div *ngFor="let discount of counter(numberOfDiscounts); let i = index" style="display: flex;">
+                    <label class="col-form-label-lg" for="forDays"> Days : </label>
+                    <input id="forDays" class="form-control" style="margin-left: 20px; width: 100px;"
+                           [ngClass]="{'is-invalid': !checkValidDays(i) , 'is-valid': checkValidDays(i)}"
+                           formControlName="{{'days' + i}}"
+                           placeholder="Enter number of days">
+                    <label class="col-form-label-lg" for="forDiscounts" style="margin-left: 20px;">
+                      Discount : </label>
+                    <input id="forDiscounts" class="form-control" style="margin-left: 20px;  width: 100px;"
+                           [ngClass]="{'is-invalid': !checkValidDiscount(i) , 'is-valid': checkValidDiscount(i)}"
+                           formControlName="{{'discount' + i}}"
+                           placeholder="Enter discount in %">
+                  </div>
+                </form>
+              </div>
+
+
+              <div id="div9" class="border-bottom border-success">
+                <label for="hasCDW" class="col-form-label-lg">Has a <i>CDW</i> : </label>
+                <mat-checkbox color="primary" id="hasCDW" [checked]="hasACDW" (change)="changeCDW()"></mat-checkbox>
+              </div>
+
+              <div id="selectImages" class="form-control-file">
+                <label class="col-form-label-lg" style="width: 100%;"> Car images (You must upload at least 1
+                  image) </label>
+                <input #file type="file" accept='image/*' (change)="preview(file.files)"/>
+              </div>
+
+              <div id="images" class="row img_wrap">
+                <div *ngFor="let image of imgURLS" style="width: 210px; height: 210px;"
+                     class="col-md-3">
+                  <img [src]="image" height="200" width="200" *ngIf="image">
+                  <button class="btn-outline-danger btn-sm-sm closeButton" (click)="removeImage(image)">
+                    <fa-icon [icon]="faClose"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-success text-center" [hidden]="!isEverythingValid()" (click)="createAd()"> Create
+              advertisement
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-lg-5 text-center">
+  <ng-template #myModalPriceList let-modal>
+
+    <div>
+      <label class="col-form-label-lg text-center">Choose a pricelist </label>
+      <div>
+        <table id="table" class="table table-bordered table-striped">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Price per day</th>
+            <th scope="col">Price per km over limit</th>
+            <th scope="col">Price for CDW</th>
+            <th scope="col">Select</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let pricelist of allPricelists">
+            <td>{{pricelist.pricePerDay + ' $'}}</td>
+            <td>{{pricelist.pricePerKm + ' $'}}</td>
+            <td>{{pricelist.priceForCDW + ' $'}}</td>
+            <td>
+              <mat-radio-button name="priceGroup" color="primary"
+                                (click)="selectPricelist(pricelist)"></mat-radio-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="btn btn-success" [hidden]="!isPricelistSelected" (click)="confirmSelection()"> Confirm selection
+    </button>
+
+  </ng-template>
+</div>
+
