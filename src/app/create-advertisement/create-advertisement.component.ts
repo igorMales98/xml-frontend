@@ -1,26 +1,27 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {CarBrand} from '../../model/carBrand';
-import {CarModel} from '../../model/carModel';
-import {FuelType} from '../../model/fuelType';
-import {TransmissionType} from '../../model/transmissionType';
-import {Pricelist} from '../../model/pricelist';
-import {CarClass} from '../../model/carClass';
+import {CarBrand} from '../model/carBrand';
+import {CarModel} from '../model/carModel';
+import {FuelType} from '../model/fuelType';
+import {TransmissionType} from '../model/transmissionType';
+import {Pricelist} from '../model/pricelist';
+import {CarClass} from '../model/carClass';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {faCalendar, faWindowClose, faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
-import {AgentCreateAdvertisementService} from './agent-create-advertisement.service';
+import {CreateAdvertisementService} from './create-advertisement.service';
 import {ModalDismissReasons, NgbDatepickerConfig, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
-import {CreateAdvertisements} from '../../model/createAdvertisements';
+import {CreateAdvertisements} from '../model/createAdvertisements';
+import {UserService} from '../security/user.service';
 
 @Component({
   selector: 'app-agent-create-advertisement',
-  templateUrl: './agent-create-advertisement.component.html',
-  styleUrls: ['./agent-create-advertisement.component.css']
+  templateUrl: './create-advertisement.component.html',
+  styleUrls: ['./create-advertisement.component.css']
 })
-export class AgentCreateAdvertisementComponent implements OnInit {
+export class CreateAdvertisementComponent implements OnInit {
 
   isBrandDropdownInvalid = true;
   isModelDropdownInvalid = true;
@@ -84,9 +85,9 @@ export class AgentCreateAdvertisementComponent implements OnInit {
 
   notifier: NotifierService;
 
-  constructor(private router: Router, private agentCreateAdvertisementService: AgentCreateAdvertisementService,
+  constructor(private router: Router, private createAdvertisementService: CreateAdvertisementService,
               private modalService: NgbModal, private formBuilder: FormBuilder, private datePipe: DatePipe,
-              private config: NgbDatepickerConfig, private notifierService: NotifierService) {
+              private config: NgbDatepickerConfig, private notifierService: NotifierService, public userService: UserService) {
     this.notifier = notifierService;
     this.todayDate = new Date();
     this.minDate = {
@@ -102,7 +103,7 @@ export class AgentCreateAdvertisementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.advertisementForm = this.formBuilder.group({
+    /*this.advertisementForm = this.formBuilder.group({
       mileage: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(1),
         Validators.maxLength(10), Validators.min(0)]],
       childSeats: ['', [Validators.required, Validators.pattern(/^[0-5]*$/), Validators.max(5), Validators.min(0)]],
@@ -117,21 +118,21 @@ export class AgentCreateAdvertisementComponent implements OnInit {
       discount2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
     });
 
-    this.agentCreateAdvertisementService.getAllCarBrands().subscribe(data => {
+    this.createAdvertisementService.getAllCarBrands().subscribe(data => {
       this.allCarBrands = data;
     });
-    this.agentCreateAdvertisementService.getAllFuelTypes().subscribe(data => {
+    this.createAdvertisementService.getAllFuelTypes().subscribe(data => {
       this.allFuelTypes = data;
     });
-    this.agentCreateAdvertisementService.getAllTransmissionTypes().subscribe(data => {
+    this.createAdvertisementService.getAllTransmissionTypes().subscribe(data => {
       this.allTransmissionTypes = data;
     });
-    this.agentCreateAdvertisementService.getAllCarClasses().subscribe(data => {
+    this.createAdvertisementService.getAllCarClasses().subscribe(data => {
       this.allCarClasses = data;
     });
-    this.agentCreateAdvertisementService.getAllPricelists().subscribe(data => {
+    this.createAdvertisementService.getAllPricelists().subscribe(data => {
       this.allPricelists = data;
-    });
+    });*/
   }
 
   get adFb() {
@@ -152,7 +153,7 @@ export class AgentCreateAdvertisementComponent implements OnInit {
 
   getBrandModels(carBrand: CarBrand) {
     if (carBrand.name !== this.selectedCarBrand) {
-      this.agentCreateAdvertisementService.getCarBrandModels(carBrand.id).subscribe(data => {
+      this.createAdvertisementService.getCarBrandModels(carBrand.id).subscribe(data => {
         this.allCarBrandModels = data;
 
         this.isBrandDropdownInvalid = false;
@@ -317,7 +318,7 @@ export class AgentCreateAdvertisementComponent implements OnInit {
       this.finalTransmissionType, this.finalPricelist, this.d1,
       this.d2, this.advertisementForm.value.mileage,
       this.advertisementForm.value.childSeats, this.hasACDW, this.advertisementForm.value.allowedDistance, convMap);
-    this.agentCreateAdvertisementService.createAdvertisement(this.selectedFiles, createAdvertisement);
+    this.createAdvertisementService.createAdvertisement(this.selectedFiles, createAdvertisement);
     this.showNotification('success', 'Successfully created an advertisement.');
     // this.router.navigate(['/homePage']);
   }

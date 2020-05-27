@@ -23,6 +23,13 @@
     </button>
     <div id="navbarNavDropdown" class="navbar-collapse collapse navbar-responsive-collapse ">
 
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" *ngIf="checkLoggedIn()">
+          <a class="nav-link" routerLink="/createAdvertisement">
+            <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
+            Create advertisement</a>
+        </li>
+      </ul>
 
       <ul class="navbar-nav mr-0">
         <li class="nav-item active" *ngIf="!checkLoggedIn()">

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {faSignInAlt, faSignOutAlt, faRegistered} from '@fortawesome/free-solid-svg-icons';
+import {faSignInAlt, faSignOutAlt, faRegistered, faAd} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {UserService} from './security/user.service';
 
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   faLogin = faSignInAlt;
   faLogout = faSignOutAlt;
   faRegister = faRegistered;
+  faCreateAd = faAd;
 
   constructor(private router: Router, private userService: UserService) {
   }

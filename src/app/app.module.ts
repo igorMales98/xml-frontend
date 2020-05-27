@@ -18,7 +18,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AgentAdvertisementsComponent } from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import { CustomerAdvertisementsComponent } from './customer-home-page/customer-advertisements/customer-advertisements.component';
-import { AgentCreateAdvertisementComponent } from './agent-home-page/agent-create-advertisement/agent-create-advertisement.component';
+import { CreateAdvertisementComponent } from './create-advertisement/create-advertisement.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -78,7 +78,7 @@ const customNotifierOptions: NotifierOptions = {
     RegistrationComponent,
     AgentAdvertisementsComponent,
     CustomerAdvertisementsComponent,
-    AgentCreateAdvertisementComponent
+    CreateAdvertisementComponent
   ],
   imports: [
     BrowserModule,

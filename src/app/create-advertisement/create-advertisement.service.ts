@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {CarBrand} from '../../model/carBrand';
-import {CarModel} from '../../model/carModel';
-import {FuelType} from '../../model/fuelType';
-import {TransmissionType} from '../../model/transmissionType';
-import {CarClass} from '../../model/carClass';
-import {Pricelist} from '../../model/pricelist';
-import {CreateAdvertisements} from '../../model/createAdvertisements';
+import {CarBrand} from '../model/carBrand';
+import {CarModel} from '../model/carModel';
+import {FuelType} from '../model/fuelType';
+import {TransmissionType} from '../model/transmissionType';
+import {CarClass} from '../model/carClass';
+import {Pricelist} from '../model/pricelist';
+import {CreateAdvertisements} from '../model/createAdvertisements';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AgentCreateAdvertisementService {
+export class CreateAdvertisementService {
 
   constructor(private httpClient: HttpClient, private router: Router) {
   }
