@@ -1,17 +1,17 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {CustomerHomePageService} from './customer-home-page.service';
 import {faComments, faInfo, faCommentAlt, faUser} from '@fortawesome/free-solid-svg-icons';
-import {Advertisement} from '../model/advertisement';
-import {Comment} from '../model/comment';
+import {Advertisement} from '../../model/advertisement';
+import {Comment} from '../../model/comment';
+import {CustomerAdvertisementsService} from './customer-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-customer-home-page',
-  templateUrl: './customer-home-page.component.html',
-  styleUrls: ['./customer-home-page.component.css']
+  selector: 'app-customer-advertisements',
+  templateUrl: './customer-advertisements.component.html',
+  styleUrls: ['./customer-advertisements.component.css']
 })
-export class CustomerHomePageComponent implements OnInit {
+export class CustomerAdvertisementsComponent implements OnInit {
 
   faMessages = faComments;
   faInfo = faInfo;
@@ -28,26 +28,27 @@ export class CustomerHomePageComponent implements OnInit {
   clickedAuthor: string;
   isDisabled: boolean;
 
-  constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
+  constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    /*this.customerHomePageService.getAllAdvertisements().subscribe(data => {
+    this.customerAdvertisementsService.getAllCustomerAdvertisements(this.id).subscribe(data => {
       this.allAdvertisements = data;
 
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
-        this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
           console.log(img as string);
           const images = img.toString();
           this.allImagesForAd = images.split(',');
+          // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.allImagesForAd.length; i++) {
             advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
           }
         });
       }
-    });*/
+    });
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -75,7 +76,7 @@ export class CustomerHomePageComponent implements OnInit {
 
   openComments(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
     this.comments = [];
-    this.customerHomePageService.getComments(advertisement.id).subscribe(data => {
+    this.customerAdvertisementsService.getComments(advertisement.id).subscribe(data => {
       this.comments = data;
     });
     this.modalService.open(myModalMoreInfo, {
@@ -100,15 +101,13 @@ export class CustomerHomePageComponent implements OnInit {
   }
 
   sendReply() {
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.comments.length; i++) {
       if (this.comments[i].commenter.id === this.clickedAuthor) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
-        this.customerHomePageService.sendReply(this.comments[i]).subscribe();
+        this.customerAdvertisementsService.sendReply(this.comments[i]).subscribe();
       }
     }
   }
 
-  test() {
-    this.customerHomePageService.getTest().subscribe();
-  }
 }

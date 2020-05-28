@@ -1,26 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Advertisement} from '../model/advertisement';
-import {Comment} from '../model/comment';
+import {Advertisement} from '../../model/advertisement';
+import {Comment} from '../../model/comment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminHomePageService {
+export class AgentAdvertisementsService {
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getTest() {
-    return this.httpClient.get('https://localhost:8443/authentication-service/api/test');
-  }
-
-  getTest2() {
-    return this.httpClient.get('https://localhost:8443/codebook-service/api/test');
-  }
-
-  getAllAdvertisements() {
-    return this.httpClient.get<Advertisement[]>('http://localhost:8082/api/advertisement/getAll');
+  getAllAgentAdvertisements(id: string) {
+    return this.httpClient.get<Advertisement[]>('http://localhost:8082/api/advertisement/getAll/' + id);
   }
 
   getAdvertisementPhotos(adId: string) {
@@ -34,5 +26,4 @@ export class AdminHomePageService {
   sendReply(comment: Comment) {
     return this.httpClient.post('http://localhost:8082/api/comment/sendReply', comment);
   }
-
 }

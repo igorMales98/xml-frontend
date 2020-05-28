@@ -16,6 +16,12 @@ import {CustomerHomePageComponent} from './customer-home-page/customer-home-page
 import {TokenInterceptor} from './security/tokenInterceptor';
 import { MessagesComponent } from './messages/messages.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AgentAdvertisementsComponent } from './agent-home-page/agent-advertisements/agent-advertisements.component';
+import { CustomerAdvertisementsComponent } from './customer-home-page/customer-advertisements/customer-advertisements.component';
+import { CreateAdvertisementComponent } from './create-advertisement/create-advertisement.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 /**
  * Custom angular notifier options
@@ -69,7 +75,10 @@ const customNotifierOptions: NotifierOptions = {
     AgentHomePageComponent,
     CustomerHomePageComponent,
     MessagesComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AgentAdvertisementsComponent,
+    CustomerAdvertisementsComponent,
+    CreateAdvertisementComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +89,10 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}

@@ -6,6 +6,7 @@ import {AgentHomePageComponent} from './agent-home-page/agent-home-page.componen
 import {CustomerHomePageComponent} from './customer-home-page/customer-home-page.component';
 import {MessagesComponent} from './messages/messages.component';
 import {RegistrationComponent} from './registration/registration.component';
+import {CreateAdvertisementComponent} from './create-advertisement/create-advertisement.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'adminHomePage', component: AdminHomePageComponent},
   {path: 'agentHomePage', component: AgentHomePageComponent},
   {path: 'customerHomePage', component: CustomerHomePageComponent},
-  {path: 'messages', component: MessagesComponent}
+  {path: 'messages', component: MessagesComponent},
+  {path: 'createAdvertisement', component: CreateAdvertisementComponent}
 ];
 
 @NgModule({

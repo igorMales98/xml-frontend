@@ -6,17 +6,9 @@ import {Comment} from '../model/comment';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminHomePageService {
+export class AgentHomePageService {
 
   constructor(private httpClient: HttpClient) {
-  }
-
-  getTest() {
-    return this.httpClient.get('https://localhost:8443/authentication-service/api/test');
-  }
-
-  getTest2() {
-    return this.httpClient.get('https://localhost:8443/codebook-service/api/test');
   }
 
   getAllAdvertisements() {
