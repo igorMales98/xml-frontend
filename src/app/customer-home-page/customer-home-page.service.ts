@@ -11,24 +11,16 @@ export class CustomerHomePageService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTest() {
-    return this.httpClient.get('https://localhost:8443/authentication-service/api/test');
-  }
-
   getAllAdvertisements() {
-    return this.httpClient.get<Advertisement[]>('http://localhost:8082/api/advertisement/getAll');
+    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisement/all');
   }
 
   getAdvertisementPhotos(adId: string) {
-    return this.httpClient.get('http://localhost:8082/api/advertisement/getAdvertisementsPhotos/' + adId);
+    return this.httpClient.get('https://localhost:8443/advertisement-service/api/advertisement/getAdvertisementsPhotos/' + adId);
   }
 
   getComments(adId: string) {
-    return this.httpClient.get<Comment[]>('http://localhost:8082/api/comment/getAll/' + adId);
-  }
-
-  sendReply(comment: Comment) {
-    return this.httpClient.post('http://localhost:8082/api/comment/sendReply', comment);
+    return this.httpClient.get<Comment[]>('https://localhost:8443/advertisement-service/api/comment/all/' + adId);
   }
 
 }

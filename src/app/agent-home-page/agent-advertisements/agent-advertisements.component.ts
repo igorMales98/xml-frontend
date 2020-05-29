@@ -5,6 +5,8 @@ import {Comment} from '../../model/comment';
 import {AgentAdvertisementsService} from './agent-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from '../../security/user.service';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'app-agent-advertisements',
@@ -13,27 +15,27 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class AgentAdvertisementsComponent implements OnInit {
 
-  faMessages = faComments;
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
-  faComment = faComments;
   faUser = faUser;
-  id = '1';
   allAdvertisements: Advertisement[] = [];
   allImagesForAd: string[] = [];
   closeResult: string;
   moreInfoAdvertisement: Advertisement;
   private readonly imageType: string = 'data:image/PNG;base64,';
   comments: Comment[] = [];
-  clickedAuthor: string;
-  isDisabled: boolean;
+  clickedComment: number;
+  user: User;
 
   constructor(private agentAdvertisementsService: AgentAdvertisementsService, private domSanitizer: DomSanitizer,
-              private modalService: NgbModal) {
+              private modalService: NgbModal, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    /*this.agentAdvertisementsService.getAllAgentAdvertisements(this.id).subscribe(data => {
+    this.userService.getMyInfo();
+    this.user = this.userService.currentUser;
+
+    this.agentAdvertisementsService.getAllAgentAdvertisements(this.user.id).subscribe(data => {
       this.allAdvertisements = data;
 
       for (const advertisement of this.allAdvertisements) {
@@ -47,7 +49,7 @@ export class AgentAdvertisementsComponent implements OnInit {
           }
         });
       }
-    });*/
+    });
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -90,8 +92,8 @@ export class AgentAdvertisementsComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  openModal(content: TemplateRef<any>, commenter: string) {
-    this.clickedAuthor = commenter;
+  openModal(content: TemplateRef<any>, commentId: number) {
+    this.clickedComment = commentId;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -101,9 +103,10 @@ export class AgentAdvertisementsComponent implements OnInit {
 
   sendReply() {
     for (let i = 0; i < this.comments.length; i++) {
-      if (this.comments[i].commenter.id === this.clickedAuthor) {
+      if (this.comments[i].id === this.clickedComment) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
         this.agentAdvertisementsService.sendReply(this.comments[i]).subscribe();
+        break;
       }
     }
   }

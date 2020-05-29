@@ -1,42 +1,45 @@
 <div class="container register-form pt-4">
-  <div id="images" class="img_wrap">
+  <div id="images" class="row img_wrap">
     <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
          class="col-md-3">
-      <table class="img_wrp">
-        <tr>
-          <td>
-            <img [src]="advertisement.image[0]" height="250" width="300">
-          </td>
-          <td>
-            <div class="text-center" style="font-size: large;font-weight: 500;">
-              <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
-            </div>
-            <table>
-              <td>
-                <label id="currentRateCSS">{{advertisement.car.averageRating}}&nbsp;</label>
-              </td>
-              <td>
-                <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
-                  <ng-template let-fill="fill" let-index="index">
+      <div class="img_wrp">
+        <img [src]="advertisement.image[0]" height="250" width="250">
+        <div>
+          <p style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+          <table>
+            <td>
+              <label>{{advertisement.car.averageRating}}&nbsp;</label>
+            </td>
+            <td>
+              <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                <ng-template let-fill="fill" let-index="index">
                     <span class="star" [class.full]="fill === 100">
                         <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
                     </span>
-                  </ng-template>
-                </ngb-rating>
-              </td>
-            </table>
-            <button class="btn-outline-info btn-sm-sm commentButton"
-                    (click)="openComments(myModalComments, advertisement)">
-              <fa-icon [icon]="faCommentAlt"></fa-icon>
-            </button>
-            <button class="btn-outline-info btn-sm-sm infoButton"
-                    (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
-              <fa-icon [icon]="faInfo"></fa-icon>
-            </button>
-          </td>
-        </tr>
-      </table>
+                </ng-template>
+              </ngb-rating>
+            </td>
+          </table>
+        </div>
+        <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)">
+          <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
+          <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
+        </button>
+        <button class="btn-outline-info btn-sm-sm commentButton"
+                (click)="openComments(myModalComments, advertisement)">
+          <fa-icon [icon]="faComment"></fa-icon>
+        </button>
+        <button class="btn-outline-info btn-sm-sm infoButton"
+                (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+          <fa-icon [icon]="faInfo"></fa-icon>
+        </button>
+      </div>
     </div>
+  </div>
+  <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest()">
+    <button class="btn btn-success">
+      Rent cars
+    </button>
   </div>
 </div>
 
@@ -153,39 +156,6 @@
         <textarea type="text" id="form8" disabled autosize
                   class="md-textarea form-control"> {{comment.comment}}</textarea>
       </div>
-      <div *ngIf="comment.reply==null">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
-                  (click)="openModal(content, comment.commenter.id)">Reply
-          </button>
-        </div>
-      </div>
-      <div *ngIf="comment.reply!=null" class="marginsReply">
-        <div class="chip">
-          <fa-icon [icon]="faUser" class="mr-1"></fa-icon>
-          Agent
-        </div>
-        <div class="md-form">
-          <textarea type="text" id="form9" disabled autosize
-                    class="md-textarea form-control">{{comment.reply}}</textarea>
-        </div>
-      </div>
-    </div>
-
-
-  </ng-template>
-  <ng-template #content let-modal>
-
-    <div class="modal-body">
-      <form>
-        <textarea id="replyComment" style="resize:none" placeholder="Enter reply here..."
-                  class="form-control"></textarea>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
-              (click)="sendReply(); modal.dismiss('Send click')">Send
-      </button>
     </div>
   </ng-template>
 </div>
