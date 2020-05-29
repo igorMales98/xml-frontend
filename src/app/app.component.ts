@@ -14,11 +14,13 @@ export class AppComponent implements OnInit {
   faLogout = faSignOutAlt;
   faRegister = faRegistered;
   faCreateAd = faAd;
+  role;
 
   constructor(private router: Router, private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.role = this.userService.getRole();
   }
 
   checkLoggedIn() {
@@ -27,5 +29,6 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userService.logout();
+    this.role = null;
   }
 }

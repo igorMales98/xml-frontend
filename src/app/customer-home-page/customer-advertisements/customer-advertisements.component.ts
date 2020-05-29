@@ -5,6 +5,8 @@ import {Comment} from '../../model/comment';
 import {CustomerAdvertisementsService} from './customer-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '../../model/user';
+import {UserService} from '../../security/user.service';
 
 @Component({
   selector: 'app-customer-advertisements',
@@ -13,27 +15,27 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CustomerAdvertisementsComponent implements OnInit {
 
-  faMessages = faComments;
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
-  faComment = faComments;
   faUser = faUser;
-  id = '1';
   allAdvertisements: Advertisement[] = [];
   allImagesForAd: string[] = [];
   closeResult: string;
   moreInfoAdvertisement: Advertisement;
   private readonly imageType: string = 'data:image/PNG;base64,';
   comments: Comment[] = [];
-  clickedAuthor: string;
-  isDisabled: boolean;
+  clickedComment: number;
+  user: User;
 
   constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
-              private modalService: NgbModal) {
+              private modalService: NgbModal, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.customerAdvertisementsService.getAllCustomerAdvertisements(this.id).subscribe(data => {
+    this.userService.getMyInfo();
+    this.user = this.userService.currentUser;
+
+    this.customerAdvertisementsService.getAllCustomerAdvertisements(this.user.id).subscribe(data => {
       this.allAdvertisements = data;
 
       for (const advertisement of this.allAdvertisements) {
@@ -91,8 +93,8 @@ export class CustomerAdvertisementsComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  openModal(content: TemplateRef<any>, commenter: string) {
-    this.clickedAuthor = commenter;
+  openModal(content: TemplateRef<any>, commentId: number) {
+    this.clickedComment = commentId;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -101,11 +103,11 @@ export class CustomerAdvertisementsComponent implements OnInit {
   }
 
   sendReply() {
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.comments.length; i++) {
-      if (this.comments[i].commenter.id === this.clickedAuthor) {
+      if (this.comments[i].id === this.clickedComment) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
         this.customerAdvertisementsService.sendReply(this.comments[i]).subscribe();
+        break;
       }
     }
   }

@@ -11,6 +11,7 @@ import {map} from 'rxjs/operators';
 })
 export class UserService {
 
+  currentUser;
   accessToken = null;
   role = null;
   request: UserTokenState;
@@ -30,6 +31,12 @@ export class UserService {
       localStorage.setItem('role', this.role);
       this.loggedInUserSubject.next(response);
     }));
+  }
+
+  getMyInfo() {
+    return this.httpClient.get('https://localhost:8443/authentication-service/api/whoami').subscribe(data => {
+      this.currentUser = data;
+    });
   }
 
   getToken() {

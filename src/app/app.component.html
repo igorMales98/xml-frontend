@@ -16,7 +16,10 @@
 <body style="height: 100%;">
 <div id="app">
   <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <a class="navbar-brand ml-3" routerLink="/home">Certificate Issuing System</a>
+    <a class="navbar-brand ml-3" routerLink="/adminHomePage" *ngIf="role == 'ROLE_ADMIN'">Rent a car</a>
+    <a class="navbar-brand ml-3" routerLink="/agentHomePage" *ngIf="role == 'ROLE_AGENT'">Rent a car</a>
+    <a class="navbar-brand ml-3" routerLink="/customerHomePage" *ngIf="role =='ROLE_CUSTOMER'">Rent a car</a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -24,10 +27,22 @@
     <div id="navbarNavDropdown" class="navbar-collapse collapse navbar-responsive-collapse ">
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active" *ngIf="checkLoggedIn()">
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
           <a class="nav-link" routerLink="/createAdvertisement">
             <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
             Create advertisement</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT'">
+          <a class="nav-link" routerLink="/agentAdvertisements">
+            <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
+            My advertisements</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_CUSTOMER'">
+          <a class="nav-link" routerLink="/customerAdvertisements">
+            <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
+            My advertisements</a>
         </li>
       </ul>
 

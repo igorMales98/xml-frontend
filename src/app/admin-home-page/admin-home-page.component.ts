@@ -1,10 +1,13 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {AdminHomePageService} from './admin-home-page.service';
-import {faComments, faInfo, faCommentAlt, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../model/advertisement';
 import {Comment} from '../model/comment';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppComponent} from '../app.component';
+import {NotifierService} from 'angular-notifier';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -12,40 +15,49 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./admin-home-page.component.css']
 })
 export class AdminHomePageComponent implements OnInit {
-  faMessages = faComments;
   faInfo = faInfo;
-  faCommentAlt = faCommentAlt;
-  faComment = faComments;
+  faComment = faCommentAlt;
   faUser = faUser;
-  id = '1';
-  allAdvertisements: Advertisement[] = [];
-  allImagesForAd: string[] = [];
-  closeResult: string;
-  moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
-  comments: Comment[] = [];
-  clickedAuthor: string;
-  isDisabled: boolean;
 
-  constructor(private adminHomePageService: AdminHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal) {
+  allAdvertisements: Advertisement[] = [];
+  comments: Comment[] = [];
+  moreInfoAdvertisement: Advertisement;
+  allImagesForAd: string[] = [];
+  private readonly imageType: string = 'data:image/PNG;base64,';
+
+  closeResult: string;
+  notifier: NotifierService;
+
+  loadContent = false;
+
+  constructor(private adminHomePageService: AdminHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal,
+              private appComponent: AppComponent, private notifierService: NotifierService) {
+    this.notifier = notifierService;
   }
 
   ngOnInit(): void {
-    /*this.adminHomePageService.getAllAdvertisements().subscribe(data => {
-      this.allAdvertisements = data;
+    this.appComponent.role = localStorage.getItem('role');
+    this.loadContent = true;
 
-      for (const advertisement of this.allAdvertisements) {
-        advertisement.image = [];
-        this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
-      }
-    });*/
+    setTimeout(() => {
+      this.adminHomePageService.getAllAdvertisements().subscribe(data => {
+        this.allAdvertisements = data;
+
+        for (const advertisement of this.allAdvertisements) {
+          advertisement.image = [];
+          this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+            console.log(img as string);
+            const images = img.toString();
+            this.allImagesForAd = images.split(',');
+            for (let i = 0; i < this.allImagesForAd.length; i++) {
+              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+            }
+          });
+        }
+        this.loadContent = false;
+      });
+    }, 2000);
+
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -88,22 +100,8 @@ export class AdminHomePageComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  openModal(content: TemplateRef<any>, commenter: string) {
-    this.clickedAuthor = commenter;
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  sendReply() {
-    for (let i = 0; i < this.comments.length; i++) {
-      if (this.comments[i].commenter.id === this.clickedAuthor) {
-        this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
-        this.adminHomePageService.sendReply(this.comments[i]).subscribe();
-      }
-    }
+  public showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);
   }
 
 }
