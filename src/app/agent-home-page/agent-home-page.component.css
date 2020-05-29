@@ -68,7 +68,7 @@ textarea[type="text"]:disabled {
   margin: auto;
   position: absolute;
   right: 0;
-  top: 220%;
+  top: 10%;
   width: 175px;
 }
 

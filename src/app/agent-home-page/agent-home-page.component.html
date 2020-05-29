@@ -21,10 +21,6 @@
             </td>
           </table>
         </div>
-        <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)">
-          <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
-          <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
-        </button>
         <button class="btn-outline-info btn-sm-sm commentButton"
                 (click)="openComments(myModalComments, advertisement)">
           <fa-icon [icon]="faComment"></fa-icon>
@@ -35,11 +31,6 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest()">
-    <button class="btn btn-success">
-      Rent cars
-    </button>
   </div>
 </div>
 
@@ -158,4 +149,19 @@
       </div>
     </div>
   </ng-template>
+</div>
+<div class="container" [hidden]="!loadContent" id="animationDiv" #ads>
+  <div class="row">
+    <div id="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="loading"></div>
+    </div>
+  </div>
 </div>

@@ -21,7 +21,8 @@
             </td>
           </table>
         </div>
-        <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)">
+        <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)"
+                [hidden]="!searched">
           <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
           <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
         </button>
@@ -158,4 +159,20 @@
       </div>
     </div>
   </ng-template>
+</div>
+
+<div class="container" [hidden]="!loadContent" id="animationDiv" #ads>
+  <div class="row">
+    <div id="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="loading"></div>
+    </div>
+  </div>
 </div>

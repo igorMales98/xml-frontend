@@ -18,16 +18,17 @@ export class AdminHomePageComponent implements OnInit {
   faInfo = faInfo;
   faComment = faCommentAlt;
   faUser = faUser;
+
   allAdvertisements: Advertisement[] = [];
-  allImagesForAd: string[] = [];
-  closeResult: string;
-  moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
   comments: Comment[] = [];
-  faCart = faCartPlus;
-  faCartMinus = faCheckDouble;
-  cart: Advertisement[] = [];
+  moreInfoAdvertisement: Advertisement;
+  allImagesForAd: string[] = [];
+  private readonly imageType: string = 'data:image/PNG;base64,';
+
+  closeResult: string;
   notifier: NotifierService;
+
+  loadContent = false;
 
   constructor(private adminHomePageService: AdminHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal,
               private appComponent: AppComponent, private notifierService: NotifierService) {
@@ -36,21 +37,27 @@ export class AdminHomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.appComponent.role = localStorage.getItem('role');
-    this.adminHomePageService.getAllAdvertisements().subscribe(data => {
-      this.allAdvertisements = data;
+    this.loadContent = true;
 
-      for (const advertisement of this.allAdvertisements) {
-        advertisement.image = [];
-        this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
-      }
-    });
+    setTimeout(() => {
+      this.adminHomePageService.getAllAdvertisements().subscribe(data => {
+        this.allAdvertisements = data;
+
+        for (const advertisement of this.allAdvertisements) {
+          advertisement.image = [];
+          this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+            console.log(img as string);
+            const images = img.toString();
+            this.allImagesForAd = images.split(',');
+            for (let i = 0; i < this.allImagesForAd.length; i++) {
+              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+            }
+          });
+        }
+        this.loadContent = false;
+      });
+    }, 2000);
+
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -93,37 +100,8 @@ export class AdminHomePageComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  addToCart(advertisement: Advertisement) {
-    const index: number = this.cart.indexOf(advertisement);
-    if (index !== -1) {
-      this.cart.splice(index, 1);
-      console.log(this.cart);
-      this.showNotification('info', 'You removed car from the cart.');
-      return;
-    }
-    this.cart.push(advertisement);
-    console.log(this.cart);
-    this.modalService.dismissAll();
-    this.showNotification('success', 'You added car to the cart.');
-  }
-
-  checkIfInCart(advertisement: Advertisement) {
-    const index: number = this.cart.indexOf(advertisement);
-    return index !== -1;
-  }
-
   public showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
   }
 
-  sendRentRequest() {
-    /*const customer = new User(this.customerData.value.firstName, this.customerData.value.lastName, this.customerData.value.email,
-      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone);
-
-    const rentRequest = new RentRequest(this.startDate, this.endDate, customer, this.cart);
-    this.rentACarService.createRentRequest(rentRequest).subscribe(data => {
-      this.showNotification('success', 'Successfully created rent request.');
-      this.router.navigate(['homePage']);
-    });*/
-  }
 }

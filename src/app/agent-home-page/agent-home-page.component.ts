@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {faCartPlus, faCheckDouble, faCommentAlt, faInfo, faUser} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../model/advertisement';
 import {Comment} from '../model/comment';
 import {AgentHomePageService} from './agent-home-page.service';
@@ -7,6 +7,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../app.component';
 import {NotifierService} from 'angular-notifier';
+import {UserService} from '../security/user.service';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-agent-home-page',
@@ -17,39 +19,53 @@ export class AgentHomePageComponent implements OnInit {
   faInfo = faInfo;
   faComment = faCommentAlt;
   faUser = faUser;
+
   allAdvertisements: Advertisement[] = [];
-  allImagesForAd: string[] = [];
-  closeResult: string;
-  moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
   comments: Comment[] = [];
-  faCart = faCartPlus;
-  faCartMinus = faCheckDouble;
-  cart: Advertisement[] = [];
+  moreInfoAdvertisement: Advertisement;
+  allImagesForAd: string[] = [];
+  private readonly imageType: string = 'data:image/PNG;base64,';
+
+  closeResult: string;
   notifier: NotifierService;
 
+  loggedInUser: User;
+
+  loadContent = false;
+
   constructor(private agentHomePageService: AgentHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal,
-              private appComponent: AppComponent, private notifierService: NotifierService) {
+              private appComponent: AppComponent, private notifierService: NotifierService, private userService: UserService) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
     this.appComponent.role = localStorage.getItem('role');
-    this.agentHomePageService.getAllAdvertisements().subscribe(data => {
-      this.allAdvertisements = data;
+    this.userService.getMyInfo();
+    this.loggedInUser = this.userService.currentUser;
+    this.loadContent = true;
 
-      for (const advertisement of this.allAdvertisements) {
-        advertisement.image = [];
-        this.agentHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+    setTimeout(() => {
+      this.agentHomePageService.getAllAdvertisements().subscribe(data => {
+        for (const ad of data) {
+          if (ad.advertiser.id !== this.loggedInUser.id) {
+            this.allAdvertisements.push(ad);
           }
-        });
-      }
-    });
+        }
+
+        for (const advertisement of this.allAdvertisements) {
+          advertisement.image = [];
+          this.agentHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+            console.log(img as string);
+            const images = img.toString();
+            this.allImagesForAd = images.split(',');
+            for (let i = 0; i < this.allImagesForAd.length; i++) {
+              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+            }
+          });
+        }
+        this.loadContent = false;
+      });
+    }, 2000);
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -92,38 +108,8 @@ export class AgentHomePageComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  addToCart(advertisement: Advertisement) {
-    const index: number = this.cart.indexOf(advertisement);
-    if (index !== -1) {
-      this.cart.splice(index, 1);
-      console.log(this.cart);
-      this.showNotification('info', 'You removed car from the cart.');
-      return;
-    }
-    this.cart.push(advertisement);
-    console.log(this.cart);
-    this.modalService.dismissAll();
-    this.showNotification('success', 'You added car to the cart.');
-  }
-
-  checkIfInCart(advertisement: Advertisement) {
-    const index: number = this.cart.indexOf(advertisement);
-    return index !== -1;
-  }
-
   public showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
-  }
-
-  sendRentRequest() {
-    /*const customer = new User(this.customerData.value.firstName, this.customerData.value.lastName, this.customerData.value.email,
-      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone);
-
-    const rentRequest = new RentRequest(this.startDate, this.endDate, customer, this.cart);
-    this.rentACarService.createRentRequest(rentRequest).subscribe(data => {
-      this.showNotification('success', 'Successfully created rent request.');
-      this.router.navigate(['homePage']);
-    });*/
   }
 
 }

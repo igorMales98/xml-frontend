@@ -7,6 +7,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../app.component';
 import {NotifierService} from 'angular-notifier';
+import {UserService} from '../security/user.service';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-customer-home-page',
@@ -18,39 +20,58 @@ export class CustomerHomePageComponent implements OnInit {
   faInfo = faInfo;
   faComment = faCommentAlt;
   faUser = faUser;
-  allAdvertisements: Advertisement[] = [];
-  allImagesForAd: string[] = [];
-  closeResult: string;
-  moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
-  comments: Comment[] = [];
   faCart = faCartPlus;
   faCartMinus = faCheckDouble;
+
+  allAdvertisements: Advertisement[] = [];
+  comments: Comment[] = [];
   cart: Advertisement[] = [];
+  moreInfoAdvertisement: Advertisement;
+  private readonly imageType: string = 'data:image/PNG;base64,';
+  allImagesForAd: string[] = [];
+
+  closeResult: string;
   notifier: NotifierService;
 
+  loggedInUser: User;
+
+  loadContent = false;
+  searched = false;
+
   constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
-              private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService) {
+              private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
+              private userService: UserService) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
-    this.customerHomePageService.getAllAdvertisements().subscribe(data => {
-      this.appComponent.role = localStorage.getItem('role');
-      this.allAdvertisements = data;
+    this.appComponent.role = localStorage.getItem('role');
+    this.userService.getMyInfo();
+    this.loggedInUser = this.userService.currentUser;
+    this.loadContent = true;
 
-      for (const advertisement of this.allAdvertisements) {
-        advertisement.image = [];
-        this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+    setTimeout(() => {
+      this.customerHomePageService.getAllAdvertisements().subscribe(data => {
+        for (const ad of data) {
+          if (ad.advertiser.id !== this.loggedInUser.id) {
+            this.allAdvertisements.push(ad);
           }
-        });
-      }
-    });
+        }
+
+        for (const advertisement of this.allAdvertisements) {
+          advertisement.image = [];
+          this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+            console.log(img as string);
+            const images = img.toString();
+            this.allImagesForAd = images.split(',');
+            for (let i = 0; i < this.allImagesForAd.length; i++) {
+              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+            }
+          });
+        }
+        this.loadContent = false;
+      });
+    }, 2000);
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
