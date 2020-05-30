@@ -1,6 +1,9 @@
 <notifier-container></notifier-container>
 
-<div id="adForm">
+<div *ngIf="user.advertisementsPosted === 3" class="text-center">
+  <h1>You cannot post any more advertisements</h1>
+</div>
+<div id="adForm" *ngIf="user.advertisementsPosted !== 3">
   <h1 class="card-title text-center"> Create an advertisement </h1>
   <div class="col-lg">
     <div class="card">

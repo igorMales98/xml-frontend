@@ -7,6 +7,7 @@ export class User {
   city: string;
   address: string;
   phone: string;
+  advertisementsPosted: number;
 
   constructor(firstName: string, lastName: string, email: string, country: string, city: string, address: string, phone: string) {
     this.firstName = firstName;
@@ -17,5 +18,5 @@ export class User {
     this.address = address;
     this.phone = phone;
   }
-  
+
 }
