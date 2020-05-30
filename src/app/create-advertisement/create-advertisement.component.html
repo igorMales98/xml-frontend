@@ -5,7 +5,7 @@
   <div class="col-lg">
     <div class="card">
       <div class="card-body">
-        <form>
+        <form [formGroup]="advertisementForm">
           <div class="align-items-center">
             <div class="form-group col-lg">
 
@@ -151,7 +151,7 @@
               </div>
 
               <div id="divDiscounts" class="border-bottom border-success"
-                   *ngIf="this.userService.getLoggedInUser().role === 'AGENT'">
+                   *ngIf="role == 'ROLE_AGENT'">
                 <label class="col-form-label-lg">Define discounts: </label>
                 <button (click)="addDiscountRow()" [hidden]="numberOfDiscounts === 3" style="margin-left: 20px;"
                         class="btn-outline-primary">
