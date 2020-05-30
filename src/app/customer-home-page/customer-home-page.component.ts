@@ -25,10 +25,10 @@ export class CustomerHomePageComponent implements OnInit {
 
   allAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
-  cart: Advertisement[] = [];
   moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
+  cart: Advertisement[] = [];
   allImagesForAd: string[] = [];
+  private readonly imageType: string = 'data:image/PNG;base64,';
 
   closeResult: string;
   notifier: NotifierService;
@@ -61,7 +61,6 @@ export class CustomerHomePageComponent implements OnInit {
         for (const advertisement of this.allAdvertisements) {
           advertisement.image = [];
           this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-            console.log(img as string);
             const images = img.toString();
             this.allImagesForAd = images.split(',');
             for (let i = 0; i < this.allImagesForAd.length; i++) {
