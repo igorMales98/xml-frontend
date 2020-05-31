@@ -1,6 +1,15 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {CustomerHomePageService} from './customer-home-page.service';
-import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {
+  faComments,
+  faInfo,
+  faCommentAlt,
+  faUser,
+  faCartPlus,
+  faCheckDouble,
+  faArrowDown,
+  faArrowUp
+} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../model/advertisement';
 import {Comment} from '../model/comment';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -9,11 +18,14 @@ import {AppComponent} from '../app.component';
 import {NotifierService} from 'angular-notifier';
 import {UserService} from '../security/user.service';
 import {User} from '../model/user';
+import {SlideInOutAnimation} from '../animations/animations';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-customer-home-page',
   templateUrl: './customer-home-page.component.html',
-  styleUrls: ['./customer-home-page.component.css']
+  styleUrls: ['./customer-home-page.component.css'],
+  animations: [SlideInOutAnimation]
 })
 export class CustomerHomePageComponent implements OnInit {
 
@@ -22,6 +34,7 @@ export class CustomerHomePageComponent implements OnInit {
   faUser = faUser;
   faCart = faCartPlus;
   faCartMinus = faCheckDouble;
+  faArrow = faArrowDown;
 
   allAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
@@ -36,12 +49,24 @@ export class CustomerHomePageComponent implements OnInit {
   loggedInUser: User;
 
   loadContent = false;
+  showSearch = false;
   searched = false;
+  animationState = 'out';
+
+  startDate: string;
+  endDate: string;
+  minDateStart: string;
+  minDateEnd: string;
+  pickupPlace: string;
 
   constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
-              private userService: UserService) {
+              private userService: UserService, private datePipe: DatePipe) {
     this.notifier = notifierService;
+    this.startDate = new Date().toISOString().slice(0, 16);
+    this.endDate = new Date().toISOString().slice(0, 16);
+    this.minDateStart = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
+    this.minDateEnd = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
   }
 
   ngOnInit(): void {
@@ -63,6 +88,7 @@ export class CustomerHomePageComponent implements OnInit {
           this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
             const images = img.toString();
             this.allImagesForAd = images.split(',');
+            // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < this.allImagesForAd.length; i++) {
               advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
             }
@@ -147,4 +173,26 @@ export class CustomerHomePageComponent implements OnInit {
     });*/
   }
 
+  showSearchBar() {
+    this.animationState = this.animationState === 'out' ? 'in' : 'out';
+    if (this.showSearch === false) {
+      this.showSearch = true;
+      this.faArrow = faArrowUp;
+    } else {
+      this.showSearch = false;
+      this.faArrow = faArrowDown;
+    }
+  }
+
+  startDateChange() {
+    console.log(this.startDate);
+    this.minDateEnd = this.datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm:ss');
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
+  }
+
+  endDateChange() {
+    console.log(this.endDate);
+  }
 }

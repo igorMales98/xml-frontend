@@ -1,4 +1,42 @@
 <div class="container register-form pt-4">
+
+  <button class="navbar-toggler" (click)="showSearchBar()" style="padding-left: 0;">Search
+    <fa-icon [icon]="faArrow" class="mr-1"></fa-icon>
+  </button>
+
+  <div [@slideInOut]="animationState">
+    <div id="basicSearch" style="display: flex;">
+      <div class="row">
+        <div class="form-group col-lg-4">
+          <label for="inputDateFrom">From :</label>
+          <input type="datetime-local" id="inputDateFrom"
+                 class="form-control" [required]="true" [(ngModel)]="startDate" [min]="minDateStart"
+                 onkeydown="return false"
+                 [ngClass]="{'is-invalid': !startDate, 'is-valid': startDate}" (ngModelChange)="startDateChange()"/>
+
+        </div>
+
+        <div class="form-group col-lg-4">
+          <label for="inputDateTo">To :</label>
+          <input type="datetime-local" id="inputDateTo"
+                 class="form-control" [required]="true" [(ngModel)]="endDate" (ngModelChange)="endDateChange()"
+                 onkeydown="return false" [min]="minDateEnd"
+                 [ngClass]="{'is-invalid': !endDate, 'is-valid': endDate}"/>
+        </div>
+
+
+        <div class="form-group col-lg-4">
+          <label for="inputCity">Place : </label>
+          <input type="text" id="inputCity" class="form-control" [required]="true" [(ngModel)]="pickupPlace"
+                 [ngClass]="{'is-invalid': !pickupPlace, 'is-valid': pickupPlace}"/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container register-form pt-4">
   <div id="images" class="row img_wrap">
     <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
          class="col-md-3">
