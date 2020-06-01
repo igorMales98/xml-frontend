@@ -20,6 +20,8 @@ import {UserService} from '../security/user.service';
 import {User} from '../model/user';
 import {SlideInOutAnimation} from '../animations/animations';
 import {DatePipe} from '@angular/common';
+import {RentRequest} from '../model/rentRequest';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customer-home-page',
@@ -57,11 +59,12 @@ export class CustomerHomePageComponent implements OnInit {
   endDate: string;
   minDateStart: string;
   minDateEnd: string;
-  pickupPlace: string;
+  pickupPlace = '';
+  bundle = true;
 
   constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
-              private userService: UserService, private datePipe: DatePipe) {
+              private userService: UserService, private datePipe: DatePipe, private router: Router) {
     this.notifier = notifierService;
     this.startDate = new Date().toISOString().slice(0, 16);
     this.endDate = new Date().toISOString().slice(0, 16);
@@ -162,15 +165,18 @@ export class CustomerHomePageComponent implements OnInit {
     this.notifier.notify(type, message);
   }
 
-  sendRentRequest() {
-    /*const customer = new User(this.customerData.value.firstName, this.customerData.value.lastName, this.customerData.value.email,
-      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone);
-
-    const rentRequest = new RentRequest(this.startDate, this.endDate, customer, this.cart);
-    this.rentACarService.createRentRequest(rentRequest).subscribe(data => {
-      this.showNotification('success', 'Successfully created rent request.');
-      this.router.navigate(['homePage']);
-    });*/
+  sendRentRequest(myRents: TemplateRef<any>) {
+    this.cart.sort((a, b) => +a.advertiser.id - +b.advertiser.id);
+    console.log(this.cart);
+    this.modalService.open(myRents, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+      windowClass: 'myCustomModalClass'
+    }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   showSearchBar() {
@@ -212,5 +218,25 @@ export class CustomerHomePageComponent implements OnInit {
       }
     });
     this.searched = true;
+  }
+
+  reset() {
+    this.searched = false;
+    this.allAdvertisements = [];
+    this.showSearchBar();
+    this.ngOnInit();
+  }
+
+  confirmRent() {
+    const rentRequest = new RentRequest(this.startDate, this.endDate, this.loggedInUser, this.cart, this.bundle);
+    this.customerHomePageService.createRentRequest(rentRequest).subscribe(data => {
+      this.showNotification('success', 'Successfully created rent request.');
+      // this.router.navigate(['customerHomePage']);
+    });
+    this.modalService.dismissAll();
+  }
+
+  changeBundle() {
+    console.log(this.bundle);
   }
 }
