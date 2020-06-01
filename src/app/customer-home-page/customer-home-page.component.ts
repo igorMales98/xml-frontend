@@ -195,4 +195,22 @@ export class CustomerHomePageComponent implements OnInit {
   endDateChange() {
     console.log(this.endDate);
   }
+
+  search() {
+    this.customerHomePageService.getBasicSearch(this.startDate, this.endDate, this.pickupPlace).subscribe(data => {
+      this.allAdvertisements = data;
+      for (const advertisement of this.allAdvertisements) {
+        advertisement.image = [];
+        this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+          const images = img.toString();
+          this.allImagesForAd = images.split(',');
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.allImagesForAd.length; i++) {
+            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+          }
+        });
+      }
+    });
+    this.searched = true;
+  }
 }

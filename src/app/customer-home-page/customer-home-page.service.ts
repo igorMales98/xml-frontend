@@ -23,4 +23,9 @@ export class CustomerHomePageService {
     return this.httpClient.get<Comment[]>('https://localhost:8443/advertisement-service/api/comment/all/' + adId);
   }
 
+  getBasicSearch(dateFrom: string, dateTo: string, place: string) {
+    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisement/basicSearch/'
+      + dateFrom + '/' + dateTo + '/' + place);
+  }
+
 }
