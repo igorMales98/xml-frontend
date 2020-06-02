@@ -55,6 +55,7 @@ export class CustomerHomePageComponent implements OnInit {
   searched = false;
   animationState = 'out';
 
+  dateNow: Date;
   startDate: string;
   endDate: string;
   minDateStart: string;
@@ -66,10 +67,13 @@ export class CustomerHomePageComponent implements OnInit {
               private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
               private userService: UserService, private datePipe: DatePipe, private router: Router) {
     this.notifier = notifierService;
-    this.startDate = new Date().toISOString().slice(0, 16);
-    this.endDate = new Date().toISOString().slice(0, 16);
-    this.minDateStart = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
-    this.minDateEnd = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
+    this.dateNow = new Date();
+    this.dateNow.setDate(this.dateNow.getDate() + 2);
+    console.log(this.dateNow);
+    this.startDate = this.dateNow.toISOString().slice(0, 16);
+    this.endDate = this.dateNow.toISOString().slice(0, 16);
+    this.minDateStart = this.datePipe.transform(this.dateNow, 'yyyy-MM-ddTHH:mm');
+    this.minDateEnd = this.datePipe.transform(this.dateNow, 'yyyy-MM-ddTHH:mm');
   }
 
   ngOnInit(): void {
@@ -203,8 +207,13 @@ export class CustomerHomePageComponent implements OnInit {
   }
 
   search() {
+    this.allAdvertisements = [];
     this.customerHomePageService.getBasicSearch(this.startDate, this.endDate, this.pickupPlace).subscribe(data => {
-      this.allAdvertisements = data;
+      for (const ad of data) {
+        if (ad.advertiser.id !== this.loggedInUser.id) {
+          this.allAdvertisements.push(ad);
+        }
+      }
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
         this.customerHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
@@ -223,6 +232,7 @@ export class CustomerHomePageComponent implements OnInit {
   reset() {
     this.searched = false;
     this.allAdvertisements = [];
+    this.cart = [];
     this.showSearchBar();
     this.ngOnInit();
   }
@@ -231,7 +241,7 @@ export class CustomerHomePageComponent implements OnInit {
     const rentRequest = new RentRequest(this.startDate, this.endDate, this.loggedInUser, this.cart, this.bundle);
     this.customerHomePageService.createRentRequest(rentRequest).subscribe(data => {
       this.showNotification('success', 'Successfully created rent request.');
-      // this.router.navigate(['customerHomePage']);
+      this.reset();
     });
     this.modalService.dismissAll();
   }

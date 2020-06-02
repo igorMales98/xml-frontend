@@ -44,6 +44,10 @@
   </div>
 </div>
 
+<div class="text-center">
+  <h1 *ngIf="allAdvertisements.length === 0 && searched">Unfortunately no advertisements were found. :( </h1>
+</div>
+
 <div class="container register-form pt-4">
   <div id="images" class="row img_wrap">
     <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
