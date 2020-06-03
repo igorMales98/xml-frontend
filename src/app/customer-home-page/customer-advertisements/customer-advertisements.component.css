@@ -5,19 +5,27 @@
 .infoButton {
   position: absolute;
   bottom: 10%;
-  right: 2%;
-  width: 13%;
-  height: 20%;
+  right: -1%;
+  width: 10%;
+  height: 17%;
 }
 .commentButton {
   position: absolute;
   bottom: 10%;
-  right: 17%;
-  width: 13%;
-  height: 20%;
+  right: 10%;
+  width: 10%;
+  height: 17%;
 }
 
-#images, #imagesAd {
+.cartButton {
+  position: absolute;
+  bottom: 10%;
+  right: 21%;
+  width: 10%;
+  height: 17%;
+}
+
+#images, #imagesAd, #images2, #images3 {
   padding-top: 30px;
 }
 
@@ -69,7 +77,7 @@ textarea[type="text"]:disabled{
 .modal-footer {
   border-top: 0 none;
 }
-#currentRateCSS {
+#currentRateCSS, #currentRateCSS2, #currentRateCSS3 {
   margin-left:10px;
   font-size: 20px;
 }

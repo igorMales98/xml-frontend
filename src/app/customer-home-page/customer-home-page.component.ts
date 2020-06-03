@@ -238,7 +238,7 @@ export class CustomerHomePageComponent implements OnInit {
   }
 
   confirmRent() {
-    const rentRequest = new RentRequest(this.startDate, this.endDate, this.loggedInUser, this.cart, this.bundle);
+    const rentRequest = new RentRequest(this.startDate, this.endDate, this.loggedInUser, this.cart, this.bundle, false);
     this.customerHomePageService.createRentRequest(rentRequest).subscribe(data => {
       this.showNotification('success', 'Successfully created rent request.');
       this.reset();

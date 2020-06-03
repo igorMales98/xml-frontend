@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faComments, faInfo, faCommentAlt, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
 import {CustomerAdvertisementsService} from './customer-advertisements.service';
@@ -7,6 +7,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../../model/user';
 import {UserService} from '../../security/user.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {NotifierService} from 'angular-notifier';
+import {RentRequest} from '../../model/rentRequest';
 
 @Component({
   selector: 'app-customer-advertisements',
@@ -18,17 +22,41 @@ export class CustomerAdvertisementsComponent implements OnInit {
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
   faUser = faUser;
+  faCart = faCartPlus;
+  faCartMinus = faCheckDouble;
+
   allAdvertisements: Advertisement[] = [];
-  allImagesForAd: string[] = [];
-  closeResult: string;
-  moreInfoAdvertisement: Advertisement;
-  private readonly imageType: string = 'data:image/PNG;base64,';
   comments: Comment[] = [];
-  clickedComment: number;
+  moreInfoAdvertisement: Advertisement;
   user: User;
+  availableAdvertisements: Advertisement[] = [];
+  cart: Advertisement[] = [];
+
+  allImagesForAd: string[] = [];
+  private readonly imageType: string = 'data:image/PNG;base64,';
+
+  closeResult: string;
+  clickedComment: number;
+
+  customerData: FormGroup;
+  startDate: string;
+  endDate: string;
+  minDateStart: string;
+  minDateEnd: string;
+  disableRest = false;
+
+  physicalRent = false;
+  notifier: NotifierService;
+  bundle = true;
 
   constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
-              private modalService: NgbModal, private userService: UserService) {
+              private modalService: NgbModal, private userService: UserService, private formBuilder: FormBuilder,
+              private datePipe: DatePipe, private notifierService: NotifierService) {
+    this.notifier = notifierService;
+    this.startDate = new Date().toISOString().slice(0, 16);
+    this.endDate = new Date().toISOString().slice(0, 16);
+    this.minDateStart = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
+    this.minDateEnd = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
   }
 
   ngOnInit(): void {
@@ -51,6 +79,52 @@ export class CustomerAdvertisementsComponent implements OnInit {
         });
       }
     });
+
+    this.customerData = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      email: ['', [Validators.required, this.emailDomainValidator, Validators.pattern(/[^ @]*@[^ @]*/)]],
+      country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      address: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(10)]]
+    });
+  }
+
+  get fcd() {
+    return this.customerData.controls;
+  }
+
+  emailDomainValidator(control: FormControl) {
+    const email = control.value;
+    const [name, domain] = email.split('@');
+    if (domain !== 'gmail.com' && domain !== 'yahoo.com' && domain !== 'uns.ac.rs') {
+      return {
+        emailDomain: {
+          parsedDomain: domain
+        }
+      };
+    } else {
+      return null;
+    }
+  }
+
+  startDateChange() {
+    console.log(this.startDate);
+    this.minDateEnd = this.datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm:ss');
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
+  }
+
+  endDateChange() {
+    console.log(this.endDate);
+  }
+
+  reset() {
+    this.disableRest = false;
+    this.customerData.enable();
+    this.availableAdvertisements = [];
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -103,6 +177,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
   }
 
   sendReply() {
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.comments.length; i++) {
       if (this.comments[i].id === this.clickedComment) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;
@@ -110,6 +185,85 @@ export class CustomerAdvertisementsComponent implements OnInit {
         break;
       }
     }
+  }
+
+  showAvailableCars() {
+    this.customerAdvertisementsService.getBasicSearchForMyAdvertisements(this.startDate, this.endDate, this.user.id).subscribe(data => {
+      this.availableAdvertisements = data;
+      this.customerData.disable();
+      this.disableRest = true;
+
+      for (const advertisement of this.availableAdvertisements) {
+        advertisement.image = [];
+        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
+          console.log(img as string);
+          const images = img.toString();
+          this.allImagesForAd = images.split(',');
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.allImagesForAd.length; i++) {
+            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+          }
+        });
+      }
+    });
+  }
+
+  issueRent() {
+    if (this.physicalRent === true) {
+      document.getElementById('btnRent').textContent = 'Issue rent.';
+    } else {
+      document.getElementById('btnRent').textContent = 'See my advertisements.';
+    }
+    return this.physicalRent = this.physicalRent !== true;
+  }
+
+  addToCart(advertisement: Advertisement) {
+    const index: number = this.cart.indexOf(advertisement);
+    if (index !== -1) {
+      this.cart.splice(index, 1);
+      console.log(this.cart);
+      this.showNotification('info', 'You removed car from the cart.');
+      return;
+    }
+    this.cart.push(advertisement);
+    console.log(this.cart);
+    this.modalService.dismissAll();
+    this.showNotification('success', 'You added car to the cart.');
+  }
+
+  checkIfInCart(advertisement: Advertisement) {
+    const index: number = this.cart.indexOf(advertisement);
+    return index !== -1;
+  }
+
+  public showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);
+  }
+
+  changeBundle() {
+    console.log(this.bundle);
+  }
+
+  confirmRent() {
+    const rentRequest = new RentRequest(this.startDate, this.endDate, this.user, this.cart, this.bundle, true);
+    this.customerAdvertisementsService.createRentRequest(rentRequest).subscribe(data => {
+      this.showNotification('success', 'Successfully created rent request.');
+      this.reset();
+      this.physicalRent = false;
+    });
+    this.modalService.dismissAll();
+  }
+
+  sendRentRequest(myRents: TemplateRef<any>) {
+    this.modalService.open(myRents, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+      windowClass: 'myCustomModalClass'
+    }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
 }

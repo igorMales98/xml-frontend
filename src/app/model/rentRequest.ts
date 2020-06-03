@@ -10,12 +10,15 @@ export class RentRequest {
   advertisementsForRent: Advertisement[] = [];
   reports: Report[] = [];
   bundle: boolean;
+  physicalRent: boolean;
 
-  constructor(reservedFrom: string, reservedTo: string, customer: User, advertisementsForRent: Advertisement[], bundle: boolean) {
+  constructor(reservedFrom: string, reservedTo: string, customer: User, advertisementsForRent: Advertisement[], bundle: boolean,
+              physicalRent: boolean) {
     this.reservedFrom = reservedFrom;
     this.reservedTo = reservedTo;
     this.customer = customer;
     this.advertisementsForRent = advertisementsForRent;
     this.bundle = bundle;
+    this.physicalRent = physicalRent;
   }
 }
