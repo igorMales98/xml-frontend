@@ -245,7 +245,9 @@ export class CustomerAdvertisementsComponent implements OnInit {
   }
 
   confirmRent() {
-    const rentRequest = new RentRequest(this.startDate, this.endDate, this.user, this.cart, this.bundle, true);
+    const newUser = new User(this.customerData.value.firstName, this.customerData.value.lastName, this.customerData.value.email,
+      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone);
+    const rentRequest = new RentRequest(this.startDate, this.endDate, newUser, this.cart, this.bundle, true);
     this.customerAdvertisementsService.createRentRequest(rentRequest).subscribe(data => {
       this.showNotification('success', 'Successfully created rent request.');
       this.reset();
