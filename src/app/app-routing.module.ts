@@ -11,6 +11,7 @@ import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisemen
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
 import {AppComponent} from './app.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'createAdvertisement', component: CreateAdvertisementComponent},
   {path: 'agentAdvertisements', component: AgentAdvertisementsComponent},
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
-  {path: 'registrationRequests', component: RegistrationRequestsComponent}
+  {path: 'registrationRequests', component: RegistrationRequestsComponent},
+  {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent}
 ];
 
 @NgModule({

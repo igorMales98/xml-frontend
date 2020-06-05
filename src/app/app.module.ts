@@ -25,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {DatePipe} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 
 /**
  * Custom angular notifier options
@@ -82,7 +83,8 @@ const customNotifierOptions: NotifierOptions = {
     AgentAdvertisementsComponent,
     CustomerAdvertisementsComponent,
     CreateAdvertisementComponent,
-    RegistrationRequestsComponent
+    RegistrationRequestsComponent,
+    BlockActivateRemoveCustomersComponent
   ],
   imports: [
     BrowserModule,
