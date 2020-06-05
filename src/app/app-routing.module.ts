@@ -10,6 +10,11 @@ import {CreateAdvertisementComponent} from './create-advertisement/create-advert
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
 import {AppComponent} from './app.component';
+import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
+import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
+import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
+import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
+import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
 
 
 const routes: Routes = [
@@ -21,7 +26,12 @@ const routes: Routes = [
   {path: 'messages', component: MessagesComponent},
   {path: 'createAdvertisement', component: CreateAdvertisementComponent},
   {path: 'agentAdvertisements', component: AgentAdvertisementsComponent},
-  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent}
+  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
+  {path: 'carBrand', component: CarBrandComponent},
+  {path: 'carModel', component: CarModelComponent},
+  {path: 'carClass', component: CarClassComponent},
+  {path: 'fuelType', component: FuelTypeComponent},
+  {path: 'transmissionType', component: TransmissionTypeComponent}
 ];
 
 @NgModule({

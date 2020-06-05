@@ -22,6 +22,11 @@ import { CreateAdvertisementComponent } from './create-advertisement/create-adve
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
+import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
+import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
+import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
+import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
 
 /**
  * Custom angular notifier options
@@ -78,7 +83,12 @@ const customNotifierOptions: NotifierOptions = {
     RegistrationComponent,
     AgentAdvertisementsComponent,
     CustomerAdvertisementsComponent,
-    CreateAdvertisementComponent
+    CreateAdvertisementComponent,
+    CarBrandComponent,
+    CarModelComponent,
+    CarClassComponent,
+    FuelTypeComponent,
+    TransmissionTypeComponent
   ],
   imports: [
     BrowserModule,
