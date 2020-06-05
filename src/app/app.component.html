@@ -44,6 +44,12 @@
             <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
             My advertisements</a>
         </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/registrationRequests">
+            <fa-icon [icon]="faUserPlus" class="mr-1"></fa-icon>
+            Registration Requests</a>
+        </li>
       </ul>
 
       <ul class="navbar-nav mr-0">
@@ -64,6 +70,7 @@
             <fa-icon [icon]="faLogout" class="mr-1"></fa-icon>
             Logout</a>
         </li>
+
       </ul>
 
     </div>
