@@ -10,6 +10,7 @@ import {CreateAdvertisementComponent} from './create-advertisement/create-advert
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
 import {AppComponent} from './app.component';
+import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'messages', component: MessagesComponent},
   {path: 'createAdvertisement', component: CreateAdvertisementComponent},
   {path: 'agentAdvertisements', component: AgentAdvertisementsComponent},
-  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent}
+  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
+  {path: 'registrationRequests', component: RegistrationRequestsComponent}
 ];
 
 @NgModule({

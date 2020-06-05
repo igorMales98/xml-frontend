@@ -1,0 +1,68 @@
+<div id="divForTable">
+    <h2 class="card-title text-center"> Registration requests </h2>
+    <div class="col-lg">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="align-items-center">
+                <div *ngIf="requestCount !== 0">
+                    <table id="table" class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Confirm request</th>
+                        <th scope="col">Decline request</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let request of allRegistrationRequests">
+                        <td> {{request.username}} </td>
+                        <td> {{request.email}} </td>
+                        <td> {{request.firstName}} </td>
+                        <td> {{request.lastName}} </td>
+                        <td> {{request.city}} </td>
+                        <td> {{request.country}} </td>
+                        <td> {{request.address}} </td>
+                        <td> {{request.phone}} </td>
+                        <td>
+                          <button class="btn btn-success"
+                          (click)="confirmRegistrationRequest(request)">Confirm request</button>
+                        </td>
+                        <td>
+                          <button class="btn btn-danger"
+                          (click)="openConfirmDeleteModal(confirmDeletePricelistModal, request.id)">Decline request</button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div *ngIf="requestCount === 0">
+                    <h1> There is no Registration Requests. </h1>
+                  </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmDeletePricelistModal let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Delete This Registration Request?</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger" (click)="deleteRegistrationRequest()">Yes</button>
+    <button type="button" class="btn btn-success" (click)="modal.dismiss()">No</button>
+  </div>
+</ng-template>
