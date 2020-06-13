@@ -1,41 +1,264 @@
 <div class="container register-form pt-4">
-  <div id="images" class="img_wrap">
-    <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
-         class="col-md-3">
-      <table class="img_wrp">
-        <tr>
-          <td>
-            <img [src]="advertisement.image[0]" height="250" width="300">
-          </td>
-          <td>
-            <div class="text-center" style="font-size: large;font-weight: 500;">
-              <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+  <button *ngIf="this.allAdvertisements.length !== 0" (click)="issueRent()" class="btn btn-primary" id="btnRent">Issue
+    rent.
+  </button>
+  <div class="text-center" *ngIf="this.allAdvertisements.length === 0">
+    <h1> You have no advertisements posted</h1>
+  </div>
+</div>
+
+<div id="physicalRent" [hidden]="!physicalRent">
+
+  <div class="container register-form pt-4">
+    <div class="form">
+      <div class="note text-center">
+        <h2>Make a rent request</h2>
+      </div>
+
+      <div class="card my-5">
+        <div class="card-body">
+          <div class="note text-center">
+            <h2>Customer information</h2>
+          </div>
+          <form [formGroup]="customerData">
+
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <label for="inputFirstName">First Name</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.firstName.touched && fcd.firstName.errors, 'is-valid': fcd.firstName.touched && fcd.firstName.valid}"
+                  class="form-control"
+                  id="inputFirstName"
+                  name="firstName" formControlName="firstName"
+                  placeholder="Enter first name of customer"
+                  required>
+                <span style="color: red" *ngIf="fcd.firstName.invalid && fcd.firstName.touched">First name must contain only letters</span>
+              </div>
+
+              <div class="form-group col-lg-6">
+                <label for="inputLastName">Last Name</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.lastName.touched && fcd.lastName.errors, 'is-valid': fcd.lastName.touched && fcd.lastName.valid}"
+                  class="form-control"
+                  id="inputLastName"
+                  name="lastName" formControlName="lastName"
+                  placeholder="Enter last name of customer"
+                  required>
+                <span style="color: red"
+                      *ngIf="fcd.lastName.invalid && fcd.lastName.touched">Last name must contain only letters</span>
+              </div>
             </div>
-            <table>
-              <td>
-                <label id="currentRateCSS">{{advertisement.car.averageRating}}&nbsp;</label>
-              </td>
-              <td>
-                <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
-                  <ng-template let-fill="fill" let-index="index">
+
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <label for="inputEmail">Email</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.email.touched && fcd.email.errors && fcd.email.errors.emailDomain, 'is-valid': fcd.email.touched && fcd.email.valid}"
+                  class="form-control"
+                  id="inputEmail"
+                  name="email" formControlName="email"
+                  placeholder="Enter email of customer"
+                  required>
+                <span style="color: red" *ngIf="fcd.email.touched && fcd.email.invalid">Valid email must contain @ and some of the domains : gmail.com, yahoo.com, uns.ac.rs</span>
+              </div>
+
+              <div class="form-group col-lg-6">
+                <label for="inputCountry">Country</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.country.touched && fcd.country.errors, 'is-valid': fcd.country.touched && fcd.country.valid}"
+                  class="form-control"
+                  id="inputCountry"
+                  name="country" formControlName="country"
+                  placeholder="Enter country of customer"
+                  required>
+                <span style="color: red"
+                      *ngIf="fcd.country.invalid && fcd.country.touched">Country must contain only letters</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <label for="inputCity">City</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.city.touched && fcd.city.errors, 'is-valid': fcd.city.touched && fcd.city.valid}"
+                  class="form-control"
+                  id="inputCity"
+                  name="city" formControlName="city"
+                  placeholder="Enter city of customer"
+                  required>
+                <span style="color: red"
+                      *ngIf="fcd.city.invalid && fcd.city.touched">City must contain only letters</span>
+              </div>
+
+
+              <div class="form-group col-lg-6">
+                <label for="inputAddress">Address</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.address.touched && fcd.address.errors, 'is-valid': fcd.address.touched && fcd.address.valid}"
+                  class="form-control"
+                  id="inputAddress"
+                  name="address" formControlName="address"
+                  placeholder="Enter address of customer"
+                  required>
+                <span style="color: red"
+                      *ngIf="fcd.address.invalid && fcd.address.touched">Address must contain only letters</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <label for="inputPhone">Phone</label>
+                <input
+                  [ngClass]="{'is-invalid': fcd.phone.touched && fcd.phone.errors, 'is-valid': fcd.phone.touched && fcd.phone.valid}"
+                  class="form-control"
+                  id="inputPhone"
+                  name="phone" formControlName="phone"
+                  placeholder="Enter phone of customer"
+                  required>
+                <span style="color: red"
+                      *ngIf="fcd.phone.invalid && fcd.phone.touched">Phone must contain 9 od 10 digits</span>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container register-form pt-4" [hidden]="this.customerData.invalid">
+    <div class="card my-5">
+      <div class="card-body">
+        <div class="note text-center">
+          <h2>Period of rent</h2>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-lg-6">
+            <label for="inputDateFrom">From :</label>
+            <input type="datetime-local" id="inputDateFrom"
+                   class="form-control" [required]="true" [(ngModel)]="startDate" [min]="minDateStart"
+                   onkeydown="return false" [disabled]="disableRest"
+                   [ngClass]="{'is-invalid': !startDate, 'is-valid': startDate}" (ngModelChange)="startDateChange()"/>
+
+          </div>
+
+          <div class="form-group col-lg-6">
+            <label for="inputDateTo">From :</label>
+            <input type="datetime-local" id="inputDateTo"
+                   class="form-control" [required]="true" [(ngModel)]="endDate" (ngModelChange)="endDateChange()"
+                   onkeydown="return false" [min]="minDateEnd" [disabled]="disableRest"
+                   [ngClass]="{'is-invalid': !endDate, 'is-valid': endDate}"/>
+          </div>
+
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-success text-center" [hidden]="disableRest" (click)="showAvailableCars()"> Show
+            available cars
+          </button>
+          <button class="btn btn-success text-center" [hidden]="!disableRest" (click)="reset()"> Reset
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container register-form pt-4">
+    <div id="images2" class="img_wrap">
+      <div *ngFor="let advertisement of availableAdvertisements" style="width: 310px; height: 310px;"
+           class="col-md-3">
+        <table class="img_wrp">
+          <tr>
+            <td>
+              <img [src]="advertisement.image[0]" height="250" width="300">
+            </td>
+            <td>
+              <div class="text-center" style="font-size: large;font-weight: 500;">
+                <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+              </div>
+              <table>
+                <td>
+                  <label id="currentRateCSS2">{{advertisement.car.averageRating}}&nbsp;</label>
+                </td>
+                <td>
+                  <ngb-rating id="ratingNum2" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                    <ng-template let-fill="fill" let-index="index">
                     <span class="star" [class.full]="fill === 100">
                         <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
                     </span>
-                  </ng-template>
-                </ngb-rating>
-              </td>
-            </table>
-            <button class="btn-outline-info btn-sm-sm commentButton"
-                    (click)="openComments(myModalComments, advertisement)">
-              <fa-icon [icon]="faCommentAlt"></fa-icon>
-            </button>
-            <button class="btn-outline-info btn-sm-sm infoButton"
-                    (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
-              <fa-icon [icon]="faInfo"></fa-icon>
-            </button>
-          </td>
-        </tr>
-      </table>
+                    </ng-template>
+                  </ngb-rating>
+                </td>
+              </table>
+              <button class="btn-outline-info btn-sm-sm commentButton"
+                      (click)="openComments(myModalComments, advertisement)">
+                <fa-icon [icon]="faCommentAlt"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm infoButton"
+                      (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                <fa-icon [icon]="faInfo"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm cartButton"
+                      (click)="addToCart(advertisement)">
+                <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
+                <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest(myRents)">
+      <button class="btn btn-success">
+        Rent cars
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div [hidden]="physicalRent">
+  <div class="container register-form pt-4">
+    <div id="images" class="img_wrap">
+      <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
+           class="col-md-3">
+        <table class="img_wrp">
+          <tr>
+            <td>
+              <img [src]="advertisement.image[0]" height="250" width="300">
+            </td>
+            <td>
+              <div class="text-center" style="font-size: large;font-weight: 500;">
+                <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+              </div>
+              <table>
+                <td>
+                  <label id="currentRateCSS">{{advertisement.car.averageRating}}&nbsp;</label>
+                </td>
+                <td>
+                  <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                    <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                    </span>
+                    </ng-template>
+                  </ngb-rating>
+                </td>
+              </table>
+              <button class="btn-outline-info btn-sm-sm commentButton"
+                      (click)="openComments(myModalComments, advertisement)">
+                <fa-icon [icon]="faCommentAlt"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm infoButton"
+                      (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                <fa-icon [icon]="faInfo"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -185,6 +408,74 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
               (click)="sendReply(); modal.dismiss('Send click')">Send
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<div>
+  <ng-template #myRents let-modal class="myCustomModalClass modal-lg">
+
+    <div class="container register-form pt-4">
+      <div id="images3" class="img_wrap">
+        <div *ngFor="let advertisement of cart" style="width: 310px; height: 310px;"
+             class="col-md-3">
+          <table class="img_wrp">
+            <tr>
+              <td>
+                <img [src]="advertisement.image[0]" height="250" width="300">
+              </td>
+              <td style="display: unset;">
+                <div class="text-center" style="font-weight: 500;">
+                  <p>Advertiser : {{advertisement.advertiser.firstName + ' ' + advertisement.advertiser.lastName}}</p>
+                </div>
+                <div class="text-center" style="font-size: large;font-weight: 500;">
+                  <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                </div>
+                <div class="text-center" style="font-size: large;font-weight: 500;">
+                  <p>Price : {{advertisement.pricelist.pricePerDay + ' $ per day' }}</p>
+                </div>
+                <table>
+                  <td>
+                    <label id="currentRateCSS3">{{advertisement.car.averageRating}}&nbsp;</label>
+                  </td>
+                  <td>
+                    <ngb-rating id="ratingNum3" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                    </span>
+                      </ng-template>
+                    </ngb-rating>
+                  </td>
+                </table>
+                <button class="btn-outline-info btn-sm-sm commentButton"
+                        (click)="openComments(myModalComments, advertisement)">
+                  <fa-icon [icon]="faCommentAlt"></fa-icon>
+                </button>
+                <button class="btn-outline-info btn-sm-sm infoButton"
+                        (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                  <fa-icon [icon]="faInfo"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+      <label for="isItBundle" class="col-form-label-lg"> Do you want to create a bundle
+        request? </label>
+      <mat-checkbox color="primary" id="isItBundle" [checked]="bundle" [(ngModel)]="bundle"
+                    (ngModelChange)="changeBundle()">
+        Bundle ?
+      </mat-checkbox>
+    </div>
+
+    <div class="text-center" style="margin-bottom: 20px;">
+      <button (click)="confirmRent()" class="btn btn-success">
+        Confirm
       </button>
     </div>
   </ng-template>

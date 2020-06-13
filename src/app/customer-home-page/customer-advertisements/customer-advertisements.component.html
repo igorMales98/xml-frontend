@@ -1,6 +1,12 @@
 <div class="container register-form pt-4">
-  <button (click)="issueRent()" class="btn btn-primary" id="btnRent">Issue rent.</button>
+  <button *ngIf="this.allAdvertisements.length !== 0" (click)="issueRent()" class="btn btn-primary" id="btnRent">Issue
+    rent.
+  </button>
+  <div class="text-center" *ngIf="this.allAdvertisements.length === 0">
+    <h1> You have no advertisements posted</h1>
+  </div>
 </div>
+
 <div id="physicalRent" [hidden]="!physicalRent">
 
   <div class="container register-form pt-4">
