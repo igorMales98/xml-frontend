@@ -40,14 +40,13 @@ export class AgentAdvertisementsComponent implements OnInit {
 
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
-        this.agentAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
+        const images = advertisement.img.toString();
+        this.allImagesForAd = images.split(',');
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.allImagesForAd.length; i++) {
+          advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+        }
+
       }
     });
   }
@@ -102,6 +101,7 @@ export class AgentAdvertisementsComponent implements OnInit {
   }
 
   sendReply() {
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.comments.length; i++) {
       if (this.comments[i].id === this.clickedComment) {
         this.comments[i].reply = (document.getElementById('replyComment') as HTMLInputElement).value;

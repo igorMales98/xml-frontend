@@ -68,15 +68,13 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
-        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
+        const images = advertisement.img.toString();
+        this.allImagesForAd = images.split(',');
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.allImagesForAd.length; i++) {
+          advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+        }
+
       }
     });
 
@@ -195,15 +193,13 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
       for (const advertisement of this.availableAdvertisements) {
         advertisement.image = [];
-        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
+        const images = advertisement.img.toString();
+        this.allImagesForAd = images.split(',');
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.allImagesForAd.length; i++) {
+          advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+        }
+
       }
     });
   }
@@ -252,6 +248,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
       this.showNotification('success', 'Successfully created rent request.');
       this.reset();
       this.physicalRent = false;
+      document.getElementById('btnRent').textContent = 'Issue rent.';
     });
     this.modalService.dismissAll();
   }
@@ -268,7 +265,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
     });
   }
 
-  check(a: string){
+  check(a: string) {
     console.log(a);
   }
 
