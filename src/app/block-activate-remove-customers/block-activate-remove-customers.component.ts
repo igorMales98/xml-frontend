@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BlockActivateRemoveCustomerService } from './block-activate-remove-customers.service';
-import { User } from '../model/user';
+import {Component, OnInit} from '@angular/core';
+import {BlockActivateRemoveCustomerService} from './block-activate-remove-customers.service';
+import {User} from '../model/user';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NotifierService} from 'angular-notifier';
 
@@ -17,9 +17,9 @@ export class BlockActivateRemoveCustomersComponent implements OnInit {
   customersCount: number;
 
   constructor(private blockActivateRemoveService: BlockActivateRemoveCustomerService, private modalService: NgbModal,
-    private notifierService: NotifierService) {
-      this.notifier = notifierService;
-     }
+              private notifierService: NotifierService) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit(): void {
     this.blockActivateRemoveService.getAllRegistrationRequests().subscribe(data => {
@@ -41,28 +41,27 @@ export class BlockActivateRemoveCustomersComponent implements OnInit {
     });
   }
 
-  deleteCustomer(){
-    this.blockActivateRemoveService.deleteCustomer(this.userIdToDelete).subscribe(data =>{
+  deleteCustomer() {
+    this.blockActivateRemoveService.deleteCustomer(this.userIdToDelete).subscribe(data => {
       this.showNotification('success', 'Customer is successfuly deleted.');
       this.modalService.dismissAll();
       this.ngOnInit();
     });
   }
 
-  blockCustomer(customerId: number){
+  blockCustomer(customerId: number) {
     this.blockActivateRemoveService.blockCustomer(customerId).subscribe(data => {
       this.showNotification('success', 'Customer is successfuly blocked.');
       this.ngOnInit();
     });
   }
 
-  activateCustomer(customerId: number){
+  activateCustomer(customerId: number) {
     this.blockActivateRemoveService.activateCustomer(customerId).subscribe(data => {
       this.showNotification('success', 'Customer is successfuly activated.');
       this.ngOnInit();
     });
   }
 
-  
 
 }
