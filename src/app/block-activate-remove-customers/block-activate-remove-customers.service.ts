@@ -11,20 +11,20 @@ export class BlockActivateRemoveCustomerService {
   }
 
   getAllRegistrationRequests() {
-    return this.httpClient.get<User[]>('https://localhost:8443/authentication-service/api/blockActivateRemoveCustomer/all');
+    return this.httpClient.get<User[]>('https://localhost:8443/authentication-service/api/users/customers');
   }
 
   deleteCustomer(customerId: number) {
-    return this.httpClient.delete('https://localhost:8443/authentication-service/api/blockActivateRemoveCustomer/' + customerId);
+    return this.httpClient.delete('https://localhost:8443/authentication-service/api/users/' + customerId);
   }
 
   blockCustomer(customerId: number) {
-    return this.httpClient.put('https://localhost:8443/authentication-service/api/blockActivateRemoveCustomer/block/' + customerId,
+    return this.httpClient.put('https://localhost:8443/authentication-service/api/users/block/' + customerId,
       null);
   }
 
   activateCustomer(customerId: number) {
-    return this.httpClient.put('https://localhost:8443/authentication-service/api/blockActivateRemoveCustomer/activate/' + customerId,
+    return this.httpClient.put('https://localhost:8443/authentication-service/api/users/activate/' + customerId,
       null);
   }
 

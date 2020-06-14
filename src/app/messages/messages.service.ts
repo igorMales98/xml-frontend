@@ -17,11 +17,11 @@ export class MessagesService {
   }
 
   getReservedCustomers() {
-    return this.httpClient.get<User[]>('http://localhost:8091/message-service/api/getReservedCustomers/'+this.userTokenState.accessToken);
+    return this.httpClient.get<User[]>('http://localhost:8091/message-service/api/getReservedCustomers/' + this.userTokenState.accessToken);
   }
 
   getMessages(agentId: string, customerId: string) {
-    return this.httpClient.get<Message[]>('http://localhost:8091/message-service/api/getMessages/'+agentId +'/'+customerId);
+    return this.httpClient.get<Message[]>('http://localhost:8091/message-service/api/getMessages/' + agentId + '/' + customerId);
   }
 
   sendMessage(message: Message) {

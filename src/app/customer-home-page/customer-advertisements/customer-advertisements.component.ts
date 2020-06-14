@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
 import {CustomerAdvertisementsService} from './customer-advertisements.service';
@@ -11,6 +11,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {NotifierService} from 'angular-notifier';
 import {RentRequest} from '../../model/rentRequest';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customer-advertisements',
@@ -51,7 +52,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
   constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private userService: UserService, private formBuilder: FormBuilder,
-              private datePipe: DatePipe, private notifierService: NotifierService) {
+              private datePipe: DatePipe, private notifierService: NotifierService, private router: Router) {
     this.notifier = notifierService;
     this.startDate = new Date().toISOString().slice(0, 16);
     this.endDate = new Date().toISOString().slice(0, 16);
@@ -249,6 +250,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
       this.reset();
       this.physicalRent = false;
       document.getElementById('btnRent').textContent = 'Issue rent.';
+      this.router.navigate(['/customerAdvertisements']);
     });
     this.modalService.dismissAll();
   }

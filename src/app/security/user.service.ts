@@ -34,7 +34,7 @@ export class UserService {
   }
 
   getMyInfo() {
-    return this.httpClient.get('https://localhost:8443/authentication-service/api/whoami').subscribe(data => {
+    return this.httpClient.get('https://localhost:8443/authentication-service/api/users/whoami').subscribe(data => {
       this.currentUser = data;
     });
   }

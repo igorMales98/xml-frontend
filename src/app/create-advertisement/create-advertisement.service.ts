@@ -18,32 +18,32 @@ export class CreateAdvertisementService {
   }
 
   getAllCarBrands() {
-    return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brand/all');
+    return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brands');
   }
 
   getCarBrandModels(id: string) {
-    return this.httpClient.get<CarModel[]>('https://localhost:8443/codebook-service/api/car-model/brand/' + id);
+    return this.httpClient.get<CarModel[]>('https://localhost:8443/codebook-service/api/car-models/' + id);
   }
 
   getAllFuelTypes() {
-    return this.httpClient.get<FuelType[]>('https://localhost:8443/codebook-service/api/fuel-type/all');
+    return this.httpClient.get<FuelType[]>('https://localhost:8443/codebook-service/api/fuel-types');
   }
 
   getAllTransmissionTypes() {
-    return this.httpClient.get<TransmissionType[]>('https://localhost:8443/codebook-service/api/transmission-type/all');
+    return this.httpClient.get<TransmissionType[]>('https://localhost:8443/codebook-service/api/transmission-types');
   }
 
   getAllCarClasses() {
-    return this.httpClient.get<CarClass[]>('https://localhost:8443/codebook-service/api/car-class/all');
+    return this.httpClient.get<CarClass[]>('https://localhost:8443/codebook-service/api/car-classes');
   }
 
   getAllPricelists() {
-    return this.httpClient.get<Pricelist[]>('https://localhost:8443/codebook-service/api/pricelist/all');
+    return this.httpClient.get<Pricelist[]>('https://localhost:8443/codebook-service/api/pricelists');
   }
 
   createAdvertisement(selectedFiles, createAdvertisement: CreateAdvertisements) {
 
-    return this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisement', createAdvertisement).subscribe(data => {
+    return this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisements', createAdvertisement).subscribe(data => {
       const uploadData = new FormData();
 
       for (let blob of selectedFiles) {
