@@ -12,15 +12,11 @@ export class AgentHomePageService {
   }
 
   getAllAdvertisements() {
-    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisement/all');
-  }
-
-  getAdvertisementPhotos(adId: string) {
-    return this.httpClient.get('https://localhost:8443/advertisement-service/api/advertisement/getAdvertisementsPhotos/' + adId);
+    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisements');
   }
 
   getComments(adId: string) {
-    return this.httpClient.get<Comment[]>('https://localhost:8443/advertisement-service/api/comment/all/' + adId);
+    return this.httpClient.get<Comment[]>('https://localhost:8443/advertisement-service/api/comments/' + adId);
   }
 
 }

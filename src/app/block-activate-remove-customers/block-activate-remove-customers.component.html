@@ -1,0 +1,72 @@
+<div id="divForTable">
+    <h2 class="card-title text-center"> Block, Activate and Remove Customers </h2>
+    <div class="col-lg">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="align-items-center">
+                <div *ngIf="customersCount !== 0">
+                    <table id="table" class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Activate/Block</th>
+                        <th scope="col">Remove</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let customer of allCustomers">
+                        <td> {{customer.email}} </td>
+                        <td> {{customer.firstName}} </td>
+                        <td> {{customer.lastName}} </td>
+                        <td> {{customer.city}} </td>
+                        <td> {{customer.country}} </td>
+                        <td> {{customer.address}} </td>
+                        <td> {{customer.phone}} </td>
+                        <td>
+                          <button class="btn btn-warning"
+                          *ngIf="customer.enabled"
+                          (click)="blockCustomer(customer.id)">Block</button>
+                          <button class="btn btn-success"
+                          *ngIf="!customer.enabled"
+                          (click)="activateCustomer(customer.id)">Activate</button>
+                        </td>
+                        <td>
+                          <button class="btn btn-danger"
+                          (click)="openConfirmDeleteModal(confirmDeletePricelistModal, customer.id)">Remove </button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div *ngIf="customersCount === 0">
+                    <h1> There is no Users avaible. </h1>
+                  </div>
+
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmDeletePricelistModal let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Delete This Customer?</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger" (click)=deleteCustomer()>Yes</button>
+    <button type="button" class="btn btn-success" (click)="modal.dismiss()">No</button>
+  </div>
+</ng-template>

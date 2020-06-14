@@ -8,8 +8,9 @@ export class User {
   address: string;
   phone: string;
   advertisementsPosted: number;
+  enabled: boolean;
 
-  constructor(firstName: string, lastName: string, email: string, country: string, city: string, address: string, phone: string) {
+  constructor(firstName: string, lastName: string, email: string, country: string, city: string, address: string, phone: string, enabled: boolean) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -17,6 +18,8 @@ export class User {
     this.city = city;
     this.address = address;
     this.phone = phone;
+    this.enabled = enabled;
   }
+
 
 }

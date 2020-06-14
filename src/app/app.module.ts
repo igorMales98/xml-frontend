@@ -23,6 +23,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {DatePipe} from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
+import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 
 /**
  * Custom angular notifier options
@@ -79,7 +82,9 @@ const customNotifierOptions: NotifierOptions = {
     RegistrationComponent,
     AgentAdvertisementsComponent,
     CustomerAdvertisementsComponent,
-    CreateAdvertisementComponent
+    CreateAdvertisementComponent,
+    RegistrationRequestsComponent,
+    BlockActivateRemoveCustomersComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +98,8 @@ const customNotifierOptions: NotifierOptions = {
     FontAwesomeModule,
     BrowserAnimationsModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
