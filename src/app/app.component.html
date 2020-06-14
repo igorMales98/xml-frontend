@@ -50,6 +50,18 @@
             <fa-icon [icon]="faMessages" class="mr-1"></fa-icon>
             Messages</a>
         </li>
+      
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/registrationRequests">
+            <fa-icon [icon]="faUserPlus" class="mr-1"></fa-icon>
+            Registration Requests</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/blockActivateRemoveCustomer">
+            <fa-icon [icon]="faUsers" class="mr-1"></fa-icon>
+            Block, Activate, Remove Customers</a>
+        </li>
       </ul>
 
       <ul class="navbar-nav mr-0">
@@ -70,6 +82,7 @@
             <fa-icon [icon]="faLogout" class="mr-1"></fa-icon>
             Logout</a>
         </li>
+
       </ul>
 
     </div>

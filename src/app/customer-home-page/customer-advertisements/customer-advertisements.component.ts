@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
 import {CustomerAdvertisementsService} from './customer-advertisements.service';
@@ -11,6 +11,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {NotifierService} from 'angular-notifier';
 import {RentRequest} from '../../model/rentRequest';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customer-advertisements',
@@ -51,7 +52,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
   constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private userService: UserService, private formBuilder: FormBuilder,
-              private datePipe: DatePipe, private notifierService: NotifierService) {
+              private datePipe: DatePipe, private notifierService: NotifierService, private router: Router) {
     this.notifier = notifierService;
     this.startDate = new Date().toISOString().slice(0, 16);
     this.endDate = new Date().toISOString().slice(0, 16);
@@ -68,15 +69,13 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
-        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
+        const images = advertisement.img.toString();
+        this.allImagesForAd = images.split(',');
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.allImagesForAd.length; i++) {
+          advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+        }
+
       }
     });
 
@@ -195,15 +194,13 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
       for (const advertisement of this.availableAdvertisements) {
         advertisement.image = [];
-        this.customerAdvertisementsService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-          console.log(img as string);
-          const images = img.toString();
-          this.allImagesForAd = images.split(',');
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.allImagesForAd.length; i++) {
-            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-          }
-        });
+        const images = advertisement.img.toString();
+        this.allImagesForAd = images.split(',');
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.allImagesForAd.length; i++) {
+          advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+        }
+
       }
     });
   }
@@ -246,12 +243,14 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
   confirmRent() {
     const newUser = new User(this.customerData.value.firstName, this.customerData.value.lastName, this.customerData.value.email,
-      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone);
+      this.customerData.value.country, this.customerData.value.city, this.customerData.value.address, this.customerData.value.phone, true);
     const rentRequest = new RentRequest(this.startDate, this.endDate, newUser, this.cart, this.bundle, true);
     this.customerAdvertisementsService.createRentRequest(rentRequest).subscribe(data => {
       this.showNotification('success', 'Successfully created rent request.');
       this.reset();
       this.physicalRent = false;
+      document.getElementById('btnRent').textContent = 'Issue rent.';
+      this.router.navigate(['/customerAdvertisements']);
     });
     this.modalService.dismissAll();
   }
@@ -266,6 +265,10 @@ export class CustomerAdvertisementsComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  check(a: string) {
+    console.log(a);
   }
 
 }

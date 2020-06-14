@@ -22,6 +22,7 @@ export class MessagesService {
 
   getMessages(agentId: string, customerId: string) {
     return this.httpClient.get<Message[]>('https://localhost:8443/message-service/api/messages/getMessages/'+agentId +'/'+customerId);
+
   }
 
   sendMessage(message: Message) {
