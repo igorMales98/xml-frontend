@@ -52,6 +52,12 @@
         </li>
 
         <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/agentRegister">
+            <fa-icon [icon]="faPlusSquare" class="mr-1"></fa-icon>
+            Create Agent</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
           <a class="nav-link" routerLink="/blockActivateRemoveCustomer">
             <fa-icon [icon]="faUsers" class="mr-1"></fa-icon>
             Block, Activate, Remove Customers</a>
