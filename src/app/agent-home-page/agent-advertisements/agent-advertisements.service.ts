@@ -13,7 +13,7 @@ export class AgentAdvertisementsService {
   }
 
   getAllAgentAdvertisements(id: string) {
-    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisements/' + id);
+    return this.httpClient.get<Advertisement[]>('https://localhost:8443/advertisement-service/api/advertisements/user/' + id);
   }
 
   getComments(adId: string) {
