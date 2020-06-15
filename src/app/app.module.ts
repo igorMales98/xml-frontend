@@ -26,6 +26,7 @@ import {DatePipe} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
+import { AgentRegisterComponent } from './agent-register/agent-register.component';
 
 /**
  * Custom angular notifier options
@@ -84,7 +85,8 @@ const customNotifierOptions: NotifierOptions = {
     CustomerAdvertisementsComponent,
     CreateAdvertisementComponent,
     RegistrationRequestsComponent,
-    BlockActivateRemoveCustomersComponent
+    BlockActivateRemoveCustomersComponent,
+    AgentRegisterComponent
   ],
   imports: [
     BrowserModule,

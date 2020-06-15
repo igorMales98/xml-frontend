@@ -1,0 +1,163 @@
+<notifier-container></notifier-container>
+<div id="divv" class="animated slideInLeft">
+  <div class="container register-form pt-4">
+    <div class="form mt-1">
+      <div class="col-lg-6 offset-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="note col-lg-6 offset-3 text-center">
+              <h2>Register Agent Here</h2>
+            </div>
+            <form [formGroup]="agentData" (ngSubmit)="register()">
+
+              <div class="form-group">
+                <label for="InputFirstName">First name</label>
+                <input
+                  [ngClass]="{'is-invalid': f.firstName.touched && f.firstName.errors, 'is-valid': f.firstName.touched && f.firstName.valid}"
+                  class="form-control"
+                  id="InputFirstName"
+                  name="firstName" formControlName="firstName"
+                  placeholder="Enter first name"
+                  required>
+                <span style="color: red" *ngIf="f.firstName.invalid && f.firstName.touched">First name must contain only letters</span>
+              </div>
+
+              <div class="form-group">
+                <label for="InputLastName">Last name</label>
+                <input
+                  [ngClass]="{'is-invalid': f.lastName.touched && f.lastName.errors, 'is-valid': f.lastName.touched && f.lastName.valid}"
+                  class="form-control"
+                  id="InputLastName"
+                  name="lastName" formControlName="lastName"
+                  placeholder="Enter last name"
+                  required>
+                <span style="color: red" *ngIf="f.lastName.invalid && f.lastName.touched">Last name must contain only letters</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input
+                  [ngClass]="{'is-invalid': f.username.touched && f.username.errors, 'is-valid': f.username.touched && f.username.valid}"
+                  class="form-control"
+                  id="inputUsername"
+                  name="ssn" formControlName="username"
+                  placeholder="Enter username"
+                  required>
+                <span style="color: red" *ngIf="f.username.invalid && f.username.touched">Please enter a username that contains letters and numbers</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input
+                  [ngClass]="{'is-invalid': (f.password.touched && f.password.errors) || agentData.hasError('notSame'), 'is-valid': f.password.touched && f.password.valid && !agentData.hasError('notSame')}"
+                  type="password"
+                  class="form-control"
+                  id="inputPassword"
+                  name="password" formControlName="password"
+                  placeholder="Enter password"
+                  required>
+                <span style="color: red" *ngIf="f.password.invalid && f.password.touched">Password must contain at least 5 characters</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputPasswordRepeat">Repeat password</label>
+                <input
+                  [ngClass]="{'is-invalid': (f.passwordRepeat.touched && f.passwordRepeat.errors) || agentData.hasError('notSame'), 'is-valid': f.passwordRepeat.touched && f.passwordRepeat.valid && !agentData.hasError('notSame')}"
+                  type="password"
+                  class="form-control"
+                  id="inputPasswordRepeat"
+                  name="passwordRepeat" formControlName="passwordRepeat"
+                  placeholder="Re-enter password"
+                  required>
+                <span style="color: red"
+                      *ngIf="f.passwordRepeat.invalid && f.passwordRepeat.touched">Passwords must match</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input
+                  [ngClass]="{'is-invalid': f.email.touched && f.email.errors && f.email.errors.emailDomain, 'is-valid': f.email.touched && f.email.valid}"
+                  class="form-control"
+                  id="inputEmail"
+                  name="email" formControlName="email"
+                  placeholder="Enter email"
+                  required>
+                <span style="color: red" *ngIf="f.email.touched && f.email.invalid">Valid email must contain @ and some of the domains : gmail.com, yahoo.com, uns.ac.rs</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input
+                  [ngClass]="{'is-invalid': f.address.touched && f.address.errors, 'is-valid': f.address.touched && f.address.valid}"
+                  class="form-control"
+                  id="inputAddress"
+                  name="address" formControlName="address"
+                  placeholder="Enter the address"
+                  required>
+                <span style="color: red" *ngIf="f.address.invalid && f.address.touched">Address must contain only letters</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputCity">City</label>
+                <input
+                  [ngClass]="{'is-invalid': f.city.touched && f.city.errors, 'is-valid': f.city.touched && f.city.valid}"
+                  class="form-control"
+                  id="inputCity"
+                  name="city" formControlName="city"
+                  placeholder="Enter the city"
+                  required>
+                <span style="color: red" *ngIf="f.city.invalid && f.city.touched">City must contain only letters</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputCountry">Country</label>
+                <input
+                  [ngClass]="{'is-invalid': f.country.touched && f.country.errors, 'is-valid': f.country.touched && f.country.valid}"
+                  class="form-control"
+                  id="inputCountry"
+                  name="country" formControlName="country"
+                  placeholder="Enter the country"
+                  required>
+                <span style="color: red" *ngIf="f.country.invalid && f.country.touched">Country must contain only letters</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputPhone">Phone</label>
+                <input
+                  [ngClass]="{'is-invalid': f.phone.touched && f.phone.errors, 'is-valid': f.phone.touched && f.phone.valid}"
+                  class="form-control"
+                  id="inputPhone"
+                  name="phone" formControlName="phone"
+                  placeholder="Enter phone number"
+                  required>
+                <span style="color: red"
+                      *ngIf="f.phone.invalid && f.phone.touched">Phone must contain 9 od 10 digits</span>
+               </div>
+
+               <div class="form-group">
+                <label for="inputBusinessSocialNumber">Phone</label>
+                <input
+                  [ngClass]="{'is-invalid': f.businessSocialNumber.touched && f.businessSocialNumber.errors, 'is-valid': f.businessSocialNumber.touched && f.businessSocialNumber.valid}"
+                  class="form-control"
+                  id="inputBusinessSocialNumber"
+                  name="businessSocialNumber" formControlName="businessSocialNumber"
+                  placeholder="Enter Business Social number"
+                  required>
+                <span style="color: red"
+                      *ngIf="f.businessSocialNumber.invalid && f.businessSocialNumber.touched">BSN must contain 5 digits</span>
+               </div>
+
+
+
+              <div class="text-right">
+                <button type="submit" [disabled]="agentData.invalid"
+                        class="btn btn-success">Register
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
