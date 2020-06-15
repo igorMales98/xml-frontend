@@ -8,8 +8,9 @@ export class Message {
     sender: User;
     type: string;
 
-    constructor(message: string, receiver: User) {
+    constructor(message: string, receiver: User, sender: User) {
         this.message = message;
         this.receiver = receiver;
+        this.sender = sender;
     }
 }
