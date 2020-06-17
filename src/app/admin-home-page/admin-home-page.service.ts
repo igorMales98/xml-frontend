@@ -19,4 +19,7 @@ export class AdminHomePageService {
     return this.httpClient.get<Comment[]>('https://localhost:8443/advertisement-service/api/comments/' + adId);
   }
 
+  sendReply(comment: Comment) {
+    return this.httpClient.post('https://localhost:8443/advertisement-service/api/comments/reply', comment);
+  }
 }
