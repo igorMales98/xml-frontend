@@ -20,6 +20,7 @@ export class AgentHomePageComponent implements OnInit {
   faComment = faCommentAlt;
   faUser = faUser;
 
+  clickedComment: number;
   allAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
   moreInfoAdvertisement: Advertisement;
@@ -105,6 +106,7 @@ export class AgentHomePageComponent implements OnInit {
     });
     this.moreInfoAdvertisement = advertisement;
   }
+
 
   public showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
