@@ -1,11 +1,15 @@
-<div id="divForTable">
-    <h2 class="card-title text-center"> Block, Activate and Remove Customers </h2>
+<div id="divForTable" class="animated slideInLeft">
+    <h1 class="card-title text-center"> </h1>
     <div class="col-lg">
         <div class="card">
           <div class="card-body">
             <form>
               <div class="align-items-center">
                 <div *ngIf="customersCount !== 0">
+                  <div class="note col-lg-6 offset-3 text-center">
+                    <h2>Block, Activate and Remove Customers</h2>
+                  </div>
+
                     <table id="table" class="table table-bordered table-striped table-hover">
                       <thead class="thead-dark">
                       <tr>
@@ -47,7 +51,7 @@
                   </div>
 
                   <div *ngIf="customersCount === 0">
-                    <h1> There is no Users avaible. </h1>
+                    <h1> There are no Users avaible. </h1>
                   </div>
 
               </div>

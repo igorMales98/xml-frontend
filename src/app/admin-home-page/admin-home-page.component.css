@@ -20,6 +20,9 @@
   bottom: 22%;
   right: 12%;
 }
+.marginsReply {
+  margin-left: 4%;
+}
 
 #images, #imagesAd {
   padding-top: 30px;

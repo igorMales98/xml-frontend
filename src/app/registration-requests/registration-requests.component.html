@@ -1,11 +1,15 @@
-<div id="divForTable">
-    <h2 class="card-title text-center"> Registration requests </h2>
+<div id="divForTable" class="animated slideInLeft">
+    <h1 class="card-title text-center">  </h1>
     <div class="col-lg">
         <div class="card">
           <div class="card-body">
             <form>
               <div class="align-items-center">
                 <div *ngIf="requestCount !== 0">
+                    <div class="note col-lg-6 offset-3 text-center">
+                      <h2>Registration requests</h2>
+                    </div>
+
                     <table id="table" class="table table-bordered table-striped table-hover">
                       <thead class="thead-dark">
                       <tr>
@@ -44,7 +48,7 @@
                     </table>
                   </div>
                   <div *ngIf="requestCount === 0">
-                    <h1> There is no Registration Requests. </h1>
+                    <h1> There are no Registration Requests. </h1>
                   </div>
               </div>
             </form>

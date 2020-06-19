@@ -13,6 +13,7 @@ import {AppComponent} from './app.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
+import { AgentRegisterComponent } from './agent-register/agent-register.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
   {path: 'registrationRequests', component: RegistrationRequestsComponent},
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
-  {path: 'customerRentRequests', component: CustomerRentReguestsComponent}
+  {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
+  {path: 'agentRegister', component: AgentRegisterComponent}
 ];
 
 @NgModule({

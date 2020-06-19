@@ -42,7 +42,6 @@ export class AdminHomePageComponent implements OnInit {
     setTimeout(() => {
       this.adminHomePageService.getAllAdvertisements().subscribe(data => {
         this.allAdvertisements = data;
-
         for (const advertisement of this.allAdvertisements) {
           advertisement.image = [];
           const images = advertisement.img.toString();
