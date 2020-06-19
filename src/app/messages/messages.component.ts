@@ -3,6 +3,7 @@ import { MessagesService } from './messages.service';
 import { User } from '../model/user';
 import {Message} from '../model/message';
 import {UserService} from '../security/user.service'
+import {faUser} from '@fortawesome/free-solid-svg-icons';
 //TODO: scroll i refresh
 @Component({
   selector: 'app-messages',
@@ -10,6 +11,7 @@ import {UserService} from '../security/user.service'
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  faUser = faUser;
   customers: User[] = [];
   messages: Message[] = [];
   clickedCustomer: User;

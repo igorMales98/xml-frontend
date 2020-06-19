@@ -2,7 +2,7 @@
     <div class="text-center" *ngIf="(customers.length==0)">Inbox is empty</div>
     <div>
         <ul  id="listMessages" class="list-group list-group-flush" *ngFor="let customer of customers">
-        <li (click)="showMessages(customer)" class="list-group-item"> {{customer.firstName}} {{customer.lastName}}</li> 
+        <li (click)="showMessages(customer)" class="list-group-item"><fa-icon [icon]="faUser" class="mr-1"></fa-icon> {{customer.firstName}} {{customer.lastName}}</li> 
         </ul>
     </div>
     <ul class="list-group list-group-flush">
@@ -13,7 +13,7 @@
     <div class="text-center" *ngIf="(messages.length==0)">No messages</div>
     <div *ngFor="let message of messages"> 
         <div *ngIf="message.type=='customer'">
-            <div class="chip customerName">
+            <div class="chip customerName"><fa-icon [icon]="faUser" class="mr-1"></fa-icon>
                 {{clickedCustomer.firstName}} {{clickedCustomer.lastName}}
             </div>
             <div class="md-form ">
