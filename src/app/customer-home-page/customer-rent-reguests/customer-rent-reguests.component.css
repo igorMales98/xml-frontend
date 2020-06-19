@@ -1,0 +1,84 @@
+.img_wrp {
+    display: inline-block;
+    position: relative;
+  }
+  .infoButton {
+    position: absolute;
+    bottom: 10%;
+    right: -1%;
+    width: 10%;
+    height: 17%;
+  }
+  .commentButton {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    width: 10%;
+    height: 17%;
+  }
+  
+  .cartButton {
+    position: absolute;
+    bottom: 10%;
+    right: 21%;
+    width: 10%;
+    height: 17%;
+  }
+  
+  #images, #imagesAd, #images2, #images3 {
+    padding-top: 30px;
+  }
+  
+  .myCustomModalClass .modal-lg {
+    max-width: 70%;
+  }
+  
+  #carBrandInfo, #carModelInfo, #carClassInfo, #fuelTypeInfo, #transmissionTypeInfo, #mileageInfo, #averageRatingInfo,
+  #childSeatsInfo, #hasAndroidInfo, #hasAndroidInfo2, #hasCdwInfo, #hasCdwInfo2, #pricelistInfo, #allowedDistanceInfo {
+    resize: none;
+    height: 35px;
+    overflow: hidden;
+  }
+  
+  .marginsRating {
+    display: inline-block;
+    margin: 2%;
+  }
+  .marginsReply {
+    margin-left: 2%;
+  }
+  textarea[type="text"]:disabled{
+    color: black;
+    background-color:#d2eff3;
+    resize: none;
+  }
+  .star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #b8ebf3;
+  }
+  
+  .full {
+    color: #17a2b8;
+  }
+  
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #17a2b8;
+  }
+  
+  .modal-header {
+    border-bottom: 0 none;
+  }
+  
+  .modal-footer {
+    border-top: 0 none;
+  }
+  #currentRateCSS, #currentRateCSS2, #currentRateCSS3 {
+    margin-left:10px;
+    font-size: 20px;
+  }
+  
