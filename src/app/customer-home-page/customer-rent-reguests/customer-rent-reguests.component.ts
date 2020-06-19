@@ -44,9 +44,6 @@ export class CustomerRentReguestsComponent implements OnInit {
   notifier: NotifierService;
   bundle = true;
 
-  datesFrom: string[] = [];
-  datesTo: string[] = [];
-
   constructor(private customerRentRequestsService: CustomerRentRequestsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private userService: UserService, private formBuilder: FormBuilder,
               private datePipe: DatePipe, private notifierService: NotifierService, private router: Router) {
@@ -59,6 +56,7 @@ export class CustomerRentReguestsComponent implements OnInit {
 
     this.customerRentRequestsService.getCustomerRentRequests(this.user.id).subscribe(data => {
       this.allRentRequests = data;
+      console.log(data[4].advertisementsForRent);
       for (const rentRequest of this.allRentRequests) {
         for (const advertisement of rentRequest.advertisementsForRent) {
           advertisement.image = [];
