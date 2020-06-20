@@ -27,6 +27,7 @@ import { CarModelComponent } from './admin-home-page/codebook/car-model/car-mode
 import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
 import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
 import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
+import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
 
 /**
  * Custom angular notifier options
@@ -88,7 +89,8 @@ const customNotifierOptions: NotifierOptions = {
     CarModelComponent,
     CarClassComponent,
     FuelTypeComponent,
-    TransmissionTypeComponent
+    TransmissionTypeComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
