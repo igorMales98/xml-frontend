@@ -18,39 +18,39 @@ export class CreateAdvertisementService {
   }
 
   getAllCarBrands() {
-    return this.httpClient.get<CarBrand[]>('http://localhost:8082/api/car-brand/getAll');
+    return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brands');
   }
 
   getCarBrandModels(id: string) {
-    return this.httpClient.get<CarModel[]>('http://localhost:8082/api/car-model/getBrandModels/' + id);
+    return this.httpClient.get<CarModel[]>('https://localhost:8443/codebook-service/api/car-models/' + id);
   }
 
   getAllFuelTypes() {
-    return this.httpClient.get<FuelType[]>('http://localhost:8082/api/fuel-type/getAll');
+    return this.httpClient.get<FuelType[]>('https://localhost:8443/codebook-service/api/fuel-types');
   }
 
   getAllTransmissionTypes() {
-    return this.httpClient.get<TransmissionType[]>('http://localhost:8082/api/transmission-type/getAll');
+    return this.httpClient.get<TransmissionType[]>('https://localhost:8443/codebook-service/api/transmission-types');
   }
 
   getAllCarClasses() {
-    return this.httpClient.get<CarClass[]>('http://localhost:8082/api/car-class/getAll');
+    return this.httpClient.get<CarClass[]>('https://localhost:8443/codebook-service/api/car-classes');
   }
 
   getAllPricelists() {
-    return this.httpClient.get<Pricelist[]>('http://localhost:8082/api/pricelist/getAll');
+    return this.httpClient.get<Pricelist[]>('https://localhost:8443/codebook-service/api/pricelists');
   }
 
   createAdvertisement(selectedFiles, createAdvertisement: CreateAdvertisements) {
 
-    return this.httpClient.post('http://localhost:8082/api/advertisement/create', createAdvertisement).subscribe(data => {
+    return this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisements', createAdvertisement).subscribe(data => {
       const uploadData = new FormData();
 
       for (let blob of selectedFiles) {
         uploadData.append('myFile', blob, blob.name);
       }
 
-      this.httpClient.post('http://localhost:8082/api/advertisement/uploadPhotos/' + data, uploadData).subscribe();
+      this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisement/uploadPhotos/' + data, uploadData).subscribe();
 
     });
   }

@@ -14,12 +14,12 @@ import {AdminHomePageComponent} from './admin-home-page/admin-home-page.componen
 import {AgentHomePageComponent} from './agent-home-page/agent-home-page.component';
 import {CustomerHomePageComponent} from './customer-home-page/customer-home-page.component';
 import {TokenInterceptor} from './security/tokenInterceptor';
-import { MessagesComponent } from './messages/messages.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { AgentAdvertisementsComponent } from './agent-home-page/agent-advertisements/agent-advertisements.component';
-import { CustomerAdvertisementsComponent } from './customer-home-page/customer-advertisements/customer-advertisements.component';
-import { CreateAdvertisementComponent } from './create-advertisement/create-advertisement.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MessagesComponent} from './messages/messages.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
+import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
+import {CreateAdvertisementComponent} from './create-advertisement/create-advertisement.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
@@ -28,6 +28,11 @@ import { CarClassComponent } from './admin-home-page/codebook/car-class/car-clas
 import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
 import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
 import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
+import {DatePipe} from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
+import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
+import { AgentRegisterComponent } from './agent-register/agent-register.component';
 
 /**
  * Custom angular notifier options
@@ -91,6 +96,10 @@ const customNotifierOptions: NotifierOptions = {
     FuelTypeComponent,
     TransmissionTypeComponent,
     CommentComponent
+    CreateAdvertisementComponent,
+    RegistrationRequestsComponent,
+    BlockActivateRemoveCustomersComponent,
+    AgentRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -104,10 +113,12 @@ const customNotifierOptions: NotifierOptions = {
     FontAwesomeModule,
     BrowserAnimationsModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

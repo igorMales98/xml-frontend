@@ -15,6 +15,9 @@ import { CarModelComponent } from './admin-home-page/codebook/car-model/car-mode
 import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
 import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
 import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
+import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
+import { AgentRegisterComponent } from './agent-register/agent-register.component';
 
 
 const routes: Routes = [
@@ -32,6 +35,10 @@ const routes: Routes = [
   {path: 'carClass', component: CarClassComponent},
   {path: 'fuelType', component: FuelTypeComponent},
   {path: 'transmissionType', component: TransmissionTypeComponent}
+  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
+  {path: 'registrationRequests', component: RegistrationRequestsComponent},
+  {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
+  {path: 'agentRegister', component: AgentRegisterComponent}
 ];
 
 @NgModule({

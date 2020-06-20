@@ -147,7 +147,19 @@
         <textarea type="text" id="form8" disabled autosize
                   class="md-textarea form-control"> {{comment.comment}}</textarea>
       </div>
+      <div *ngIf="comment.reply!=null" class="marginsReply">
+        <div class="chip">
+          <fa-icon [icon]="faUser" class="mr-1"></fa-icon>
+          Agent
+        </div>
+        <div class="md-form">
+          <textarea type="text" id="form9" disabled autosize
+                    class="md-textarea form-control">{{comment.reply}}</textarea>
+        </div>
+      </div>
     </div>
+
+
   </ng-template>
 </div>
 <div class="container" [hidden]="!loadContent" id="animationDiv" #ads>

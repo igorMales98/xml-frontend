@@ -2,22 +2,32 @@
   display: inline-block;
   position: relative;
 }
+
 .infoButton {
   position: absolute;
   bottom: 10%;
-  right: 2%;
-  width: 13%;
-  height: 20%;
+  right: -1%;
+  width: 10%;
+  height: 17%;
 }
+
 .commentButton {
   position: absolute;
   bottom: 10%;
-  right: 17%;
-  width: 13%;
-  height: 20%;
+  right: 10%;
+  width: 10%;
+  height: 17%;
 }
 
-#images, #imagesAd {
+.cartButton {
+  position: absolute;
+  bottom: 10%;
+  right: 21%;
+  width: 10%;
+  height: 17%;
+}
+
+#images, #imagesAd, #images2, #images3 {
   padding-top: 30px;
 }
 
@@ -36,14 +46,17 @@
   display: inline-block;
   margin: 2%;
 }
+
 .marginsReply {
-  margin-left: 2%;
+  margin-left: 4%;
 }
-textarea[type="text"]:disabled{
+
+textarea[type="text"]:disabled {
   color: black;
-  background-color:#d2eff3;
+  background-color: #d2eff3;
   resize: none;
 }
+
 .star {
   position: relative;
   display: inline-block;
@@ -69,7 +82,8 @@ textarea[type="text"]:disabled{
 .modal-footer {
   border-top: 0 none;
 }
+
 #currentRateCSS {
-  margin-left:10px;
+  margin-left: 10px;
   font-size: 20px;
 }

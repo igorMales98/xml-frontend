@@ -1,11 +1,14 @@
 <notifier-container></notifier-container>
 
-<div id="adForm">
+<div *ngIf="user.advertisementsPosted === 3" class="text-center">
+  <h1>You cannot post any more advertisements</h1>
+</div>
+<div id="adForm" *ngIf="user.advertisementsPosted !== 3">
   <h1 class="card-title text-center"> Create an advertisement </h1>
   <div class="col-lg">
     <div class="card">
       <div class="card-body">
-        <form>
+        <form [formGroup]="advertisementForm">
           <div class="align-items-center">
             <div class="form-group col-lg">
 
@@ -151,7 +154,7 @@
               </div>
 
               <div id="divDiscounts" class="border-bottom border-success"
-                   *ngIf="this.userService.getLoggedInUser().role === 'AGENT'">
+                   *ngIf="role == 'ROLE_AGENT'">
                 <label class="col-form-label-lg">Define discounts: </label>
                 <button (click)="addDiscountRow()" [hidden]="numberOfDiscounts === 3" style="margin-left: 20px;"
                         class="btn-outline-primary">

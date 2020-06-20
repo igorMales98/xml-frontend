@@ -11,5 +11,6 @@ export class Advertisement {
   pricelist: Pricelist;
 
   // helper for image
+  img: any[] = [];
   image: any[] = [];
 }

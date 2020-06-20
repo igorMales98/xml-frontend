@@ -42,17 +42,14 @@ export class AdminHomePageComponent implements OnInit {
     setTimeout(() => {
       this.adminHomePageService.getAllAdvertisements().subscribe(data => {
         this.allAdvertisements = data;
-
         for (const advertisement of this.allAdvertisements) {
           advertisement.image = [];
-          this.adminHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-            console.log(img as string);
-            const images = img.toString();
-            this.allImagesForAd = images.split(',');
-            for (let i = 0; i < this.allImagesForAd.length; i++) {
-              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-            }
-          });
+          const images = advertisement.img.toString();
+          this.allImagesForAd = images.split(',');
+          for (let i = 0; i < this.allImagesForAd.length; i++) {
+            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+          }
+
         }
         this.loadContent = false;
       });

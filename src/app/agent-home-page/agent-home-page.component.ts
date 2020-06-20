@@ -20,6 +20,7 @@ export class AgentHomePageComponent implements OnInit {
   faComment = faCommentAlt;
   faUser = faUser;
 
+  clickedComment: number;
   allAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
   moreInfoAdvertisement: Advertisement;
@@ -54,14 +55,12 @@ export class AgentHomePageComponent implements OnInit {
 
         for (const advertisement of this.allAdvertisements) {
           advertisement.image = [];
-          this.agentHomePageService.getAdvertisementPhotos(advertisement.id).subscribe(img => {
-            console.log(img as string);
-            const images = img.toString();
-            this.allImagesForAd = images.split(',');
-            for (let i = 0; i < this.allImagesForAd.length; i++) {
-              advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
-            }
-          });
+          const images = advertisement.img.toString();
+          this.allImagesForAd = images.split(',');
+          for (let i = 0; i < this.allImagesForAd.length; i++) {
+            advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
+          }
+
         }
         this.loadContent = false;
       });
@@ -107,6 +106,7 @@ export class AgentHomePageComponent implements OnInit {
     });
     this.moreInfoAdvertisement = advertisement;
   }
+
 
   public showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);

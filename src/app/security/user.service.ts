@@ -24,7 +24,7 @@ export class UserService {
   }
 
   login(loginRequest: LoginRequest) {
-    return this.httpClient.post('http://localhost:8083/api/auth/login', loginRequest).pipe(map((response: UserTokenState) => {
+    return this.httpClient.post('https://localhost:8443/authentication-service/api/auth/login', loginRequest).pipe(map((response: UserTokenState) => {
       this.accessToken = response.accessToken;
       this.role = response.role;
       localStorage.setItem('user', JSON.stringify(response));
@@ -34,7 +34,7 @@ export class UserService {
   }
 
   getMyInfo() {
-    return this.httpClient.get('https://localhost:8443/authentication-service/api/whoami').subscribe(data => {
+    return this.httpClient.get('https://localhost:8443/authentication-service/api/users/whoami').subscribe(data => {
       this.currentUser = data;
     });
   }

@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body style="height: 100%;">
 <notifier-container></notifier-container>
-<div class="animated slideInLeft">
+<div id="divv" class="animated slideInLeft">
   <div class="container register-form pt-4">
     <div class="form mt-5">
-      <div class="note col-lg-6 offset-3 text-center">
-        <h2>Login here</h2>
-      </div>
-
       <div class="col-lg-6 offset-3">
         <div class="card">
           <div class="card-body">
+            <div class="note col-lg-6 offset-3 text-center">
+              <h2>Login here</h2>
+            </div>
             <form [formGroup]="userData" id="loginForm" (ngSubmit)="login()">
 
               <div class="form-group">
@@ -51,6 +43,3 @@
     </div>
   </div>
 </div>
-
-</body>
-</html>

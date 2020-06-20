@@ -1,4 +1,54 @@
 <div class="container register-form pt-4">
+
+  <button class="navbar-toggler" (click)="showSearchBar()" style="padding-left: 0;">Search
+    <fa-icon [icon]="faArrow" class="mr-1"></fa-icon>
+  </button>
+
+  <div [@slideInOut]="animationState">
+    <div id="basicSearch" style="display: flex;">
+      <div class="row">
+        <div class="form-group col-lg-4">
+          <label for="inputDateFrom">From :</label>
+          <input type="datetime-local" id="inputDateFrom"
+                 class="form-control" [required]="true" [(ngModel)]="startDate" [min]="minDateStart"
+                 onkeydown="return false"
+                 [ngClass]="{'is-invalid': !startDate, 'is-valid': startDate}" (ngModelChange)="startDateChange()"/>
+
+        </div>
+
+        <div class="form-group col-lg-4">
+          <label for="inputDateTo">To :</label>
+          <input type="datetime-local" id="inputDateTo"
+                 class="form-control" [required]="true" [(ngModel)]="endDate" (ngModelChange)="endDateChange()"
+                 onkeydown="return false" [min]="minDateEnd"
+                 [ngClass]="{'is-invalid': !endDate, 'is-valid': endDate}"/>
+        </div>
+
+
+        <div class="form-group col-lg-4">
+          <label for="inputCity">Place : </label>
+          <input type="text" id="inputCity" class="form-control" [required]="true" [(ngModel)]="pickupPlace"
+                 [ngClass]="{'is-invalid': !pickupPlace.trim(), 'is-valid': pickupPlace.trim()}"/>
+        </div>
+
+      </div>
+    </div>
+    <div class="text-center">
+      <button (click)="search()" class="btn btn-success" [hidden]="!startDate || !endDate || !pickupPlace.trim()">
+        Search
+      </button>
+      <button (click)="reset()" class="btn btn-primary" [hidden]="!searched" style="margin-left: 20px;">
+        Reset
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <h1 *ngIf="allAdvertisements.length === 0 && searched">Unfortunately no advertisements were found. :( </h1>
+</div>
+
+<div class="container register-form pt-4">
   <div id="images" class="row img_wrap">
     <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
          class="col-md-3">
@@ -37,7 +87,7 @@
       </div>
     </div>
   </div>
-  <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest()">
+  <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest(myRents)">
     <button class="btn btn-success">
       Rent cars
     </button>
@@ -157,6 +207,87 @@
         <textarea type="text" id="form8" disabled autosize
                   class="md-textarea form-control"> {{comment.comment}}</textarea>
       </div>
+      <div *ngIf="comment.reply!=null" class="marginsReply">
+        <div class="chip">
+          <fa-icon [icon]="faUser" class="mr-1"></fa-icon>
+          Agent
+        </div>
+        <div class="md-form">
+          <textarea type="text" id="form9" disabled autosize
+                    class="md-textarea form-control">{{comment.reply}}</textarea>
+        </div>
+      </div>
+    </div>
+
+
+  </ng-template>
+  
+</div>
+
+<div>
+  <ng-template #myRents let-modal class="myCustomModalClass modal-lg">
+
+    <div class="container register-form pt-4">
+      <div id="images2" class="img_wrap">
+        <div *ngFor="let advertisement of cart" style="width: 310px; height: 310px;"
+             class="col-md-3">
+          <table class="img_wrp">
+            <tr>
+              <td>
+                <img [src]="advertisement.image[0]" height="250" width="300">
+              </td>
+              <td style="display: unset;">
+                <div class="text-center" style="font-weight: 500;">
+                  <p>Advertiser : {{advertisement.advertiser.firstName + ' ' + advertisement.advertiser.lastName}}</p>
+                </div>
+                <div class="text-center" style="font-size: large;font-weight: 500;">
+                  <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                </div>
+                <div class="text-center" style="font-size: large;font-weight: 500;">
+                  <p>Price : {{advertisement.pricelist.pricePerDay + ' $ per day' }}</p>
+                </div>
+                <table>
+                  <td>
+                    <label id="currentRateCSS">{{advertisement.car.averageRating}}&nbsp;</label>
+                  </td>
+                  <td>
+                    <ngb-rating id="ratingNum2" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                    </span>
+                      </ng-template>
+                    </ngb-rating>
+                  </td>
+                </table>
+                <button class="btn-outline-info btn-sm-sm commentButton"
+                        (click)="openComments(myModalComments, advertisement)">
+                  <fa-icon [icon]="faComment"></fa-icon>
+                </button>
+                <button class="btn-outline-info btn-sm-sm infoButton"
+                        (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                  <fa-icon [icon]="faInfo"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+      <label for="isItBundle" class="col-form-label-lg"> For cars from the same user, do you want to create a bundle
+        request? </label>
+      <mat-checkbox color="primary" id="isItBundle" [checked]="bundle" [(ngModel)]="bundle"
+                    (ngModelChange)="changeBundle()">
+        Bundle ?
+      </mat-checkbox>
+    </div>
+
+    <div class="text-center" style="margin-bottom: 20px;">
+      <button (click)="confirmRent()" class="btn btn-success">
+        Confirm
+      </button>
     </div>
   </ng-template>
 </div>

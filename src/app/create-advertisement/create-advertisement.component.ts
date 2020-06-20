@@ -15,6 +15,7 @@ import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
 import {CreateAdvertisements} from '../model/createAdvertisements';
 import {UserService} from '../security/user.service';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-agent-create-advertisement',
@@ -84,6 +85,9 @@ export class CreateAdvertisementComponent implements OnInit {
   faMinus = faMinus;
 
   notifier: NotifierService;
+  role;
+
+  user: User;
 
   constructor(private router: Router, private createAdvertisementService: CreateAdvertisementService,
               private modalService: NgbModal, private formBuilder: FormBuilder, private datePipe: DatePipe,
@@ -103,36 +107,43 @@ export class CreateAdvertisementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.advertisementForm = this.formBuilder.group({
-      mileage: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(1),
-        Validators.maxLength(10), Validators.min(0)]],
-      childSeats: ['', [Validators.required, Validators.pattern(/^[0-5]*$/), Validators.max(5), Validators.min(0)]],
-      allowedDistance: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(1)]]
-    });
-    this.discountForm = this.formBuilder.group({
-      days0: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
-      days1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
-      days2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
-      discount0: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
-      discount1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
-      discount2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
-    });
+    this.userService.getMyInfo();
+    this.user = this.userService.currentUser;
 
-    this.createAdvertisementService.getAllCarBrands().subscribe(data => {
-      this.allCarBrands = data;
-    });
-    this.createAdvertisementService.getAllFuelTypes().subscribe(data => {
-      this.allFuelTypes = data;
-    });
-    this.createAdvertisementService.getAllTransmissionTypes().subscribe(data => {
-      this.allTransmissionTypes = data;
-    });
-    this.createAdvertisementService.getAllCarClasses().subscribe(data => {
-      this.allCarClasses = data;
-    });
-    this.createAdvertisementService.getAllPricelists().subscribe(data => {
-      this.allPricelists = data;
-    });*/
+    if (this.user.advertisementsPosted !== 3) {
+      this.role = localStorage.getItem('role');
+      this.advertisementForm = this.formBuilder.group({
+        mileage: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(1),
+          Validators.maxLength(10), Validators.min(0)]],
+        childSeats: ['', [Validators.required, Validators.pattern(/^[0-5]*$/), Validators.max(5), Validators.min(0)]],
+        allowedDistance: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(1)]]
+      });
+      this.discountForm = this.formBuilder.group({
+        days0: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
+        days1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
+        days2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(90), Validators.min(1)]],
+        discount0: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
+        discount1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
+        discount2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.max(99), Validators.min(1)]],
+      });
+
+      this.createAdvertisementService.getAllCarBrands().subscribe(data => {
+        this.allCarBrands = data;
+      });
+      this.createAdvertisementService.getAllFuelTypes().subscribe(data => {
+        this.allFuelTypes = data;
+      });
+      this.createAdvertisementService.getAllTransmissionTypes().subscribe(data => {
+        this.allTransmissionTypes = data;
+      });
+      this.createAdvertisementService.getAllCarClasses().subscribe(data => {
+        this.allCarClasses = data;
+      });
+      this.createAdvertisementService.getAllPricelists().subscribe(data => {
+        this.allPricelists = data;
+      });
+    }
+
   }
 
   get adFb() {
@@ -315,12 +326,16 @@ export class CreateAdvertisementComponent implements OnInit {
     });
     console.log(convMap);
     const createAdvertisement = new CreateAdvertisements(this.finalCarBrand, this.finalCarModel, this.finalCarClass, this.finalFuelType,
-      this.finalTransmissionType, this.finalPricelist, this.d1,
-      this.d2, this.advertisementForm.value.mileage,
-      this.advertisementForm.value.childSeats, this.hasACDW, this.advertisementForm.value.allowedDistance, convMap);
+      this.finalTransmissionType, this.finalPricelist, this.d1, this.d2, this.advertisementForm.value.mileage,
+      this.advertisementForm.value.childSeats, this.hasACDW, this.advertisementForm.value.allowedDistance, convMap, this.user.id,
+      this.role);
     this.createAdvertisementService.createAdvertisement(this.selectedFiles, createAdvertisement);
     this.showNotification('success', 'Successfully created an advertisement.');
-    // this.router.navigate(['/homePage']);
+    if (this.role === 'ROLE_AGENT') {
+      this.router.navigate(['/agentHomePage']);
+    } else if (this.role === 'ROLE_CUSTOMER') {
+      this.router.navigate(['/customerHomePage']);
+    }
   }
 
   changeCDW() {

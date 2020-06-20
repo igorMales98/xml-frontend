@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
 <div class="animated slideInLeft">
   <div class="container register-form">
     <div class="form">
-      <div class="note mt-5">
-        <h2>Register here</h2>
-      </div>
-
+      <div class="card-body">
+        
       <div class="card ">
-        <div class="card-body">
+          <div class="note col-lg-6 offset-3 text-center">
+            <h2>Register here</h2>
+          </div>
+
           <form (ngSubmit)="register()" [formGroup]="userData">
 
             <div class="row">
-              <div class="form-group col-lg-6">
+              <div class="form-group col-lg-6 w-75">
                 <label for="inputUsername">Username</label>
                 <input
                   [ngClass]="{'is-invalid': f.username.touched && f.username.errors, 'is-valid': f.username.touched && f.username.valid}"
@@ -164,6 +158,5 @@
   </div>
 
 </div>
-</body>
-</html>
+
 <router-outlet></router-outlet>
