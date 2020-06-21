@@ -96,7 +96,7 @@ const customNotifierOptions: NotifierOptions = {
     CarClassComponent,
     FuelTypeComponent,
     TransmissionTypeComponent,
-    CommentComponent
+    CommentComponent,
     CreateAdvertisementComponent,
     RegistrationRequestsComponent,
     BlockActivateRemoveCustomersComponent,
