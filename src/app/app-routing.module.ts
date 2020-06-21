@@ -9,11 +9,10 @@ import {RegistrationComponent} from './registration/registration.component';
 import {CreateAdvertisementComponent} from './create-advertisement/create-advertisement.component';
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
-import {AppComponent} from './app.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
-
+import { RentRequestsComponent} from './rent-requests/rent-requests.component'
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -27,7 +26,9 @@ const routes: Routes = [
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
   {path: 'registrationRequests', component: RegistrationRequestsComponent},
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
-  {path: 'agentRegister', component: AgentRegisterComponent}
+  {path: 'agentRegister', component: AgentRegisterComponent},
+  {path: 'rentRequests', component: RentRequestsComponent}
+
 ];
 
 @NgModule({
