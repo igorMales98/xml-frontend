@@ -1,0 +1,24 @@
+#div1, #div2, #div3, #div4 {
+  padding-top: 20px;
+}
+
+#carBrandForm {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.border-bottom {
+  border-width: 3px !important;
+}
+
+#carBrandName {
+  width: 300px;
+  float: right;
+  margin-right: 30%;
+}
+
+#createCarBrand {
+  width: 200px;
+  float: right;
+  margin-right: 35%;
+}

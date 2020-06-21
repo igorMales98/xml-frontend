@@ -27,6 +27,36 @@
     <div id="navbarNavDropdown" class="navbar-collapse collapse navbar-responsive-collapse ">
 
       <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/carBrand">
+            <fa-icon class="mr-1"></fa-icon>
+            Car Brand</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/carModel">
+            <fa-icon class="mr-1"></fa-icon>
+            Car Model</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/carClass">
+            <fa-icon class="mr-1"></fa-icon>
+            Car Class</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/fuelType">
+            <fa-icon class="mr-1"></fa-icon>
+            Fuel Type</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/transmissionType">
+            <fa-icon class="mr-1"></fa-icon>
+            Transmission Type</a>
+        </li>
+
         <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
           <a class="nav-link" routerLink="/createAdvertisement">
             <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
@@ -56,6 +86,12 @@
           <a class="nav-link" routerLink="/messages">
             <fa-icon [icon]="faMessages" class="mr-1"></fa-icon>
             Messages</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+          <a class="nav-link" routerLink="/rentRequests">
+            <fa-icon [icon]="faCar" class="mr-1"></fa-icon>
+            Rent Requests</a>
         </li>
         
         <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">

@@ -22,12 +22,19 @@ import {CreateAdvertisementComponent} from './create-advertisement/create-advert
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
+import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
+import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
+import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
+import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
+import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
 import {DatePipe} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
+import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 
 /**
  * Custom angular notifier options
@@ -85,10 +92,18 @@ const customNotifierOptions: NotifierOptions = {
     AgentAdvertisementsComponent,
     CustomerAdvertisementsComponent,
     CreateAdvertisementComponent,
+    CarBrandComponent,
+    CarModelComponent,
+    CarClassComponent,
+    FuelTypeComponent,
+    TransmissionTypeComponent,
+    CommentComponent,
+    CreateAdvertisementComponent,
     RegistrationRequestsComponent,
     BlockActivateRemoveCustomersComponent,
     CustomerRentReguestsComponent,
-    AgentRegisterComponent
+    AgentRegisterComponent,
+    RentRequestsComponent
   ],
   imports: [
     BrowserModule,

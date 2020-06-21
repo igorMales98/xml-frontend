@@ -1,0 +1,120 @@
+<notifier-container></notifier-container>
+
+<div id="fuelTypeForm">
+  <h1 class="card-title text-center"> Create a transmission type </h1>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="align-items-center">
+
+            <div class="form-group col-lg">
+              <form [formGroup]="transmissionTypeForm">
+                <div id="div1" class="border-bottom"
+                     [ngClass]="{'border-success': transmissionTypeFb.transmissionTypeName.valid, 'border-danger': transmissionTypeFb.transmissionTypeName.invalid}">
+                  <label for="transmissionTypeName" class="col-form-label-lg">Transmission type name : </label>
+                  <input class="form-control-lg" id="transmissionTypeName" formControlName="transmissionTypeName"
+                         placeholder="Enter a transmission type name">
+                  <span style="color: red; float: right"
+                        *ngIf="transmissionTypeFb.transmissionTypeName.invalid && transmissionTypeFb.transmissionTypeName.touched">Name must have minimum one and maximum 15 letters.</span>
+                </div>
+
+                <div class="text-center">
+                  <div id="div4">
+                    <button id="addToTransmissionType" class="btn btn-success text-center" [hidden]="transmissionTypeForm.invalid"
+                            (click)=addNameToTransmissionType()> Add to transmission type list
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="divForTable">
+    <h1 class="card-title text-center"> Existing transmission types </h1>
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <div class="align-items-center">
+              <div>
+                <table id="table" class="table table-bordered table-striped">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Transmission type name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let transmissionType of allTransmissionTypes">
+                    <td>{{transmissionType.name}}</td>
+                    <td>
+                      <button class="btn btn-primary" (click)="openModal(editTransmissionTypeModal, transmissionType)">Edit</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary"
+                              (click)="openConfirmDeleteModal(confirmDeleteTransmissionTypeModal, transmissionType.id)">Delete
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <ng-template #editTransmissionTypeModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Edit Transmission Type</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="editTransmissionTypeForm" (ngSubmit)="saveChanges()">
+
+          <div class="form-group row">
+            <label for="transmissionTypeNameEdit" class="col-sm-4 col-form-label">Transmission Type name:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="transmissionTypeNameEdit" formControlName="transmissionTypeName">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+
+    <ng-template #confirmDeleteTransmissionTypeModal let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Delete Transmission Type Name?</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="deleteTransmissionType()">Yes</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">No</button>
+
+      </div>
+    </ng-template>
+
+
+  </div>
+</div>

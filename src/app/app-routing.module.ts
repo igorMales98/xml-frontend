@@ -10,11 +10,16 @@ import {CreateAdvertisementComponent} from './create-advertisement/create-advert
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
 import {AppComponent} from './app.component';
+import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
+import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
+import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
+import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
+import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
-
+import { RentRequestsComponent} from './rent-requests/rent-requests.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -26,10 +31,18 @@ const routes: Routes = [
   {path: 'createAdvertisement', component: CreateAdvertisementComponent},
   {path: 'agentAdvertisements', component: AgentAdvertisementsComponent},
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
+  {path: 'carBrand', component: CarBrandComponent},
+  {path: 'carModel', component: CarModelComponent},
+  {path: 'carClass', component: CarClassComponent},
+  {path: 'fuelType', component: FuelTypeComponent},
+  {path: 'transmissionType', component: TransmissionTypeComponent},
+  {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
   {path: 'registrationRequests', component: RegistrationRequestsComponent},
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
   {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
-  {path: 'agentRegister', component: AgentRegisterComponent}
+  {path: 'agentRegister', component: AgentRegisterComponent},
+  {path: 'rentRequests', component: RentRequestsComponent}
+
 ];
 
 @NgModule({
