@@ -17,6 +17,7 @@ import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-typ
 import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
+import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
 import { RentRequestsComponent} from './rent-requests/rent-requests.component';
 
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
   {path: 'registrationRequests', component: RegistrationRequestsComponent},
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
+  {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
   {path: 'agentRegister', component: AgentRegisterComponent},
   {path: 'rentRequests', component: RentRequestsComponent}
 

@@ -1,15 +1,17 @@
 import { User } from './user';
+import { Advertisement } from './advertisement';
 
 export class Comment {
     commenter: User;
     comment: string;
     reply: string;
-    id: number;
+    id: string;
+    approved: boolean;
+    advertisementDto: Advertisement;
 
-    constructor(commenter: User, comment: string, reply: string, id: number) {
+    constructor(commenter: User, comment: string, advertisementDto: Advertisement) {
       this.commenter = commenter;
       this.comment = comment;
-      this.reply = reply;
-      this.id = id;
+      this.advertisementDto = advertisementDto;
     }
   }

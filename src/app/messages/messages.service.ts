@@ -17,14 +17,14 @@ export class MessagesService {
   }
 
   getPeople(id: string) {
-    return this.httpClient.get<User[]>('https://localhost:8443/message-service/api/messages/getPeople/'+id);
+    return this.httpClient.get<User[]>('https://localhost:8443/message-service/api/messages/people/'+id);
   }
 
   getMessages(agentId: string, customerId: string) {
-    return this.httpClient.get<Message[]>('https://localhost:8443/message-service/api/messages/getMessages/'+agentId +'/'+customerId);
+    return this.httpClient.get<Message[]>('https://localhost:8443/message-service/api/messages/'+agentId +'/'+customerId);
   }
 
   sendMessage(message: Message) {
-    return this.httpClient.post('https://localhost:8443/message-service/api/messages/sendMessage', message);
+    return this.httpClient.post('https://localhost:8443/message-service/api/messages', message);
   }
 }

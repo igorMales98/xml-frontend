@@ -37,7 +37,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
   private readonly imageType: string = 'data:image/PNG;base64,';
 
   closeResult: string;
-  clickedComment: number;
+  clickedComment: string;
 
   customerData: FormGroup;
   startDate: string;
@@ -166,7 +166,7 @@ export class CustomerAdvertisementsComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  openModal(content: TemplateRef<any>, commentId: number) {
+  openModal(content: TemplateRef<any>, commentId: string) {
     this.clickedComment = commentId;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
