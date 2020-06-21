@@ -21,7 +21,7 @@ export class CustomerAdvertisementsService {
   }
 
   sendReply(comment: Comment) {
-    return this.httpClient.post('https://localhost:8443/advertisement-service/api/comment/reply', comment);
+    return this.httpClient.put('https://localhost:8443/advertisement-service/api/comment', comment);
   }
 
   getBasicSearchForMyAdvertisements(dateFrom: string, dateTo: string, id: string) {

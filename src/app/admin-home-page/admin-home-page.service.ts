@@ -20,6 +20,6 @@ export class AdminHomePageService {
   }
 
   sendReply(comment: Comment) {
-    return this.httpClient.post('https://localhost:8443/advertisement-service/api/comments/reply', comment);
+    return this.httpClient.put('https://localhost:8443/advertisement-service/api/comments', comment);
   }
 }

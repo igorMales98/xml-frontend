@@ -1,13 +1,13 @@
 <div class="container register-form pt-4">
     <div class="text-center" *ngIf="this.allRentRequests.length === 0">
-      <h1> You have no advertisements posted</h1>
+      <h1> You have no rent requests</h1>
     </div>
   </div>
   
   <div>
     <div class="container register-form pt-4">
         <div *ngFor="let rentRequest of allRentRequests">
-           From: {{niceDate(rentRequest.reservedFrom)}} To: {{niceDate(rentRequest.reservedTo)}}
+           From: {{niceDate(rentRequest.reservedFrom)}} To: {{niceDate(rentRequest.reservedTo)}} Status: {{rentRequest.rentRequestStatus}}
       <div id="images" class="img_wrap">
         <div *ngFor="let advertisement of rentRequest.advertisementsForRent" style="width: 310px; height: 310px;"
              class="col-md-3">  
@@ -42,8 +42,15 @@
                         (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
                   <fa-icon [icon]="faInfo"></fa-icon>
                 </button>
-            </td>
-            </tr> 
+                <div *ngIf="btnPostComment[advertisement.id]===true">
+                    <div class="btn-outline-info btn-sm-sm postComment">
+                    <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
+                            (click)="openModal(content,advertisement)">Give feedback
+                    </button>
+                    </div>
+                </div>
+             </td>
+            </tr>
           </table>
         </div>
         </div>
@@ -174,11 +181,33 @@
                       class="md-textarea form-control">{{comment.reply}}</textarea>
           </div>
         </div>
-      </div>
-  
+        </div>
   
     </ng-template>
-    
+  </div>
+  <div>
+    <ng-template #content let-modal>
+
+        <div class="modal-body">
+          <form>
+            <textarea id="postComment" style="resize:none" placeholder="Leave your comment here..."
+                      class="form-control"></textarea>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <label id="currentRateCSS">{{currentRate}}&nbsp;</label>
+            <ngb-rating id="ratingNum" [(rate)]="currentRate" [max]="5" (click)="changeRate()">
+                <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+                </ng-template>
+            </ngb-rating>
+          <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
+                  (click)="postComment(); modal.dismiss('Send click')">Send
+          </button>
+        </div>
+      </ng-template>
   </div>
   
   

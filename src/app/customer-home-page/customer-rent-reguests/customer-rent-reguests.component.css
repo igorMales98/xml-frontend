@@ -4,25 +4,23 @@
   }
   .infoButton {
     position: absolute;
-    bottom: 10%;
-    right: -1%;
+    bottom: 20%;
+    right: 5%;
     width: 10%;
     height: 17%;
   }
   .commentButton {
     position: absolute;
-    bottom: 10%;
-    right: 10%;
+    bottom: 20%;
+    right: 16%;
     width: 10%;
     height: 17%;
   }
   
-  .cartButton {
+  .postComment {
     position: absolute;
-    bottom: 10%;
-    right: 21%;
-    width: 10%;
-    height: 17%;
+    bottom: 0%;
+    right: 2%;
   }
   
   #images, #imagesAd, #images2, #images3 {

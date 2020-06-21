@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, ɵclearResolutionOfComponentResourcesQueue} from '@angular/core';
 import {faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
@@ -31,7 +31,12 @@ export class CustomerRentReguestsComponent implements OnInit {
   private readonly imageType: string = 'data:image/PNG;base64,';
 
   closeResult: string;
-  clickedComment: number;
+  clickedComment: string;
+  clickedAdvertisement: Advertisement;
+  btnPostComment: Set<boolean> = new Set();
+  newComment: Comment;
+  currentRate: number;
+  currentRateChanged: boolean;
 
   customerData: FormGroup;
   startDate: string;
@@ -66,8 +71,22 @@ export class CustomerRentReguestsComponent implements OnInit {
           for (let i = 0; i < this.allImagesForAd.length; i++) {
             advertisement.image.push(this.domSanitizer.bypassSecurityTrustUrl(this.imageType + this.allImagesForAd[i]));
           }
+          let dateReserved = new Date(rentRequest.reservedTo[0]+"-"+rentRequest.reservedTo[1]+"-"+rentRequest.reservedTo[2]+" "+rentRequest.reservedTo[3]+":"+rentRequest.reservedTo[4]);
+          let dateToday = new Date();
+          let exists = false;
+        //  this.customerRentRequestsService.sentFeedback(this.user.id,advertisement.id).subscribe(data => {
+        //      exists = data;
+        //  });
+          if (rentRequest.rentRequestStatus === "PAID" && (dateReserved.getTime()<dateToday.getTime()) && !exists) {
+            console.log(rentRequest.rentRequestStatus+" "+rentRequest.id+" "+advertisement.car.carModel.name +" "+ !exists);
+            this.btnPostComment[advertisement.id] = true;
+          } else {
+            if (typeof this.btnPostComment[advertisement.id] === "undefined")
+              this.btnPostComment[advertisement.id] = false;
+          }
         }
       }
+      console.log(this.btnPostComment);
     });
 
   }
@@ -116,13 +135,44 @@ export class CustomerRentReguestsComponent implements OnInit {
     this.moreInfoAdvertisement = advertisement;
   }
 
-  openModal(content: TemplateRef<any>, commentId: number) {
-    this.clickedComment = commentId;
+  openModal(content: TemplateRef<any>, advertisement: Advertisement) {
+    this.clickedAdvertisement = advertisement;
+    this.currentRate = advertisement.car.averageRating;
+    this.currentRateChanged = false;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  postComment() {
+    // tslint:disable-next-line:prefer-for-of
+    let commentText = (document.getElementById('postComment') as HTMLInputElement).value;
+    if (commentText=="") {
+      alert('You can\'t leave an empty comment.');
+      return;
+    }
+    if (!this.currentRateChanged) {
+      alert('Rating is required.');
+      return;
+    }
+    this.newComment = new Comment(this.user,commentText,this.clickedAdvertisement);
+    console.log("ad: "+ this.newComment.advertisementDto);
+    this.customerRentRequestsService.postComment(this.newComment).subscribe();
+    this.clickedAdvertisement.car.averageRating = 
+    Math.round((this.clickedAdvertisement.car.averageRating*this.clickedAdvertisement.car.timesRated+this.currentRate)
+    /(this.clickedAdvertisement.car.timesRated+1)*100)/100;
+    this.clickedAdvertisement.car.timesRated++;
+    console.log(this.clickedAdvertisement.car.averageRating+" "+this.clickedAdvertisement.car.timesRated);
+    if (this.currentRateChanged) {
+      this.customerRentRequestsService.rate(this.clickedAdvertisement.car).subscribe(
+        () => { 
+          this.ngOnInit();
+       }
+     );
+    }
+    this.currentRateChanged = false;
   }
 
   public showNotification(type: string, message: string): void {
@@ -140,6 +190,10 @@ export class CustomerRentReguestsComponent implements OnInit {
     var splitDate = date.toString().split(',');
     var niceDate = splitDate[2]+"."+splitDate[1]+"."+splitDate[0];
     return niceDate;
+  }
+
+  changeRate() {
+    this.currentRateChanged = true;
   }
 
 }
