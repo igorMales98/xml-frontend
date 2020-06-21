@@ -18,7 +18,7 @@ import { TransmissionTypeComponent } from './admin-home-page/codebook/transmissi
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
-
+import { RentRequestsComponent} from './rent-requests/rent-requests.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -34,11 +34,13 @@ const routes: Routes = [
   {path: 'carModel', component: CarModelComponent},
   {path: 'carClass', component: CarClassComponent},
   {path: 'fuelType', component: FuelTypeComponent},
-  {path: 'transmissionType', component: TransmissionTypeComponent}
+  {path: 'transmissionType', component: TransmissionTypeComponent},
   {path: 'customerAdvertisements', component: CustomerAdvertisementsComponent},
   {path: 'registrationRequests', component: RegistrationRequestsComponent},
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
-  {path: 'agentRegister', component: AgentRegisterComponent}
+  {path: 'agentRegister', component: AgentRegisterComponent},
+  {path: 'rentRequests', component: RentRequestsComponent}
+
 ];
 
 @NgModule({

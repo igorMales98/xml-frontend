@@ -33,6 +33,7 @@ import {MatTableModule} from '@angular/material/table';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
+import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 
 /**
  * Custom angular notifier options
@@ -95,11 +96,12 @@ const customNotifierOptions: NotifierOptions = {
     CarClassComponent,
     FuelTypeComponent,
     TransmissionTypeComponent,
-    CommentComponent
+    CommentComponent,
     CreateAdvertisementComponent,
     RegistrationRequestsComponent,
     BlockActivateRemoveCustomersComponent,
-    AgentRegisterComponent
+    AgentRegisterComponent,
+    RentRequestsComponent
   ],
   imports: [
     BrowserModule,
