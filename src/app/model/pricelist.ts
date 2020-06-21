@@ -4,7 +4,7 @@ export class Pricelist {
   pricePerKm: string;
   priceForCDW: string;
 
-  constructor(id: string, pricePerDay: string, pricePerKm: string, priceForCDW){
+  constructor(id: string, pricePerDay: string, pricePerKm: string, priceForCDW: string){
     this.id = id;
     this.pricePerDay = pricePerDay;
     this.pricePerKm = pricePerKm;
