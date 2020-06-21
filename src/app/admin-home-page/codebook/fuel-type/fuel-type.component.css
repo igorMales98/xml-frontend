@@ -1,0 +1,24 @@
+#div1, #div2, #div3, #div4 {
+    padding-top: 20px;
+  }
+  
+  #fuelTypeForm {
+      margin-left: 20%;
+      margin-right: 20%;
+  }
+  
+  .border-bottom {
+    border-width: 3px !important;
+  }
+  
+  #fuelTypeName {
+    width: 300px;
+    float: right;
+    margin-right: 30%;
+  }
+  
+  #createFuelType {
+    width: 200px;
+    float: right;
+    margin-right: 35%;
+  }
