@@ -9,7 +9,6 @@ import {RegistrationComponent} from './registration/registration.component';
 import {CreateAdvertisementComponent} from './create-advertisement/create-advertisement.component';
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
-import {AppComponent} from './app.component';
 import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
 import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
 import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
@@ -20,6 +19,7 @@ import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-c
 import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
 import { RentRequestsComponent} from './rent-requests/rent-requests.component';
+import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -41,7 +41,8 @@ const routes: Routes = [
   {path: 'blockActivateRemoveCustomer', component: BlockActivateRemoveCustomersComponent},
   {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
   {path: 'agentRegister', component: AgentRegisterComponent},
-  {path: 'rentRequests', component: RentRequestsComponent}
+  {path: 'rentRequests', component: RentRequestsComponent},
+  {path: 'comments', component : CommentComponent}
 
 ];
 

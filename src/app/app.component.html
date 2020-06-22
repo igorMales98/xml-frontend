@@ -27,35 +27,6 @@
     <div id="navbarNavDropdown" class="navbar-collapse collapse navbar-responsive-collapse ">
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
-          <a class="nav-link" routerLink="/carBrand">
-            <fa-icon class="mr-1"></fa-icon>
-            Car Brand</a>
-        </li>
-
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
-          <a class="nav-link" routerLink="/carModel">
-            <fa-icon class="mr-1"></fa-icon>
-            Car Model</a>
-        </li>
-
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
-          <a class="nav-link" routerLink="/carClass">
-            <fa-icon class="mr-1"></fa-icon>
-            Car Class</a>
-        </li>
-
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
-          <a class="nav-link" routerLink="/fuelType">
-            <fa-icon class="mr-1"></fa-icon>
-            Fuel Type</a>
-        </li>
-
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
-          <a class="nav-link" routerLink="/transmissionType">
-            <fa-icon class="mr-1"></fa-icon>
-            Transmission Type</a>
-        </li>
 
         <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
           <a class="nav-link" routerLink="/createAdvertisement">
@@ -109,8 +80,29 @@
         <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
           <a class="nav-link" routerLink="/blockActivateRemoveCustomer">
             <fa-icon [icon]="faUsers" class="mr-1"></fa-icon>
-            Block, Activate, Remove Customers</a>
+            Customers</a>
         </li>
+
+        <li class="nav-item dropdown" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink19" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false">
+            <fa-icon [icon]="faBookOpen" class="mr-1"></fa-icon>
+            Codebook</a>
+          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink19">
+            <a class="dropdown-item bg-dark" routerLink="/carBrand">Car Brand</a>
+            <a class="dropdown-item bg-dark" routerLink="/carModel">Car Model</a>
+            <a class="dropdown-item bg-dark" routerLink="/carClass">Car Class</a>
+            <a class="dropdown-item bg-dark" routerLink="/fuelType">Fuel Type</a>
+            <a class="dropdown-item bg-dark" routerLink="/transmissionType">Transmission Type</a>
+          </div>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+          <a class="nav-link" routerLink="/comments">
+            <fa-icon [icon]="faComment" class="mr-1"></fa-icon>
+            Comments</a>
+        </li>
+
       </ul>
 
       <ul class="navbar-nav mr-0">

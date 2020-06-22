@@ -8,6 +8,7 @@ export class Comment {
     id: string;
     approved: boolean;
     advertisementDto: Advertisement;
+    rejected: boolean;
 
     constructor(commenter: User, comment: string, advertisementDto: Advertisement) {
       this.commenter = commenter;
