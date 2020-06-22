@@ -5,7 +5,7 @@
           <div class="card-body">
             <form>
               <div class="align-items-center">
-                <div>
+                <div *ngIf="requestsCount !== 0">
                   <div class="note col-lg-6 offset-3 text-center">
                     <h2>Rent Requests</h2>
                   </div>
@@ -49,7 +49,7 @@
                     </table>
                   </div>
 
-                  <div>
+                  <div *ngIf="requestsCount === 0">
                     <h1> There are no Rent Requests. </h1>
                   </div>
 

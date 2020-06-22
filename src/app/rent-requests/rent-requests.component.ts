@@ -17,6 +17,7 @@ export class RentRequestsComponent implements OnInit {
   loggedUser: User;
   allRequests: RentRequest[] = [];
   cancelId: number;
+  requestsCount: number;
 
   constructor(private notifierService: NotifierService, private userService: UserService,
     private rentRequestService: RentRequestsService, private modalService: NgbModal) { 
@@ -29,6 +30,7 @@ export class RentRequestsComponent implements OnInit {
     this.loggedUser = this.userService.currentUser;
     this.rentRequestService.getAllRequests(this.loggedUser.id).subscribe(data => {
         this.allRequests = data;
+        this.requestsCount = this.allRequests.length;
     });
   }
 
