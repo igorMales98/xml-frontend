@@ -83,6 +83,7 @@ export class CarClassComponent implements OnInit {
   }
 
   openModal(targetModal, carClass) {
+    this.carClassToEdit = carClass;
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'

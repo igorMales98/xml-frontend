@@ -83,6 +83,7 @@ export class FuelTypeComponent implements OnInit {
   }
 
   openModal(targetModal, fuelType) {
+    this.fuelTypeToEdit = fuelType;
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'

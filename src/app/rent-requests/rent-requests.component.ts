@@ -20,7 +20,7 @@ export class RentRequestsComponent implements OnInit {
   requestsCount: number;
 
   constructor(private notifierService: NotifierService, private userService: UserService,
-    private rentRequestService: RentRequestsService, private modalService: NgbModal) { 
+    private rentRequestService: RentRequestsService, private modalService: NgbModal) {
     this.notifier = notifierService;
 
   }
@@ -54,7 +54,7 @@ export class RentRequestsComponent implements OnInit {
     });
   }
 
-  acceptRentRequest(requestId: number){
+  acceptRentRequest(requestId: string){
     console.log(requestId)
     this.rentRequestService.acceptRequest(requestId).subscribe(data => {
       this.showNotification('success', 'Rent request is successfully accepted!');
