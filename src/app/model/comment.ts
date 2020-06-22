@@ -4,18 +4,15 @@ import { Advertisement } from './advertisement';
 export class Comment {
     commenter: User;
     comment: string;
-    id: number;
+    reply: string;
+    id: string;
     approved: boolean;
-    rejected: boolean;
     advertisementDto: Advertisement;
+    rejected: boolean;
 
-    constructor(commenter: User, comment: string, advertisementDto: Advertisement, approved: boolean, rejected: boolean) {
+    constructor(commenter: User, comment: string, advertisementDto: Advertisement) {
       this.commenter = commenter;
       this.comment = comment;
-      this.id = id;
-      this.approved = approved;
-      this.rejected = rejected;
       this.advertisementDto = advertisementDto;
     }
-
   }
