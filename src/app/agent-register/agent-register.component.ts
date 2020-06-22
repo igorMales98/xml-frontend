@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {NotifierService} from 'angular-notifier';
 import {AgentRegisterService} from './agent-register.service';
 import {Agent} from '../model/agent';
@@ -16,27 +16,27 @@ export class AgentRegisterComponent implements OnInit {
   notifier: NotifierService;
 
   constructor(private notifierService: NotifierService, private formBuilder: FormBuilder,
-    private agentRegisterService: AgentRegisterService) { 
+              private agentRegisterService: AgentRegisterService) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
     this.agentData = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-      passwordRepeat: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, this.emailDomainValidator, Validators.pattern(/[^ @]*@[^ @]*/)]],
-      address: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(10)]],
-      businessSocialNumber: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(5)]]
+        firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
+        password: ['', [Validators.required, Validators.minLength(5)]],
+        passwordRepeat: ['', [Validators.required, Validators.minLength(5)]],
+        email: ['', [Validators.required, this.emailDomainValidator, Validators.pattern(/[^ @]*@[^ @]*/)]],
+        address: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+        phone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(9), Validators.maxLength(10)]],
+        businessSocialNumber: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(5)]]
 
 
-    },
-    {validator: this.checkPasswords});
+      },
+      {validator: this.checkPasswords});
   }
 
   emailDomainValidator(control: FormControl) {
@@ -70,7 +70,7 @@ export class AgentRegisterComponent implements OnInit {
     this.notifier.notify(type, message);
   }
 
-  register(){
+  register() {
     const agent = new Agent(this.agentData.value.firstName, this.agentData.value.lastName, this.agentData.value.username,
       this.agentData.value.password, this.agentData.value.email, this.agentData.value.address,
       this.agentData.value.city, this.agentData.value.country, this.agentData.value.phone,
@@ -80,7 +80,7 @@ export class AgentRegisterComponent implements OnInit {
       this.showNotification('success', 'Agent is registered successfully!');
       this.ngOnInit();
     });
-    
+
   }
 
 }

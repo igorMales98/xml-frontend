@@ -14,7 +14,7 @@
                      [ngClass]="{'border-success': carClassFb.carClassName.valid, 'border-danger': carClassFb.carClassName.invalid}">
                   <label for="carClassName" class="col-form-label-lg">Car class name : </label>
                   <input class="form-control-lg" id="carClassName" formControlName="carClassName"
-                         placeholder="Enter a car clas name">
+                         placeholder="Enter a car class name">
                   <span style="color: red; float: right"
                         *ngIf="carClassFb.carClassName.invalid && carClassFb.carClassName.touched">Name must have minimum one and maximum 15 letters.</span>
                 </div>

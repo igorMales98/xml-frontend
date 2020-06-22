@@ -19,11 +19,11 @@ export class RentRequestsService {
     return this.httpClient.delete('https://localhost:8443/rent-request-service/api/rent-requests/' + id);
   }
 
-  acceptRequest(id: number){
+  acceptRequest(id: string){
     return this.httpClient.put('https://localhost:8443/rent-request-service/api/rent-requests/' + id, null);
   }
 
-  
+
 
 
 }

@@ -3,19 +3,19 @@
       <h1> You have no rent requests</h1>
     </div>
   </div>
-  
+
   <div>
     <div class="container register-form pt-4">
         <div *ngFor="let rentRequest of allRentRequests">
            From: {{niceDate(rentRequest.reservedFrom)}} To: {{niceDate(rentRequest.reservedTo)}} Status: {{rentRequest.rentRequestStatus}}
       <div id="images" class="img_wrap">
         <div *ngFor="let advertisement of rentRequest.advertisementsForRent" style="width: 310px; height: 310px;"
-             class="col-md-3">  
+             class="col-md-3">
          <table class="img_wrp">
             <tr>
               <td>
                 <img [src]="advertisement.image[0]" height="250" width="300">
-              </td> 
+              </td>
                <td>
                 <div class="text-center" style="font-size: large;font-weight: 500;">
                   <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
@@ -57,17 +57,17 @@
         <hr/>
       </div>
     </div>
-  
+
     <div>
       <ng-template #myModalMoreInfo let-modal class="myCustomModalClass modal-lg">
-  
+
         <div id="imagesAd" class="row img_wrap">
           <div *ngFor="let image of moreInfoAdvertisement.image" style="width: 210px; height: 210px;"
                class="col-md-3">
             <img [src]="image" height="200" width="200" *ngIf="image">
           </div>
         </div>
-  
+
         <div id="moreInfo">
           <div class="row">
             <div class="form-group col-lg-6">
@@ -81,7 +81,7 @@
                         class="md-textarea form-control">{{moreInfoAdvertisement.car.carModel.name}}</textarea>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-group col-lg-6">
               <label for="carClassInfo">Car Class : </label>
@@ -94,7 +94,7 @@
                         class="md-textarea form-control">{{moreInfoAdvertisement.car.fuelType.name}}</textarea>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-group col-lg-6">
               <label for="transmissionTypeInfo">Transmission Type : </label>
@@ -107,7 +107,7 @@
                         class="md-textarea form-control">{{moreInfoAdvertisement.car.mileage + ' km'}}</textarea>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-group col-lg-6">
               <label for="averageRatingInfo">Average rating : </label>
@@ -120,7 +120,7 @@
                         class="md-textarea form-control">{{moreInfoAdvertisement.car.childSeats}}</textarea>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-group col-lg-6">
               <label for="hasAndroidInfo" *ngIf="moreInfoAdvertisement.car.hasAndroid">Has android : </label>
@@ -139,7 +139,7 @@
                         class="md-textarea form-control">No</textarea>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-group col-lg-6">
               <label for="pricelistInfo">Pricelist : </label>
@@ -152,15 +152,15 @@
                         class="md-textarea form-control">{{moreInfoAdvertisement.car.allowedDistance + ' km'}}</textarea>
             </div>
           </div>
-  
+
         </div>
-  
+
       </ng-template>
     </div>
   </div>
   <div>
     <ng-template #myModalComments let-modal class="myCustomModalClass modal-lg">
-  
+
       <div *ngIf="comments.length==0" style="text-align: center;">There are no comments for this ad.</div>
       <div *ngFor="let comment of comments">
         <div class="chip">
@@ -182,7 +182,7 @@
           </div>
         </div>
         </div>
-  
+
     </ng-template>
   </div>
   <div>
@@ -209,5 +209,4 @@
         </div>
       </ng-template>
   </div>
-  
-  
+

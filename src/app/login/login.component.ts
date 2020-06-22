@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         this.showNotification('success', 'Welcome ');
       },
       (err) => {
-        this.showNotification('error', 'Wrong username or password. ');
+        this.showNotification('error', err.error);
       }
     );
   }

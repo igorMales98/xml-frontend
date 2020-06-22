@@ -1,29 +1,29 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { CarBrand } from 'src/app/model/carBrand';
+import {CarBrand} from 'src/app/model/carBrand';
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CarBrandService {
 
-    constructor(private httpClient: HttpClient) {
-    }
+  constructor(private httpClient: HttpClient) {
+  }
 
-    createCarBrand(newCarBrandName: CarBrand) {
-        return this.httpClient.post('https://localhost:8443/codebook-service/api/car-brand/addCarBrand', newCarBrandName);
-    }
+  createCarBrand(newCarBrandName: CarBrand) {
+    return this.httpClient.post('https://localhost:8443/codebook-service/api/car-brands', newCarBrandName);
+  }
 
-    getAllCarBrands() {
-        return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brands');
-    }
+  getAllCarBrands() {
+    return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brands');
+  }
 
-    deleteCarBrand(id: number) {
-        return this.httpClient.delete('https://localhost:8443/codebook-service/api/car-brands/deleteCarBrand/' + id);
-    }
+  deleteCarBrand(id: number) {
+    return this.httpClient.delete('https://localhost:8443/codebook-service/api/car-brands/' + id);
+  }
 
-    editCarBrand(editedCarBrand: CarBrand){
-        return this.httpClient.put('https://localhost:8443/codebook-service/api/car-brands/editCarBrand', editedCarBrand);
-    }
+  editCarBrand(editedCarBrand: CarBrand) {
+    return this.httpClient.put('https://localhost:8443/codebook-service/api/car-brands', editedCarBrand);
+  }
 }

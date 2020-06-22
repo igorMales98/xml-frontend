@@ -50,7 +50,7 @@ export class CreateAdvertisementService {
         uploadData.append('myFile', blob, blob.name);
       }
 
-      this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisement/uploadPhotos/' + data, uploadData).subscribe();
+      this.httpClient.post('https://localhost:8443/advertisement-service/api/advertisements/uploadPhotos/' + data, uploadData).subscribe();
 
     });
   }
