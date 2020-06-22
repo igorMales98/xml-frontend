@@ -11,6 +11,7 @@ export class RentRequest {
   reports: Report[] = [];
   bundle: boolean;
   physicalRent: boolean;
+  rentRequestStatus: string;
 
   constructor(reservedFrom: string, reservedTo: string, customer: User, advertisementsForRent: Advertisement[], bundle: boolean,
               physicalRent: boolean) {

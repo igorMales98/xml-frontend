@@ -32,6 +32,7 @@ import {DatePipe} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
+import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
 import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 
@@ -100,6 +101,7 @@ const customNotifierOptions: NotifierOptions = {
     CreateAdvertisementComponent,
     RegistrationRequestsComponent,
     BlockActivateRemoveCustomersComponent,
+    CustomerRentReguestsComponent,
     AgentRegisterComponent,
     RentRequestsComponent
   ],

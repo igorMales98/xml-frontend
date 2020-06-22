@@ -1,0 +1,213 @@
+<div class="container register-form pt-4">
+    <div class="text-center" *ngIf="this.allRentRequests.length === 0">
+      <h1> You have no rent requests</h1>
+    </div>
+  </div>
+  
+  <div>
+    <div class="container register-form pt-4">
+        <div *ngFor="let rentRequest of allRentRequests">
+           From: {{niceDate(rentRequest.reservedFrom)}} To: {{niceDate(rentRequest.reservedTo)}} Status: {{rentRequest.rentRequestStatus}}
+      <div id="images" class="img_wrap">
+        <div *ngFor="let advertisement of rentRequest.advertisementsForRent" style="width: 310px; height: 310px;"
+             class="col-md-3">  
+         <table class="img_wrp">
+            <tr>
+              <td>
+                <img [src]="advertisement.image[0]" height="250" width="300">
+              </td> 
+               <td>
+                <div class="text-center" style="font-size: large;font-weight: 500;">
+                  <p>{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                </div>
+                <table>
+                  <td>
+                    <label id="currentRateCSS">{{advertisement.car.averageRating}}&nbsp;</label>
+                  </td>
+                  <td>
+                    <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
+                      <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                      </span>
+                      </ng-template>
+                    </ngb-rating>
+                  </td>
+                </table>
+                <button class="btn-outline-info btn-sm-sm commentButton"
+                        (click)="openComments(myModalComments, advertisement)">
+                  <fa-icon [icon]="faCommentAlt"></fa-icon>
+                </button>
+                <button class="btn-outline-info btn-sm-sm infoButton"
+                        (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                  <fa-icon [icon]="faInfo"></fa-icon>
+                </button>
+                <div *ngIf="btnPostComment[advertisement.id]===true">
+                    <div class="btn-outline-info btn-sm-sm postComment">
+                    <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
+                            (click)="openModal(content,advertisement)">Give feedback
+                    </button>
+                    </div>
+                </div>
+             </td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        <hr/>
+      </div>
+    </div>
+  
+    <div>
+      <ng-template #myModalMoreInfo let-modal class="myCustomModalClass modal-lg">
+  
+        <div id="imagesAd" class="row img_wrap">
+          <div *ngFor="let image of moreInfoAdvertisement.image" style="width: 210px; height: 210px;"
+               class="col-md-3">
+            <img [src]="image" height="200" width="200" *ngIf="image">
+          </div>
+        </div>
+  
+        <div id="moreInfo">
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="carBrandInfo">Car Brand : </label>
+              <textarea id="carBrandInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.carBrand.name}}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="carModelInfo">Car Model : </label>
+              <textarea id="carModelInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.carModel.name}}</textarea>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="carClassInfo">Car Class : </label>
+              <textarea id="carClassInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.carClass.name}}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="fuelTypeInfo">Fuel Type : </label>
+              <textarea id="fuelTypeInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.fuelType.name}}</textarea>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="transmissionTypeInfo">Transmission Type : </label>
+              <textarea id="transmissionTypeInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.transmissionType.name}}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="mileageInfo">Mileage : </label>
+              <textarea id="mileageInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.mileage + ' km'}}</textarea>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="averageRatingInfo">Average rating : </label>
+              <textarea id="averageRatingInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.averageRating}}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="childSeatsInfo">Child seats : </label>
+              <textarea id="childSeatsInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.childSeats}}</textarea>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="hasAndroidInfo" *ngIf="moreInfoAdvertisement.car.hasAndroid">Has android : </label>
+              <label for="hasAndroidInfo2" *ngIf="!moreInfoAdvertisement.car.hasAndroid">Has android : </label>
+              <textarea id="hasAndroidInfo" disabled *ngIf="moreInfoAdvertisement.car.hasAndroid"
+                        class="md-textarea form-control">Yes</textarea>
+              <textarea id="hasAndroidInfo2" disabled *ngIf="!moreInfoAdvertisement.car.hasAndroid"
+                        class="md-textarea form-control">No</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="hasCdwInfo" *ngIf="moreInfoAdvertisement.car.collisionDamageWaiverExists">Has CDW : </label>
+              <label for="hasCdwInfo2" *ngIf="!moreInfoAdvertisement.car.collisionDamageWaiverExists">Has CDW : </label>
+              <textarea id="hasCdwInfo" disabled *ngIf="moreInfoAdvertisement.car.collisionDamageWaiverExists"
+                        class="md-textarea form-control">Yes</textarea>
+              <textarea id="hasCdwInfo2" disabled *ngIf="!moreInfoAdvertisement.car.collisionDamageWaiverExists"
+                        class="md-textarea form-control">No</textarea>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="pricelistInfo">Pricelist : </label>
+              <textarea id="pricelistInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.pricelist.pricePerDay + ' $ per day'}}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="allowedDistanceInfo">Allowed distance : </label>
+              <textarea id="allowedDistanceInfo" disabled
+                        class="md-textarea form-control">{{moreInfoAdvertisement.car.allowedDistance + ' km'}}</textarea>
+            </div>
+          </div>
+  
+        </div>
+  
+      </ng-template>
+    </div>
+  </div>
+  <div>
+    <ng-template #myModalComments let-modal class="myCustomModalClass modal-lg">
+  
+      <div *ngIf="comments.length==0" style="text-align: center;">There are no comments for this ad.</div>
+      <div *ngFor="let comment of comments">
+        <div class="chip">
+          <fa-icon [icon]="faUser" class="mr-1"></fa-icon>
+          {{comment.commenter.firstName}} {{comment.commenter.lastName}}
+        </div>
+        <div class="md-form">
+          <textarea type="text" id="form8" disabled autosize
+                    class="md-textarea form-control"> {{comment.comment}}</textarea>
+        </div>
+        <div *ngIf="comment.reply!=null" class="marginsReply">
+          <div class="chip">
+            <fa-icon [icon]="faUser" class="mr-1"></fa-icon>
+            Agent
+          </div>
+          <div class="md-form">
+            <textarea type="text" id="form9" disabled autosize
+                      class="md-textarea form-control">{{comment.reply}}</textarea>
+          </div>
+        </div>
+        </div>
+  
+    </ng-template>
+  </div>
+  <div>
+    <ng-template #content let-modal>
+
+        <div class="modal-body">
+          <form>
+            <textarea id="postComment" style="resize:none" placeholder="Leave your comment here..."
+                      class="form-control"></textarea>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <label id="currentRateCSS">{{currentRate}}&nbsp;</label>
+            <ngb-rating id="ratingNum" [(rate)]="currentRate" [max]="5" (click)="changeRate()">
+                <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+                </ng-template>
+            </ngb-rating>
+          <button type="button" class="btn btn-primary" style="background-color:#17a2b8;"
+                  (click)="postComment(); modal.dismiss('Send click')">Send
+          </button>
+        </div>
+      </ng-template>
+  </div>
+  
+  
