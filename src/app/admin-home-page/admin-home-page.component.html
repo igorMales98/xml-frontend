@@ -1,34 +1,42 @@
-<div class="container register-form pt-4">
-  <div id="images" class="row img_wrap">
-    <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
-         class="col-md-3">
-      <div class="img_wrp">
-        <img [src]="advertisement.image[0]" height="250" width="250">
-        <div>
-          <p style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
-          <table>
-            <td>
-              <label>{{advertisement.car.averageRating}}&nbsp;</label>
-            </td>
-            <td>
-              <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
-                <ng-template let-fill="fill" let-index="index">
-                    <span class="star" [class.full]="fill === 100">
-                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-                    </span>
-                </ng-template>
-              </ngb-rating>
-            </td>
-          </table>
+
+<div class="col-lg">
+  <h1 class="card-title text-center">  </h1>
+  <div class="card">
+    <div class="card-body">
+      <div class="container register-form pt-4">
+        <div id="images" class="row img_wrap">
+          <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
+              class="col-md-3">
+            <div class="img_wrp">
+              <img [src]="advertisement.image[0]" height="250" width="250">
+              <div>
+                <p style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                <table>
+                  <td>
+                    <label>{{advertisement.car.averageRating}}&nbsp;</label>
+                  </td>
+                  <td>
+                    <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
+                          <span class="star" [class.full]="fill === 100">
+                              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                          </span>
+                      </ng-template>
+                    </ngb-rating>
+                  </td>
+                </table>
+              </div>
+              <button class="btn-outline-info btn-sm-sm commentButton"
+                      (click)="openComments(myModalComments, advertisement)">
+                <fa-icon [icon]="faComment"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm infoButton"
+                      (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                <fa-icon [icon]="faInfo"></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
-        <button class="btn-outline-info btn-sm-sm commentButton"
-                (click)="openComments(myModalComments, advertisement)">
-          <fa-icon [icon]="faComment"></fa-icon>
-        </button>
-        <button class="btn-outline-info btn-sm-sm infoButton"
-                (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
-          <fa-icon [icon]="faInfo"></fa-icon>
-        </button>
       </div>
     </div>
   </div>

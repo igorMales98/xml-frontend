@@ -1,1 +1,61 @@
-<p>comment works!</p>
+
+<div id="divForTable" class="animated slideInLeft">
+    <h1 class="card-title text-center">  </h1>
+    <div class="col-lg">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="align-items-center">
+                <div>
+                    <div class="note col-lg-6 offset-3 text-center">
+                      <h2>Accept or reject comment</h2>
+                    </div>
+
+                    <table id="table" class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+                      <tr>
+                        <th scope="col" style="text-align:center">Comment Text</th>
+                        <th scope="col" style="text-align:center">Commenter</th>
+                        <th scope="col" style="text-align:center">Commenter Email</th>
+                        <th scope="col" style="text-align:center">Accept Comment</th>
+                        <th scope="col" style="text-align:center">Reject Comment</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let comment of allComments">
+                        <td>{{comment.comment}}</td>
+                        <td>{{comment.commenter.firstName}} {{comment.commenter.lastName}}</td>
+                        <td>{{comment.commenter.email}}</td>
+                        <td align="center">
+                          <button class="btn btn-success" [disabled]="comment.rejected" *ngIf="!comment.approved"
+                          (click)="acceptComment(comment.id)">Accept Comment</button>
+                          <label *ngIf="comment.approved">This Comment is Accepted.</label>
+                        </td>
+                        <td align="center">
+                          <button class="btn btn-danger" *ngIf="!comment.rejected" [disabled]="comment.approved"
+                          (click)="openConfirmDeleteModal(confirmDeleteCommentModal, comment.id)">Reject Comment</button>
+                        <label *ngIf="comment.rejected">This Comment is Rejected.</label>                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmDeleteCommentModal let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Reject Comment?</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger" (click)="rejectComment()">Yes</button>
+    <button type="button" class="btn btn-success" (click)="modal.dismiss()">No</button>
+  </div>
+</ng-template>

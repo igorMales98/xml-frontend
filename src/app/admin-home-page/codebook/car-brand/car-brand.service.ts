@@ -16,14 +16,14 @@ export class CarBrandService {
     }
 
     getAllCarBrands() {
-        return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brand/all');
+        return this.httpClient.get<CarBrand[]>('https://localhost:8443/codebook-service/api/car-brands');
     }
 
     deleteCarBrand(id: number) {
-        return this.httpClient.delete('https://localhost:8443/codebook-service/api/car-brand/deleteCarBrand/' + id);
+        return this.httpClient.delete('https://localhost:8443/codebook-service/api/car-brands/deleteCarBrand/' + id);
     }
 
     editCarBrand(editedCarBrand: CarBrand){
-        return this.httpClient.put('https://localhost:8443/codebook-service/api/car-brand/editCarBrand', editedCarBrand);
+        return this.httpClient.put('https://localhost:8443/codebook-service/api/car-brands/editCarBrand', editedCarBrand);
     }
 }
