@@ -18,7 +18,7 @@
                        placeholder="Enter your username"
                        required>
                 <span style="color: red; float: right"
-                *ngIf="loginFb.username.invalid && loginFb.username.touched">You can only use letters, numbers, dots and minuses.</span>
+                      *ngIf="loginFb.username.invalid && loginFb.username.touched">You can only use letters, numbers, dots and minuses.</span>
               </div>
 
               <div class="form-group">
@@ -29,7 +29,9 @@
                        name="password"
                        placeholder="Enter your password"
                        required>
-               </div>
+              </div>
+
+              <a (click)="openForgotPasswordModal(forgotPasswordModal)">Forgot password ?</a>
 
               <div class="text-right">
                 <button type="submit" [disabled]="userData.invalid" id="loginbtn"
@@ -43,3 +45,29 @@
     </div>
   </div>
 </div>
+
+<div class="mt-lg-5 text-center">
+  <ng-template #forgotPasswordModal let-modal>
+
+    <form [formGroup]="forgotPasswordData" id="forgotPasswordForm" (ngSubmit)="forgotPassword()">
+
+      <div class="form-group">
+        <label for="inputEmail2">Email</label>
+        <input class="form-control"
+               id="inputEmail2" formControlName="email"
+               name="email"
+               placeholder="Enter your email"
+               required>
+        <span style="color: red" *ngIf="fp.email.touched && fp.email.invalid">Valid email must contain @ and some of the domains : gmail.com, yahoo.com, uns.ac.rs</span>
+      </div>
+
+      <div class="text-right">
+        <button type="submit" [disabled]="forgotPasswordData.invalid" id="forgotPasswordBtn"
+                class="btn btn-success">Reset
+        </button>
+      </div>
+    </form>
+
+  </ng-template>
+</div>
+
