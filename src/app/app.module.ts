@@ -35,6 +35,7 @@ import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-c
 import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
 import { RentRequestsComponent } from './rent-requests/rent-requests.component';
+import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 
 /**
  * Custom angular notifier options
@@ -103,7 +104,8 @@ const customNotifierOptions: NotifierOptions = {
     BlockActivateRemoveCustomersComponent,
     CustomerRentReguestsComponent,
     AgentRegisterComponent,
-    RentRequestsComponent
+    RentRequestsComponent,
+    AccountConfirmationComponent
   ],
   imports: [
     BrowserModule,

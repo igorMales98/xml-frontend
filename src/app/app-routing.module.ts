@@ -20,6 +20,7 @@ import { CustomerRentReguestsComponent } from './customer-home-page/customer-ren
 import { AgentRegisterComponent } from './agent-register/agent-register.component';
 import { RentRequestsComponent} from './rent-requests/rent-requests.component';
 import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
+import {AccountConfirmationComponent} from './account-confirmation/account-confirmation.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -42,7 +43,8 @@ const routes: Routes = [
   {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
   {path: 'agentRegister', component: AgentRegisterComponent},
   {path: 'rentRequests', component: RentRequestsComponent},
-  {path: 'comments', component : CommentComponent}
+  {path: 'comments', component : CommentComponent},
+  {path: 'activateUser/:token', component: AccountConfirmationComponent},
 
 ];
 
