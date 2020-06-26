@@ -28,14 +28,14 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.passwordData = this.formBuilder.group({
-        password: ['', [Validators.required, Validators.minLength(5)]],
-        passwordRepeat: ['', [Validators.required, Validators.minLength(5)]],
+        password: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
+        passwordRepeat: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
       },
       {validator: this.checkPasswords});
 
     this.newPasswordData = this.formBuilder.group({
-        password: ['', [Validators.required, Validators.minLength(5)]],
-        passwordRepeat: ['', [Validators.required, Validators.minLength(5)]],
+        password: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
+        passwordRepeat: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
       },
       {validator: this.checkPasswords});
   }
@@ -71,6 +71,8 @@ export class ChangePasswordComponent implements OnInit {
       this.valid = false;
       this.passwordData.enable();
       this.passwordData.reset();
+    }, error => {
+      this.showNotification('error', error.error);
     });
   }
 }
