@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
     this.userData = this.formBuilder.group({
         username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
         email: ['', [Validators.required, this.emailDomainValidator, Validators.pattern(/[^ @]*@[^ @]*/)]],
-        password: ['', [Validators.required, Validators.minLength(5)]],
+        password: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
         passwordRepeat: ['', [Validators.required, Validators.minLength(5)]],
         firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
         lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
