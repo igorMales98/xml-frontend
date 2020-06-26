@@ -21,6 +21,7 @@ import { AgentRegisterComponent } from './agent-register/agent-register.componen
 import { RentRequestsComponent} from './rent-requests/rent-requests.component';
 import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
 import {AccountConfirmationComponent} from './account-confirmation/account-confirmation.component';
+import {ChangePasswordComponent} from './change-password/change-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -45,6 +46,7 @@ const routes: Routes = [
   {path: 'rentRequests', component: RentRequestsComponent},
   {path: 'comments', component : CommentComponent},
   {path: 'activateUser/:token', component: AccountConfirmationComponent},
+  {path: 'changePassword', component: ChangePasswordComponent}
 
 ];
 

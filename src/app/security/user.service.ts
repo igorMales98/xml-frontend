@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {LoginRequest} from '../model/loginRequest';
 import {map} from 'rxjs/operators';
+import {any} from 'codelyzer/util/function';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class UserService {
   }
 
   login(loginRequest: LoginRequest) {
-    return this.httpClient.post('https://localhost:8443/authentication-service/api/auth/login', loginRequest).pipe(map((response: UserTokenState) => {
+    return this.httpClient.post('https://localhost:8443/authentication-service/api/auth/login', loginRequest).
+    pipe(map((response: UserTokenState) => {
       this.accessToken = response.accessToken;
       this.role = response.role;
       localStorage.setItem('user', JSON.stringify(response));
@@ -60,6 +62,11 @@ export class UserService {
     localStorage.removeItem('role');
     this.accessToken = null;
     this.router.navigate(['/']);
+  }
+
+  forgotPassword(email: string) {
+    return this.httpClient.get('https://localhost:8443/authentication-service/api/auth/forgotPassword/' + email + '/restore',
+      {headers: {'Content-Type' : 'application/json'}, responseType: 'text'});
   }
 
 }

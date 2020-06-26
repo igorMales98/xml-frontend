@@ -14,7 +14,6 @@ export class RegistrationComponent implements OnInit {
 
   userData: FormGroup;
   notifier: NotifierService;
-  registrationRequest: RegistrationRequest;
 
   constructor(private notifierService: NotifierService, private registrationService: RegistrationService,
               private formBuilder: FormBuilder, private router: Router) {
@@ -22,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData = this.formBuilder.group({
+      this.userData = this.formBuilder.group({
         username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]*$/)]],
         email: ['', [Validators.required, this.emailDomainValidator, Validators.pattern(/[^ @]*@[^ @]*/)]],
         password: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]).{8,30}$/), Validators.minLength(8), Validators.maxLength(30)]],
