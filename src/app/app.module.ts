@@ -37,6 +37,7 @@ import { AgentRegisterComponent } from './agent-register/agent-register.componen
 import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 /**
  * Custom angular notifier options
@@ -109,21 +110,22 @@ const customNotifierOptions: NotifierOptions = {
     AccountConfirmationComponent,
     ChangePasswordComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    NotifierModule.withConfig(customNotifierOptions),
-    ReactiveFormsModule,
-    FontAwesomeModule,
-    BrowserAnimationsModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatTableModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FormsModule,
+        RouterModule,
+        HttpClientModule,
+        NotifierModule.withConfig(customNotifierOptions),
+        ReactiveFormsModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatTableModule,
+        MatSlideToggleModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     DatePipe

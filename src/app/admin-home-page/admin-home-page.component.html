@@ -1,16 +1,16 @@
-
-<div class="col-lg">
-  <h1 class="card-title text-center">  </h1>
-  <div class="card">
-    <div class="card-body">
-      <div class="container register-form pt-4">
+<div class="container register-form pt-4" [hidden]="loadContent">
+  <div class="col-lg">
+    <h1 class="card-title text-center"></h1>
+    <div class="card">
+      <div class="card-body">
         <div id="images" class="row img_wrap">
           <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
-              class="col-md-3">
+               class="col-md-3">
             <div class="img_wrp">
               <img [src]="advertisement.image[0]" height="250" width="250">
               <div>
-                <p style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                <p
+                  style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
                 <table>
                   <td>
                     <label>{{advertisement.car.averageRating}}&nbsp;</label>
@@ -41,6 +41,7 @@
     </div>
   </div>
 </div>
+
 
 <div>
   <ng-template #myModalMoreInfo let-modal class="myCustomModalClass modal-lg">

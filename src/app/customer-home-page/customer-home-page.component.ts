@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CustomerHomePageService} from './customer-home-page.service';
 import {
   faComments,
@@ -22,6 +22,13 @@ import {SlideInOutAnimation} from '../animations/animations';
 import {DatePipe} from '@angular/common';
 import {RentRequest} from '../model/rentRequest';
 import {Router} from '@angular/router';
+import {CarBrand} from '../model/carBrand';
+import {CarModel} from '../model/carModel';
+import {FuelType} from '../model/fuelType';
+import {TransmissionType} from '../model/transmissionType';
+import {CarClass} from '../model/carClass';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-customer-home-page',
@@ -39,6 +46,7 @@ export class CustomerHomePageComponent implements OnInit {
   faArrow = faArrowDown;
 
   allAdvertisements: Advertisement[] = [];
+  basicSearchAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
   moreInfoAdvertisement: Advertisement;
   cart: Advertisement[] = [];
@@ -63,9 +71,32 @@ export class CustomerHomePageComponent implements OnInit {
   pickupPlace = '';
   bundle = true;
 
+  selectedCarBrand = 'Select car brand';
+  allCarBrands: CarBrand[] = [];
+
+  selectedCarModel = 'Select car model';
+  allCarBrandModels: CarModel[] = [];
+  isCarBrandSelected = false;
+
+  selectedFuelType = 'Select fuel type';
+  allFuelTypes: FuelType[] = [];
+
+  selectedTransmissionType = 'Select transmission type';
+  allTransmissionTypes: TransmissionType[] = [];
+
+  selectedCarClass = 'Select car class';
+  allCarClasses: CarClass[] = [];
+
+  advancedSearch: FormGroup;
+  hasACDW = false;
+
+  @ViewChild('togglePrice') togglePrice: MatSlideToggle;
+  @ViewChild('toggleRating') toggleRating: MatSlideToggle;
+  @ViewChild('toggleMileage') toggleMileage: MatSlideToggle;
+
   constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
-              private userService: UserService, private datePipe: DatePipe, private router: Router) {
+              private userService: UserService, private datePipe: DatePipe, private router: Router, private formBuilder: FormBuilder) {
     this.notifier = notifierService;
     this.dateNow = new Date();
     this.dateNow.setDate(this.dateNow.getDate() + 2);
@@ -103,6 +134,33 @@ export class CustomerHomePageComponent implements OnInit {
         this.loadContent = false;
       });
     }, 2000);
+
+    this.customerHomePageService.getAllCarBrands().subscribe(data => {
+      this.allCarBrands = data;
+    });
+    this.customerHomePageService.getAllFuelTypes().subscribe(data => {
+      this.allFuelTypes = data;
+    });
+    this.customerHomePageService.getAllTransmissionTypes().subscribe(data => {
+      this.allTransmissionTypes = data;
+    });
+    this.customerHomePageService.getAllCarClasses().subscribe(data => {
+      this.allCarClasses = data;
+    });
+
+    this.advancedSearch = this.formBuilder.group({
+      mileage: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(0),
+        Validators.maxLength(10), Validators.min(0)]],
+      distance: ['', [Validators.pattern(/^[0-9]*$/), Validators.maxLength(6),
+        Validators.minLength(1)]],
+      childSeats: ['', [Validators.pattern(/^[0-5]*$/), Validators.max(5), Validators.min(0)]],
+      priceFrom: ['', [Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(1)]],
+      priceTo: ['', [Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(1)]],
+    });
+  }
+
+  get asf() {
+    return this.advancedSearch.controls;
   }
 
   openMoreInfoModal(myModalMoreInfo: TemplateRef<any>, advertisement: Advertisement) {
@@ -206,6 +264,10 @@ export class CustomerHomePageComponent implements OnInit {
   }
 
   search() {
+    if (this.searched) {
+      this.advancedSearchMethod(this.basicSearchAdvertisements);
+      return;
+    }
     this.allAdvertisements = [];
     this.customerHomePageService.getBasicSearch(this.startDate, this.endDate, this.pickupPlace).subscribe(data => {
       for (const ad of data) {
@@ -223,15 +285,177 @@ export class CustomerHomePageComponent implements OnInit {
         }
 
       }
+      this.basicSearchAdvertisements = this.allAdvertisements;
     });
     this.searched = true;
+  }
+
+  advancedSearchMethod(advertisements: Advertisement[]) {
+    console.log('E sad je usao u napredni search sto i treba.');
+    this.allAdvertisements = [];
+    let allOk = true;
+    let brandSearch = false;
+    let modelSearch = false;
+    let classSearch = false;
+    let fuelSearch = false;
+    let transmissionSearch = false;
+    let mileageSearch = false;
+    let distanceSearch = false;
+    let childSeatsSearch = false;
+    let priceFromSearch = false;
+    let priceToSearch = false;
+
+    if (this.selectedCarBrand !== 'Select car brand') {
+      brandSearch = true;
+    }
+    if (this.selectedCarModel !== 'Select car model') {
+      modelSearch = true;
+    }
+    if (this.selectedCarClass !== 'Select car class') {
+      classSearch = true;
+    }
+    if (this.selectedFuelType !== 'Select fuel type') {
+      fuelSearch = true;
+    }
+    if (this.selectedTransmissionType !== 'Select transmission type') {
+      transmissionSearch = true;
+    }
+    if (this.asf.mileage.touched && this.asf.mileage.valid) {
+      mileageSearch = true;
+    }
+    if (this.asf.distance.touched && this.asf.distance.valid) {
+      distanceSearch = true;
+    }
+    if (this.asf.priceFrom.touched && this.asf.priceFrom.valid) {
+      priceFromSearch = true;
+    }
+    if (this.asf.priceTo.touched && this.asf.priceTo.valid) {
+      priceToSearch = true;
+    }
+    if (this.asf.childSeats.touched && this.asf.childSeats.valid) {
+      childSeatsSearch = true;
+    }
+
+    for (const advertisement of advertisements) {
+
+      if (brandSearch) {
+        if (advertisement.car.carBrand.name === this.selectedCarBrand) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (modelSearch) {
+        if (advertisement.car.carModel.name === this.selectedCarModel) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (classSearch) {
+        if (advertisement.car.carClass.name === this.selectedCarClass) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (fuelSearch) {
+        if (advertisement.car.fuelType.name === this.selectedFuelType) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (transmissionSearch) {
+        if (advertisement.car.transmissionType.name === this.selectedTransmissionType) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (mileageSearch) {
+        if (advertisement.car.mileage <= this.advancedSearch.value.mileage) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (distanceSearch) {
+        if (advertisement.car.allowedDistance >= this.advancedSearch.value.distance) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (priceFromSearch) {
+        if (advertisement.pricelist.pricePerDay >= this.advancedSearch.value.priceFrom) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (priceToSearch) {
+        if (advertisement.pricelist.pricePerDay <= this.advancedSearch.value.priceTo) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (childSeatsSearch) {
+        if (advertisement.car.childSeats >= this.advancedSearch.value.childSeats) {
+          allOk = true;
+        } else {
+          allOk = false;
+          continue;
+        }
+      }
+
+      if (this.hasACDW) {
+        allOk = advertisement.car.collisionDamageWaiverExists === this.hasACDW;
+      }
+
+      if (allOk) {
+        this.allAdvertisements.push(advertisement);
+      }
+
+    }
   }
 
   reset() {
     this.searched = false;
     this.allAdvertisements = [];
+    this.basicSearchAdvertisements = [];
     this.cart = [];
     this.showSearchBar();
+    this.selectedCarBrand = 'Select car brand';
+    this.selectedCarModel = 'Select car model';
+    this.selectedFuelType = 'Select fuel type';
+    this.selectedTransmissionType = 'Select transmission type';
+    this.selectedCarClass = 'Select car class';
+    this.advancedSearch.reset();
+    this.hasACDW = false;
+    this.pickupPlace = '';
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = false;
     this.ngOnInit();
   }
 
@@ -246,5 +470,72 @@ export class CustomerHomePageComponent implements OnInit {
 
   changeBundle() {
     console.log(this.bundle);
+  }
+
+  getBrandModels(carBrand: CarBrand) {
+    if (carBrand.name !== this.selectedCarBrand) {
+      this.customerHomePageService.getCarBrandModels(carBrand.id).subscribe(data => {
+        this.allCarBrandModels = data;
+        this.selectedCarBrand = carBrand.name;
+        this.selectedCarModel = 'Select car model';
+        this.isCarBrandSelected = true;
+      });
+    }
+  }
+
+  selectModel(carModel: CarModel) {
+    this.selectedCarModel = carModel.name;
+  }
+
+  selectFuelType(fuelType: FuelType) {
+    this.selectedFuelType = fuelType.name;
+  }
+
+  selectTransmissionType(transmissionType: TransmissionType) {
+    this.selectedTransmissionType = transmissionType.name;
+  }
+
+  selectCarClass(carClass: CarClass) {
+    this.selectedCarClass = carClass.name;
+  }
+
+  changeCDW() {
+    this.hasACDW = this.hasACDW !== true;
+    console.log(this.hasACDW);
+  }
+
+  resetAdvanced() {
+    this.allAdvertisements = this.basicSearchAdvertisements;
+    this.selectedCarBrand = 'Select car brand';
+    this.selectedCarModel = 'Select car model';
+    this.selectedFuelType = 'Select fuel type';
+    this.selectedTransmissionType = 'Select transmission type';
+    this.selectedCarClass = 'Select car class';
+    this.advancedSearch.reset();
+    this.hasACDW = false;
+  }
+
+  sortByPrice() {
+    this.togglePrice.checked = true;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = false;
+    this.allAdvertisements.sort((a, b) =>
+      +a.pricelist.pricePerDay - +b.pricelist.pricePerDay);
+  }
+
+  sortByRating() {
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = true;
+    this.toggleMileage.checked = false;
+    this.allAdvertisements.sort((a, b) =>
+      b.car.averageRating - a.car.averageRating);
+  }
+
+  sortByMileage() {
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = true;
+    this.allAdvertisements.sort((a, b) =>
+      a.car.mileage - b.car.mileage);
   }
 }
