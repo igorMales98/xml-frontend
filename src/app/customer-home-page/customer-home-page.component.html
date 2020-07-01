@@ -1,45 +1,175 @@
 <div class="container register-form pt-4">
+  <div class="col-lg">
+    <h1 class="card-title text-center"></h1>
+    <div class="card">
+      <div class="card-body">
+        <button class="navbar-toggler" (click)="showSearchBar()" style="padding-left: 0;">Search
+          <fa-icon [icon]="faArrow" class="mr-1"></fa-icon>
+        </button>
 
-  <button class="navbar-toggler" (click)="showSearchBar()" style="padding-left: 0;">Search
-    <fa-icon [icon]="faArrow" class="mr-1"></fa-icon>
-  </button>
+        <div [@slideInOut]="animationState">
+          <div id="basicSearch" style="display: flex;" [hidden]="searched">
+            <div class="row">
+              <div class="form-group col-lg-4">
+                <label for="inputDateFrom">From :</label>
+                <input type="datetime-local" id="inputDateFrom"
+                       class="form-control" [required]="true" [(ngModel)]="startDate" [min]="minDateStart"
+                       onkeydown="return false"
+                       [ngClass]="{'is-invalid': !startDate, 'is-valid': startDate}"
+                       (ngModelChange)="startDateChange()"/>
 
-  <div [@slideInOut]="animationState">
-    <div id="basicSearch" style="display: flex;">
-      <div class="row">
-        <div class="form-group col-lg-4">
-          <label for="inputDateFrom">From :</label>
-          <input type="datetime-local" id="inputDateFrom"
-                 class="form-control" [required]="true" [(ngModel)]="startDate" [min]="minDateStart"
-                 onkeydown="return false"
-                 [ngClass]="{'is-invalid': !startDate, 'is-valid': startDate}" (ngModelChange)="startDateChange()"/>
+              </div>
+
+              <div class="form-group col-lg-4">
+                <label for="inputDateTo">To :</label>
+                <input type="datetime-local" id="inputDateTo"
+                       class="form-control" [required]="true" [(ngModel)]="endDate" (ngModelChange)="endDateChange()"
+                       onkeydown="return false" [min]="minDateEnd"
+                       [ngClass]="{'is-invalid': !endDate, 'is-valid': endDate}"/>
+              </div>
+
+
+              <div class="form-group col-lg-4">
+                <label for="inputCity">Place : </label>
+                <input type="text" id="inputCity" class="form-control" [required]="true" [(ngModel)]="pickupPlace"
+                       [ngClass]="{'is-invalid': !pickupPlace.trim(), 'is-valid': pickupPlace.trim()}"/>
+              </div>
+            </div>
+
+          </div>
+
+          <form [formGroup]="advancedSearch" [hidden]="!searched" style="margin-top: 30px;">
+
+            <div id="advancedSearch">
+              <div class="row">
+
+                <div class="form-group col-lg-3">
+                  <div ngbDropdown class="d-lg-inline-block" id="carBrandSelect">
+                    <button class="btn btn-outline-primary" id="dropdownCarBrand" style="width: 35.3vh;"
+                            ngbDropdownToggle> {{ this.selectedCarBrand }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownCarBrand">
+                      <button ngbDropdownItem *ngFor="let carBrand of allCarBrands"
+                              (click)="getBrandModels(carBrand)"> {{ carBrand.name }} </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <div ngbDropdown class="d-lg-inline-block" id="carModelSelect">
+                    <button class="btn btn-outline-primary" id="dropdownCarModel" ngbDropdownToggle
+                            style="width: 35.3vh;"
+                            [disabled]="!isCarBrandSelected"> {{ this.selectedCarModel }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownCarModel">
+                      <button ngbDropdownItem *ngFor="let carModel of allCarBrandModels"
+                              (click)="selectModel(carModel)"> {{ carModel.name }} </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <div ngbDropdown class="d-lg-inline-block" id="fuelTypeSelect">
+                    <button class="btn btn-outline-primary" id="dropdownFuelType"
+                            ngbDropdownToggle style="width: 35.3vh;"> {{ this.selectedFuelType }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownFuelType">
+                      <button ngbDropdownItem *ngFor="let fuelType of allFuelTypes"
+                              (click)="selectFuelType(fuelType)"> {{ fuelType.name }} </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <div ngbDropdown class="d-lg-inline-block" id="transmissionTypeSelect">
+                    <button class="btn btn-outline-primary" id="dropdownTransmissionType"
+                            ngbDropdownToggle style="width: 35.3vh;"> {{ this.selectedTransmissionType }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownTransmissionType">
+                      <button ngbDropdownItem *ngFor="let transmissionType of allTransmissionTypes"
+                              (click)="selectTransmissionType(transmissionType)"> {{ transmissionType.name }} </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <div ngbDropdown class="d-lg-inline-block" id="carClassSelect">
+                    <button class="btn btn-outline-primary" id="dropdownCarClass" ngbDropdownToggle
+                            style="width: 35.3vh;"
+                    > {{ this.selectedCarClass }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownCarClass">
+                      <button ngbDropdownItem *ngFor="let carClass of allCarClasses"
+                              (click)="selectCarClass(carClass)"> {{ carClass.name }} </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <input type="text" id="inputMileage" class="form-control" formControlName="mileage"
+                         placeholder="Mileage"
+                         [ngClass]="{'is-invalid': asf.mileage.invalid && asf.mileage.touched,
+                       'is-valid': asf.mileage.valid && asf.mileage.touched}"
+                         style="width: 35.3vh; text-align: center;"/>
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" id="inputDistance" class="form-control"
+                         formControlName="distance"
+                         placeholder="Intended distance"
+                         [ngClass]="{'is-invalid': asf.distance.invalid && asf.distance.touched,
+                       'is-valid': asf.distance.valid && asf.distance.touched}"
+                         style="width: 35.3vh; text-align: center;"/>
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" id="inputChildSeats" class="form-control"
+                         formControlName="childSeats"
+                         placeholder="Number of child seats"
+                         [ngClass]="{'is-invalid': asf.childSeats.invalid && asf.childSeats.touched,
+                       'is-valid': asf.childSeats.valid && asf.childSeats.touched}"
+                         style="width: 35.3vh; text-align: center;"/>
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" id="inputPriceFrom" class="form-control"
+                         formControlName="priceFrom"
+                         placeholder="Price from"
+                         [ngClass]="{'is-invalid': asf.priceFrom.invalid && asf.priceFrom.touched,
+                       'is-valid': asf.priceFrom.valid && asf.priceFrom.touched}"
+                         style="width: 35.3vh; text-align: center;"/>
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" id="inputPriceTo" class="form-control"
+                         formControlName="priceTo"
+                         placeholder="Price to"
+                         [ngClass]="{'is-invalid': asf.priceTo.invalid && asf.priceTo.touched,
+                       'is-valid': asf.priceTo.valid && asf.priceTo.touched}"
+                         style="width: 35.3vh; text-align: center;"/>
+                </div>
+                <div id="div9" class="form-group col-lg-3">
+                  <label for="hasCDW" class="col-form-label-lg">Has a <i>CDW</i> : </label>
+                  <mat-checkbox color="primary" id="hasCDW" style="margin-left: 30px;"
+                                [checked]="hasACDW" (change)="changeCDW()"></mat-checkbox>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+          <div class="text-center">
+            <button (click)="search()" class="btn btn-success" [hidden]="!startDate || !endDate || !pickupPlace.trim()">
+              Search
+            </button>
+            <button (click)="reset()" class="btn btn-primary" [hidden]="!searched" style="margin-left: 20px;">
+              Clear filters
+            </button>
+            <button (click)="resetAdvanced()" class="btn btn-primary" [hidden]="!searched" style="margin-left: 20px;">
+              Clear advanced filters
+            </button>
+          </div>
 
         </div>
 
-        <div class="form-group col-lg-4">
-          <label for="inputDateTo">To :</label>
-          <input type="datetime-local" id="inputDateTo"
-                 class="form-control" [required]="true" [(ngModel)]="endDate" (ngModelChange)="endDateChange()"
-                 onkeydown="return false" [min]="minDateEnd"
-                 [ngClass]="{'is-invalid': !endDate, 'is-valid': endDate}"/>
-        </div>
-
-
-        <div class="form-group col-lg-4">
-          <label for="inputCity">Place : </label>
-          <input type="text" id="inputCity" class="form-control" [required]="true" [(ngModel)]="pickupPlace"
-                 [ngClass]="{'is-invalid': !pickupPlace.trim(), 'is-valid': pickupPlace.trim()}"/>
-        </div>
 
       </div>
-    </div>
-    <div class="text-center">
-      <button (click)="search()" class="btn btn-success" [hidden]="!startDate || !endDate || !pickupPlace.trim()">
-        Search
-      </button>
-      <button (click)="reset()" class="btn btn-primary" [hidden]="!searched" style="margin-left: 20px;">
-        Reset
-      </button>
     </div>
   </div>
 </div>
@@ -221,7 +351,7 @@
 
 
   </ng-template>
-  
+
 </div>
 
 <div>
