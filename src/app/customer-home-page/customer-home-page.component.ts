@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CustomerHomePageService} from './customer-home-page.service';
 import {
   faComments,
@@ -28,6 +28,7 @@ import {FuelType} from '../model/fuelType';
 import {TransmissionType} from '../model/transmissionType';
 import {CarClass} from '../model/carClass';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-customer-home-page',
@@ -88,6 +89,10 @@ export class CustomerHomePageComponent implements OnInit {
 
   advancedSearch: FormGroup;
   hasACDW = false;
+
+  @ViewChild('togglePrice') togglePrice: MatSlideToggle;
+  @ViewChild('toggleRating') toggleRating: MatSlideToggle;
+  @ViewChild('toggleMileage') toggleMileage: MatSlideToggle;
 
   constructor(private customerHomePageService: CustomerHomePageService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private appComponent: AppComponent, private notifierService: NotifierService,
@@ -448,6 +453,9 @@ export class CustomerHomePageComponent implements OnInit {
     this.advancedSearch.reset();
     this.hasACDW = false;
     this.pickupPlace = '';
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = false;
     this.ngOnInit();
   }
 
@@ -505,5 +513,29 @@ export class CustomerHomePageComponent implements OnInit {
     this.selectedCarClass = 'Select car class';
     this.advancedSearch.reset();
     this.hasACDW = false;
+  }
+
+  sortByPrice() {
+    this.togglePrice.checked = true;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = false;
+    this.allAdvertisements.sort((a, b) =>
+      +a.pricelist.pricePerDay - +b.pricelist.pricePerDay);
+  }
+
+  sortByRating() {
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = true;
+    this.toggleMileage.checked = false;
+    this.allAdvertisements.sort((a, b) =>
+      b.car.averageRating - a.car.averageRating);
+  }
+
+  sortByMileage() {
+    this.togglePrice.checked = false;
+    this.toggleRating.checked = false;
+    this.toggleMileage.checked = true;
+    this.allAdvertisements.sort((a, b) =>
+      a.car.mileage - b.car.mileage);
   }
 }

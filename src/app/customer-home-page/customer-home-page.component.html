@@ -1,4 +1,4 @@
-<div class="container register-form pt-4">
+<div class="container register-form pt-4" [hidden]="loadContent">
   <div class="col-lg">
     <h1 class="card-title text-center"></h1>
     <div class="card">
@@ -6,6 +6,15 @@
         <button class="navbar-toggler" (click)="showSearchBar()" style="padding-left: 0;">Search
           <fa-icon [icon]="faArrow" class="mr-1"></fa-icon>
         </button>
+
+        <div id="toggle-group-cert" class="border-bottom animated slideInDown"
+             style="display: inline-flex; margin-left: 20%;" [hidden]="!searched">
+          <label>Sort advertisements by : </label>
+          <mat-slide-toggle style="margin-left: 15px;" #togglePrice (change)="sortByPrice()">Price</mat-slide-toggle>
+          <mat-slide-toggle style="margin-left: 15px;" #toggleRating (change)="sortByRating()">Rating</mat-slide-toggle>
+          <mat-slide-toggle style="margin-left: 15px;" #toggleMileage (change)="sortByMileage()">Mileage
+          </mat-slide-toggle>
+        </div>
 
         <div [@slideInOut]="animationState">
           <div id="basicSearch" style="display: flex;" [hidden]="searched">
@@ -178,49 +187,57 @@
   <h1 *ngIf="allAdvertisements.length === 0 && searched">Unfortunately no advertisements were found. :( </h1>
 </div>
 
-<div class="container register-form pt-4">
-  <div id="images" class="row img_wrap">
-    <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
-         class="col-md-3">
-      <div class="img_wrp">
-        <img [src]="advertisement.image[0]" height="250" width="250">
-        <div>
-          <p style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
-          <table>
-            <td>
-              <label>{{advertisement.car.averageRating}}&nbsp;</label>
-            </td>
-            <td>
-              <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
-                <ng-template let-fill="fill" let-index="index">
+<div class="container register-form pt-4" [hidden]="loadContent">
+  <div class="col-lg">
+    <h1 class="card-title text-center"></h1>
+    <div class="card">
+      <div class="card-body">
+        <div id="images" class="row img_wrap">
+          <div *ngFor="let advertisement of allAdvertisements" style="width: 310px; height: 310px;"
+               class="col-md-3">
+            <div class="img_wrp"  style="margin-top: 15px;">
+              <img [src]="advertisement.image[0]" height="250" width="250">
+              <div>
+                <p
+                  style="font-size: larger;">{{advertisement.car.carBrand.name + ' ' + advertisement.car.carModel.name}}</p>
+                <table>
+                  <td>
+                    <label>{{advertisement.car.averageRating}}&nbsp;</label>
+                  </td>
+                  <td>
+                    <ngb-rating id="ratingNum" [(rate)]="advertisement.car.averageRating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
                     <span class="star" [class.full]="fill === 100">
                         <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
                     </span>
-                </ng-template>
-              </ngb-rating>
-            </td>
-          </table>
+                      </ng-template>
+                    </ngb-rating>
+                  </td>
+                </table>
+              </div>
+              <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)"
+                      [hidden]="!searched">
+                <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
+                <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm commentButton"
+                      (click)="openComments(myModalComments, advertisement)">
+                <fa-icon [icon]="faComment"></fa-icon>
+              </button>
+              <button class="btn-outline-info btn-sm-sm infoButton"
+                      (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
+                <fa-icon [icon]="faInfo"></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
-        <button class="btn-outline-primary btn-sm-sm cartButton" (click)="addToCart(advertisement)"
-                [hidden]="!searched">
-          <fa-icon [icon]="faCart" *ngIf="!checkIfInCart(advertisement)"></fa-icon>
-          <fa-icon [icon]="faCartMinus" *ngIf="checkIfInCart(advertisement)"></fa-icon>
-        </button>
-        <button class="btn-outline-info btn-sm-sm commentButton"
-                (click)="openComments(myModalComments, advertisement)">
-          <fa-icon [icon]="faComment"></fa-icon>
-        </button>
-        <button class="btn-outline-info btn-sm-sm infoButton"
-                (click)="openMoreInfoModal(myModalMoreInfo, advertisement)">
-          <fa-icon [icon]="faInfo"></fa-icon>
-        </button>
+        <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest(myRents)">
+          <button class="btn btn-success">
+            Rent cars
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="text-center" [hidden]="cart.length === 0" (click)="sendRentRequest(myRents)">
-    <button class="btn btn-success">
-      Rent cars
-    </button>
   </div>
 </div>
 
