@@ -38,6 +38,7 @@ import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
 
 /**
  * Custom angular notifier options
@@ -108,7 +109,8 @@ const customNotifierOptions: NotifierOptions = {
     AgentRegisterComponent,
     RentRequestsComponent,
     AccountConfirmationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    CancelRequestComponent
   ],
     imports: [
         BrowserModule,

@@ -1,0 +1,70 @@
+<div id="divForTable" class="animated slideInLeft">
+  <h1 class="card-title text-center"> </h1>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="align-items-center">
+            <div *ngIf="rentRequests.length !== 0">
+              <div class="note col-lg-6 offset-3 text-center">
+                <h2>Rent Requests</h2>
+              </div>
+
+              <table id="table" class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                  <th scope="col" style="text-align:center">Requested Car/Cars</th>
+                  <th scope="col" style="text-align:center">Customer Name</th>
+                  <th scope="col" style="text-align:center">Customer Last Name</th>
+                  <th scope="col" style="text-align:center">Customer Phone</th>
+                  <th scope="col" style="text-align:center">Customer Email</th>
+                  <th scope="col" style="text-align:center">Reserved From</th>
+                  <th scope="col" style="text-align:center">Reserved To</th>
+                  <th scope="col" style="text-align:center">Request Status</th>
+                  <th scope="col" style="text-align:center">Cancel Request</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let request of rentRequests">
+                  <td align="center"><button class="btn btn-info">Information</button></td>
+                  <td>{{request.customer.firstName}}</td>
+                  <td>{{request.customer.lastName}}</td>
+                  <td>{{request.customer.phone}}</td>
+                  <td>{{request.customer.email}}</td>
+                  <td>{{request.reservedFrom[2]}}.{{request.reservedFrom[1]}}.{{request.reservedFrom[0]}}.</td>
+                  <td>{{request.reservedTo[2]}}.{{request.reservedTo[1]}}.{{request.reservedTo[0]}}.</td>
+                  <td>{{request.rentRequestStatus}}</td>
+                  <td align="center">
+                    <button class="btn btn-danger"
+                            (click)="openConfirmDeleteModal(confirmRejectingRequestModal, request.id)"
+                    >Cancel </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="rentRequests.length === 0">
+              <h1> There are no Rent Requests. </h1>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #confirmRejectingRequestModal let-modal>
+    <div class="modal-header">
+      <h1 class="modal-title" id="editProfileLabel3">Are You Sure You Want To Reject This Request?</h1>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger" (click)="cancelRentRequest()">Yes</button>
+      <button type="button" class="btn btn-success" (click)="modal.dismiss()">No</button>
+    </div>
+  </ng-template>
