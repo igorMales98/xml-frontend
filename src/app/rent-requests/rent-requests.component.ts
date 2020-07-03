@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NotifierService} from 'angular-notifier';
-import { UserService } from '../security/user.service';
-import { User } from '../model/user';
-import { RentRequest } from '../model/rentRequest';
-import { RentRequestsService } from './rent-requests.service';
+import {UserService} from '../security/user.service';
+import {User} from '../model/user';
+import {RentRequest} from '../model/rentRequest';
+import {RentRequestsService} from './rent-requests.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -20,7 +20,7 @@ export class RentRequestsComponent implements OnInit {
   requestsCount: number;
 
   constructor(private notifierService: NotifierService, private userService: UserService,
-    private rentRequestService: RentRequestsService, private modalService: NgbModal) {
+              private rentRequestService: RentRequestsService, private modalService: NgbModal) {
     this.notifier = notifierService;
 
   }
@@ -29,8 +29,8 @@ export class RentRequestsComponent implements OnInit {
     this.userService.getMyInfo();
     this.loggedUser = this.userService.currentUser;
     this.rentRequestService.getAllRequests(this.loggedUser.id).subscribe(data => {
-        this.allRequests = data;
-        this.requestsCount = this.allRequests.length;
+      this.allRequests = data;
+      this.requestsCount = this.allRequests.length;
     });
   }
 
@@ -46,7 +46,7 @@ export class RentRequestsComponent implements OnInit {
     });
   }
 
-  cancelRentRequest(){
+  cancelRentRequest() {
     this.rentRequestService.cancelRequest(this.cancelId).subscribe(data => {
       this.showNotification('success', 'Rent request is successfully cancelled!');
       this.modalService.dismissAll();
@@ -54,14 +54,13 @@ export class RentRequestsComponent implements OnInit {
     });
   }
 
-  acceptRentRequest(requestId: string){
-    console.log(requestId)
+  acceptRentRequest(requestId: string) {
+    console.log(requestId);
     this.rentRequestService.acceptRequest(requestId).subscribe(data => {
       this.showNotification('success', 'Rent request is successfully accepted!');
       this.ngOnInit();
     });
   }
-
 
 
 }

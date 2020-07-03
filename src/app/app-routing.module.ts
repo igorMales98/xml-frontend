@@ -23,6 +23,7 @@ import { CommentComponent } from './admin-home-page/codebook/comment/comment.com
 import {AccountConfirmationComponent} from './account-confirmation/account-confirmation.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
+import {CancelRequestComponent} from './customer-home-page/cancel-request/cancel-request.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -48,7 +49,8 @@ const routes: Routes = [
   {path: 'comments', component : CommentComponent},
   {path: 'activateUser/:token', component: AccountConfirmationComponent},
   {path: 'changePassword', component: ChangePasswordComponent},
-  {path: 'pricelist', component: PricelistComponent}
+  {path: 'pricelist', component: PricelistComponent},
+  {path: 'cancelRequest', component: CancelRequestComponent}
 
 ];
 

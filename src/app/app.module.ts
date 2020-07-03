@@ -38,6 +38,8 @@ import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
 
 /**
  * Custom angular notifier options
@@ -109,6 +111,7 @@ const customNotifierOptions: NotifierOptions = {
     RentRequestsComponent,
     AccountConfirmationComponent,
     ChangePasswordComponent,
+    CancelRequestComponent,
     PricelistComponent
   ],
   imports: [
@@ -124,8 +127,9 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     MatRadioModule,
     MatCheckboxModule,
-    MatTableModule
-  ],
+    MatTableModule,
+    MatSlideToggleModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     DatePipe
