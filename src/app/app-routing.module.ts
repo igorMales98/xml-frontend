@@ -9,21 +9,22 @@ import {RegistrationComponent} from './registration/registration.component';
 import {CreateAdvertisementComponent} from './create-advertisement/create-advertisement.component';
 import {AgentAdvertisementsComponent} from './agent-home-page/agent-advertisements/agent-advertisements.component';
 import {CustomerAdvertisementsComponent} from './customer-home-page/customer-advertisements/customer-advertisements.component';
-import { CarBrandComponent } from './admin-home-page/codebook/car-brand/car-brand.component';
-import { CarModelComponent } from './admin-home-page/codebook/car-model/car-model.component';
-import { CarClassComponent } from './admin-home-page/codebook/car-class/car-class.component';
-import { FuelTypeComponent } from './admin-home-page/codebook/fuel-type/fuel-type.component';
-import { TransmissionTypeComponent } from './admin-home-page/codebook/transmission-type/transmission-type.component';
-import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
-import { BlockActivateRemoveCustomersComponent } from './block-activate-remove-customers/block-activate-remove-customers.component';
-import { CustomerRentReguestsComponent } from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
-import { AgentRegisterComponent } from './agent-register/agent-register.component';
-import { RentRequestsComponent} from './rent-requests/rent-requests.component';
-import { CommentComponent } from './admin-home-page/codebook/comment/comment.component';
+import {CarBrandComponent} from './admin-home-page/codebook/car-brand/car-brand.component';
+import {CarModelComponent} from './admin-home-page/codebook/car-model/car-model.component';
+import {CarClassComponent} from './admin-home-page/codebook/car-class/car-class.component';
+import {FuelTypeComponent} from './admin-home-page/codebook/fuel-type/fuel-type.component';
+import {TransmissionTypeComponent} from './admin-home-page/codebook/transmission-type/transmission-type.component';
+import {RegistrationRequestsComponent} from './registration-requests/registration-requests.component';
+import {BlockActivateRemoveCustomersComponent} from './block-activate-remove-customers/block-activate-remove-customers.component';
+import {CustomerRentReguestsComponent} from './customer-home-page/customer-rent-reguests/customer-rent-reguests.component';
+import {AgentRegisterComponent} from './agent-register/agent-register.component';
+import {RentRequestsComponent} from './rent-requests/rent-requests.component';
+import {CommentComponent} from './admin-home-page/codebook/comment/comment.component';
 import {AccountConfirmationComponent} from './account-confirmation/account-confirmation.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
-import { PricelistComponent } from './pricelist/pricelist.component';
+import {PricelistComponent} from './pricelist/pricelist.component';
 import {CancelRequestComponent} from './customer-home-page/cancel-request/cancel-request.component';
+import {StatisticsComponent} from './statistics/statistics.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -46,11 +47,12 @@ const routes: Routes = [
   {path: 'customerRentRequests', component: CustomerRentReguestsComponent},
   {path: 'agentRegister', component: AgentRegisterComponent},
   {path: 'rentRequests', component: RentRequestsComponent},
-  {path: 'comments', component : CommentComponent},
+  {path: 'comments', component: CommentComponent},
   {path: 'activateUser/:token', component: AccountConfirmationComponent},
   {path: 'changePassword', component: ChangePasswordComponent},
   {path: 'pricelist', component: PricelistComponent},
-  {path: 'cancelRequest', component: CancelRequestComponent}
+  {path: 'cancelRequest', component: CancelRequestComponent},
+  {path: 'statistics', component: StatisticsComponent}
 
 ];
 
