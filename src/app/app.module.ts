@@ -40,6 +40,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { PricelistComponent } from './pricelist/pricelist.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import {ChartsModule, MDBBootstrapModule} from 'angular-bootstrap-md';
 
 /**
  * Custom angular notifier options
@@ -112,7 +114,8 @@ const customNotifierOptions: NotifierOptions = {
     AccountConfirmationComponent,
     ChangePasswordComponent,
     CancelRequestComponent,
-    PricelistComponent
+    PricelistComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +131,8 @@ const customNotifierOptions: NotifierOptions = {
     MatRadioModule,
     MatCheckboxModule,
     MatTableModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ChartsModule,
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
