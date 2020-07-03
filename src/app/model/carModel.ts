@@ -1,10 +1,13 @@
+import { CarBrand } from './carBrand';
+
 export class CarModel {
   id: string;
   name: string;
+  carBrand: CarBrand;
 
-  constructor(id: string, name: string){
-          this.id = id;
+  constructor(name: string, carBrand: CarBrand){
           this.name = name;
+          this.carBrand = carBrand;
   }
 
 }

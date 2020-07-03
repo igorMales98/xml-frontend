@@ -37,6 +37,7 @@ import { AgentRegisterComponent } from './agent-register/agent-register.componen
 import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
 
@@ -110,23 +111,24 @@ const customNotifierOptions: NotifierOptions = {
     RentRequestsComponent,
     AccountConfirmationComponent,
     ChangePasswordComponent,
-    CancelRequestComponent
+    CancelRequestComponent,
+    PricelistComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NgbModule,
-        FormsModule,
-        RouterModule,
-        HttpClientModule,
-        NotifierModule.withConfig(customNotifierOptions),
-        ReactiveFormsModule,
-        FontAwesomeModule,
-        BrowserAnimationsModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        MatTableModule,
-        MatSlideToggleModule
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    FormsModule,
+    RouterModule,
+    HttpClientModule,
+    NotifierModule.withConfig(customNotifierOptions),
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatSlideToggleModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},

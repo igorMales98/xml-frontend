@@ -100,6 +100,7 @@
             <a class="dropdown-item bg-dark" routerLink="/carClass">Car Class</a>
             <a class="dropdown-item bg-dark" routerLink="/fuelType">Fuel Type</a>
             <a class="dropdown-item bg-dark" routerLink="/transmissionType">Transmission Type</a>
+            <a class="dropdown-item bg-dark" routerLink="/pricelist">Pricelist</a>
           </div>
         </li>
 
@@ -107,6 +108,12 @@
           <a class="nav-link" routerLink="/comments">
             <fa-icon [icon]="faComment" class="mr-1"></fa-icon>
             Comments</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+          <a class="nav-link" routerLink="/pricelist">
+            <fa-icon [icon]="faPricelist" class="mr-1"></fa-icon>
+            Pricelist</a>
         </li>
 
         <li class="nav-item active">

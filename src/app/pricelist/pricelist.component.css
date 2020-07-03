@@ -2,11 +2,7 @@
     padding-top: 20px;
   }
   
-  .dropdown {
-    margin-left: 10px;
-  }
-
-  #carModelForm {
+  #pricelistForm {
       margin-left: 20%;
       margin-right: 20%;
   }
@@ -15,15 +11,29 @@
     border-width: 3px !important;
   }
   
-  #carModelName {
+  #pricePerDay {
     width: 300px;
     float: right;
     margin-right: 30%;
   }
   
-  #createCarModel {
+  #pricePerKm {
+    width: 300px;
+    float: right;
+    margin-right: 30%;
+  }
+  
+  #priceForCDW {
+    width: 300px;
+    float: right;
+    margin-right: 30%;
+  }
+  
+  #createPricelist {
     width: 200px;
     float: right;
     margin-right: 35%;
   }
+  
+  
   

@@ -1,1 +1,134 @@
-<p>car-model works!</p>
+<notifier-container></notifier-container>
+
+<div id="carModelForm">
+ 
+  <div class="text-center" ngbDropdown>
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+      <div *ngIf="chosenBrand!=null"> {{chosenBrand.name}} </div>
+      <div *ngIf="chosenBrand==null"> Choose a car brand </div>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <div *ngFor="let carBrand of allCarBrands">
+        <button (click)="showBrandModels(carBrand)" ngbDropdownItem>{{carBrand.name}}</button>
+      </div>
+    </div>
+  <h1></h1>
+  <div id="divForTable">
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <div class="align-items-center">
+              <div>
+                <table id="table" class="table table-bordered table-striped">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Car model name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let carModel of allCarModels">
+                    <td>{{carModel.name}}</td>
+                    <td>
+                      <button class="btn btn-primary" (click)="openModal(editCarModelModal, carModel)">Edit</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary"
+                              (click)="openConfirmDeleteModal(confirmDeleteCarModelModal, carModel.id)">Delete
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <ng-template #editCarModelModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Edit Car Model</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="editCarModelForm" (ngSubmit)="saveChanges()">
+
+          <div class="form-group row">
+            <label for="carModelNameEdit" class="col-sm-4 col-form-label">Car Model name:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="carModelNameEdit" formControlName="carModelNameEdit">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+
+    <ng-template #confirmDeleteCarModelModal let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Delete Car Model Name?</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="deleteCarModel()">Yes</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">No</button>
+
+      </div>
+    </ng-template>
+
+
+  </div>
+  
+  <h1 class="card-title text-center"> Create a car model </h1>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="align-items-center">
+
+            <div class="form-group col-lg">
+              <form [formGroup]="carModelForm">
+                <div id="div1" class="border-bottom"
+                     [ngClass]="{'border-success': carModelFb.carModelName.valid, 'border-danger': carModelFb.carModelName.invalid}">
+                  <label for="carModelName" class="col-form-label-lg">Car model name : </label>
+                  <input class="form-control-lg" id="carModelName" formControlName="carModelName"
+                         placeholder="Enter a car model name">
+                  <span style="color: red; float: right"
+                        *ngIf="carModelFb.carModelName.invalid && carModelFb.carModelName.touched">Name must have minimum one and maximum 15 letters.</span>
+                </div>
+
+                <div class="text-center">
+                  <div id="div4">
+                    <button id="addToCarModel" class="btn btn-success text-center" [hidden]="carModelForm.invalid"
+                            (click)=addNameToCarModel()> Add to car model list
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+

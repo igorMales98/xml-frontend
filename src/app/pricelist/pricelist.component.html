@@ -1,0 +1,156 @@
+<notifier-container></notifier-container>
+
+<div id="pricelistForm">
+  <h1 class="card-title text-center"> Create a pricelist </h1>
+  <div class="col-lg">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="align-items-center">
+
+            <div class="form-group col-lg">
+              <form [formGroup]="pricelistForm">
+                <div id="div1" class="border-bottom"
+                     [ngClass]="{'border-success': pricelistFb.pricePerDay.valid, 'border-danger': pricelistFb.pricePerDay.invalid}">
+                  <label for="pricePerDay" class="col-form-label-lg">Price per day : </label>
+                  <input class="form-control-lg" id="pricePerDay" formControlName="pricePerDay"
+                         placeholder="Enter price per day">
+                  <span style="color: red; float: right"
+                        *ngIf="pricelistFb.pricePerDay.invalid && pricelistFb.pricePerDay.touched">Price can't be negative and must have minimum one and maximum 6 numbers.</span>
+                </div>
+
+                <div id="div2" class="border-bottom"
+                     [ngClass]="{'border-success': pricelistFb.pricePerKm.valid, 'border-danger': pricelistFb.pricePerKm.invalid}">
+                  <label for="pricePerKm" class="col-form-label-lg">Price per km : </label>
+                  <input class="form-control-lg" id="pricePerKm" formControlName="pricePerKm"
+                         placeholder="Enter price per km">
+                  <span style="color: red; float: right"
+                        *ngIf="pricelistFb.pricePerKm.invalid && pricelistFb.pricePerKm.touched">Price can't be negative and must have minimum one and maximum 6 numbers.</span>
+                </div>
+
+                <div id="div3" class="border-bottom"
+                     [ngClass]="{'border-success': pricelistFb.priceForCDW.valid, 'border-danger': pricelistFb.priceForCDW.invalid}">
+                  <label for="priceForCDW" class="col-form-label-lg">Price for CDW : </label>
+                  <input class="form-control-lg" id="priceForCDW" formControlName="priceForCDW"
+                         placeholder="Enter price for CDW">
+                  <span style="color: red; float: right"
+                        *ngIf="pricelistFb.pricePerDay.invalid && pricelistFb.pricePerDay.touched">Price can't be negative and must have minimum one and maximum 6 numbers.</span>
+                </div>
+
+                <div class="text-center">
+                  <div id="div4">
+                    <button id="addToPricelist" class="btn btn-success text-center" [hidden]="pricelistForm.invalid"
+                            (click)=addPriceToPricelist()> Add to pricelist
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="divForTable">
+    <h1 class="card-title text-center"> Existing pricelists </h1>
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <div class="align-items-center">
+              <div>
+                <table id="table" class="table table-bordered table-striped">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Price per day</th>
+                    <th scope="col">Price per km</th>
+                    <th scope="col">Price for CDW</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let pricelist of allPricelists">
+                    <td>{{pricelist.pricePerDay}}</td>
+                    <td>{{pricelist.pricePerKm}}</td>
+                    <td>{{pricelist.priceForCDW}}</td>
+                    <td>
+                      <button class="btn btn-primary" (click)="openModal(editPriceModal, pricelist)">Edit</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary"
+                              (click)="openConfirmDeleteModal(confirmDeletePricelistModal, pricelist.id)">Delete
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <ng-template #editPriceModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Edit Price</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="editPriceForm" (ngSubmit)="saveChanges(priceToEdit)">
+
+          <div class="form-group row">
+            <label for="pricePerDayEdit" class="col-sm-4 col-form-label">Price per Day:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="pricePerDayEdit" formControlName="pricePerDay">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="pricePerKmEdit" class="col-sm-4 col-form-label">Price per Km:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="pricePerKmEdit" formControlName="pricePerKm">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="priceForCDWEdit" class="col-sm-4 col-form-label">Price for CDW:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="priceForCDWEdit" formControlName="priceForCDW">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+
+    <ng-template #confirmDeletePricelistModal let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="editProfileLabel2">Are You Sure You Want To Delete Pricelist?</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="deletePricelist()">Yes</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">No</button>
+
+      </div>
+    </ng-template>
+
+
+  </div>
+</div>
