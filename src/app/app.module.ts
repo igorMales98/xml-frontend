@@ -37,6 +37,7 @@ import { AgentRegisterComponent } from './agent-register/agent-register.componen
 import { RentRequestsComponent } from './rent-requests/rent-requests.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
 
 /**
  * Custom angular notifier options
@@ -107,7 +108,8 @@ const customNotifierOptions: NotifierOptions = {
     AgentRegisterComponent,
     RentRequestsComponent,
     AccountConfirmationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PricelistComponent
   ],
   imports: [
     BrowserModule,
