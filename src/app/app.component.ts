@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {UserService} from './security/user.service';
+import { User } from './model/user';
 
 @Component({
   selector: 'app-root',

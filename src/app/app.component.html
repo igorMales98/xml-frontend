@@ -28,7 +28,7 @@
 
       <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+        <li class="nav-item active" *ngIf="(role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER')">
           <a class="nav-link" routerLink="/createAdvertisement">
             <fa-icon [icon]="faCreateAd" class="mr-1"></fa-icon>
             Create advertisement</a>
@@ -59,7 +59,7 @@
         </li>
 
 
-        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+        <li class="nav-item active" *ngIf="(role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER')">
           <a class="nav-link" routerLink="/messages">
             <fa-icon [icon]="faMessages" class="mr-1"></fa-icon>
             Messages</a>
@@ -77,7 +77,7 @@
             Rent Requests</a>
         </li>
 
-        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
+        <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'" >
           <a class="nav-link" routerLink="/registrationRequests">
             <fa-icon [icon]="faUserPlus" class="mr-1"></fa-icon>
             Registration Requests</a>
@@ -92,7 +92,7 @@
         <li class="nav-item active" *ngIf="role == 'ROLE_ADMIN'">
           <a class="nav-link" routerLink="/blockActivateRemoveCustomer">
             <fa-icon [icon]="faUsers" class="mr-1"></fa-icon>
-            Customers</a>
+            Users</a>
         </li>
 
         <li class="nav-item dropdown" *ngIf="role == 'ROLE_ADMIN'">
@@ -116,7 +116,7 @@
             Comments</a>
         </li>
 
-        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+        <li class="nav-item active" *ngIf="(role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER')">
           <a class="nav-link" routerLink="/pricelist">
             <fa-icon [icon]="faPricelist" class="mr-1"></fa-icon>
             Pricelist</a>

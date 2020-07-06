@@ -16,7 +16,7 @@ export class MessagesComponent implements OnInit {
   user: User;
   newMessageHidden: boolean;
 
-  constructor(private messagesService: MessagesService, private userService: UserService) {
+  constructor(private messagesService: MessagesService, public userService: UserService) {
     this.userService.getMyInfo();
     this.user = this.userService.currentUser;
     this.newMessageHidden = true;
