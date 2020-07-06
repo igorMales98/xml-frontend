@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {
   faSignInAlt, faSignOutAlt, faRegistered, faAd, faComments, faUserPlus, faUsers, faPlusSquare, faCar, faBookOpen,
-  faComment, faLock, faEuroSign, faHistory, faWindowClose
+  faComment, faLock, faEuroSign, faHistory, faWindowClose, faChartPie
 } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {UserService} from './security/user.service';
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   faPassword = faLock;
   faPricelist = faEuroSign;
   faCancel = faWindowClose;
+  faStatistics = faChartPie;
   role;
 
   constructor(private router: Router, private userService: UserService) {

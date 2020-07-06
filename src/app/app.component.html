@@ -65,7 +65,13 @@
             Messages</a>
         </li>
 
-        <li class="nav-item active" *ngIf="(role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER')">
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT'">
+          <a class="nav-link" routerLink="/statistics">
+            <fa-icon [icon]="faStatistics" class="mr-1"></fa-icon>
+            Statistics</a>
+        </li>
+
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
           <a class="nav-link" routerLink="/rentRequests">
             <fa-icon [icon]="faCar" class="mr-1"></fa-icon>
             Rent Requests</a>
