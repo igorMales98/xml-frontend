@@ -10,8 +10,8 @@ export class BlockActivateRemoveCustomerService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllRegistrationRequests() {
-    return this.httpClient.get<User[]>('https://localhost:8443/authentication-service/api/users/customers');
+  getAllUsers() {
+    return this.httpClient.get<User[]>('https://localhost:8443/authentication-service/api/users');
   }
 
   deleteCustomer(customerId: number) {
@@ -28,5 +28,11 @@ export class BlockActivateRemoveCustomerService {
       null);
   }
 
+  getUserById(customerId: number) {
+    return this.httpClient.get<User>('https://localhost:8443/authentication-service/api/users/'+customerId);
+  }
 
+  setUserPermissions(customer: User) {
+    return this.httpClient.put('https://localhost:8443/authentication-service/api/users',customer);
+  }
 }

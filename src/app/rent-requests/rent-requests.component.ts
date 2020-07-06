@@ -19,7 +19,7 @@ export class RentRequestsComponent implements OnInit {
   cancelId: number;
   requestsCount: number;
 
-  constructor(private notifierService: NotifierService, private userService: UserService,
+  constructor(private notifierService: NotifierService, public userService: UserService,
               private rentRequestService: RentRequestsService, private modalService: NgbModal) {
     this.notifier = notifierService;
 

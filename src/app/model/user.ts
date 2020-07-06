@@ -9,6 +9,11 @@ export class User {
   phone: string;
   advertisementsPosted: number;
   enabled: boolean;
+  canPostAdvertisement: boolean;
+  canRent: boolean;
+  canSendMessage: boolean;
+  canCreatePricelist: boolean;
+  type: string;
 
   constructor(firstName: string, lastName: string, email: string, country: string, city: string, address: string, phone: string, enabled: boolean) {
     this.firstName = firstName;
