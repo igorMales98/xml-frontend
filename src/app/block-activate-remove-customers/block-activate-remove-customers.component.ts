@@ -15,6 +15,8 @@ export class BlockActivateRemoveCustomersComponent implements OnInit {
   userIdToDelete: number;
   notifier: NotifierService;
   customersCount: number;
+  customerPermissions: boolean[] = [];
+  clickedCustomer: User;
 
   constructor(private blockActivateRemoveService: BlockActivateRemoveCustomerService, private modalService: NgbModal,
               private notifierService: NotifierService) {
@@ -22,7 +24,7 @@ export class BlockActivateRemoveCustomersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.blockActivateRemoveService.getAllRegistrationRequests().subscribe(data => {
+    this.blockActivateRemoveService.getAllUsers().subscribe(data => {
       this.allCustomers = data;
       this.customersCount = this.allCustomers.length;
     });
@@ -62,6 +64,25 @@ export class BlockActivateRemoveCustomersComponent implements OnInit {
       this.ngOnInit();
     });
   }
+  openPermissions(targetModal, id) {
+    this.userIdToDelete = id;
+    this.blockActivateRemoveService.getUserById(this.userIdToDelete).subscribe( data => {
+      this.clickedCustomer = data;
+    });
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static'
+    });
+  }
 
+  grantPermissions() {
+    this.clickedCustomer.canPostAdvertisement = (<HTMLInputElement>document.getElementById("checkAd")).checked;
+    this.clickedCustomer.canCreatePricelist = (<HTMLInputElement>document.getElementById("checkPrice")).checked;
+    this.clickedCustomer.canRent = (<HTMLInputElement>document.getElementById("checkRent")).checked;
+    this.clickedCustomer.canSendMessage = (<HTMLInputElement>document.getElementById("checkMessage")).checked;
+    console.log(this.clickedCustomer);
+    this.blockActivateRemoveService.setUserPermissions(this.clickedCustomer).subscribe();
+    this.modalService.dismissAll();
+  }
 
 }

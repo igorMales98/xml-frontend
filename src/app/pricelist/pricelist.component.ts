@@ -5,6 +5,7 @@ import {Pricelist} from '../model/pricelist';
 import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../security/user.service';
 
 @Component({
   selector: 'app-pricelist',
@@ -22,7 +23,7 @@ export class PricelistComponent implements OnInit {
   allPricelists: Pricelist[] = [];
 
   constructor(private formBuilder: FormBuilder, private pricelistService: PricelistService,
-              private notifierService: NotifierService, private router: Router, private modalService: NgbModal) {
+              private notifierService: NotifierService, private router: Router, private modalService: NgbModal, public userService: UserService) {
     this.notifier = notifierService;
     this.router = router;
   }

@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {LoginRequest} from '../model/loginRequest';
 import {map} from 'rxjs/operators';
 import {any} from 'codelyzer/util/function';
+import { AppComponent } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class UserService {
       localStorage.setItem('user', JSON.stringify(response));
       localStorage.setItem('role', this.role);
       this.loggedInUserSubject.next(response);
+
     }));
   }
 

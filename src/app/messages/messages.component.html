@@ -1,39 +1,43 @@
-<div id="chatBox" class="card" style="width: 18rem;">
-    <div class="text-center" *ngIf="(customers.length==0)">Inbox is empty</div>
-    <div>
-        <ul  id="listMessages" class="list-group list-group-flush" *ngFor="let customer of customers">
-        <li (click)="showMessages(customer)" class="list-group-item"> {{customer.firstName}} {{customer.lastName}}</li> 
-        </ul>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li style="height: 500px;" class="list-group-item"></li> 
-    </ul>
-</div>
-<div style="margin-left: 2%;">
-    <div class="text-center" *ngIf="(messages.length==0)">No messages</div>
-    <div *ngFor="let message of messages"> 
-        <div *ngIf="message.type=='customer'">
-            <div class="chip customerName">
-                {{clickedCustomer.firstName}} {{clickedCustomer.lastName}}
+<div *ngIf="!userService.currentUser.canSendMessage">
+    <h1>YOU ARE BLOCKED</h1>
+  </div>
+  <div *ngIf="userService.currentUser.canSendMessage">
+        <div id="chatBox" class="card" style="width: 18rem;">
+            <div class="text-center" *ngIf="(customers.length==0)">Inbox is empty</div>
+            <div>
+                <ul  id="listMessages" class="list-group list-group-flush" *ngFor="let customer of customers">
+                <li (click)="showMessages(customer)" class="list-group-item"> {{customer.firstName}} {{customer.lastName}}</li> 
+                </ul>
             </div>
-            <div class="md-form ">
-            <textarea type="text" id="messageCustomer" disabled autosize class="md-textarea form-control"> {{message.message}}</textarea>
-            <p class="newMessage">{{message.messageDate}}</p>
+            <ul class="list-group list-group-flush">
+                <li style="height: 500px;" class="list-group-item"></li> 
+            </ul>
+        </div>
+        <div style="margin-left: 2%;">
+            <div class="text-center" *ngIf="(messages.length==0)">No messages</div>
+            <div *ngFor="let message of messages"> 
+                <div *ngIf="message.type=='customer'">
+                    <div class="chip customerName">
+                        {{clickedCustomer.firstName}} {{clickedCustomer.lastName}}
+                    </div>
+                    <div class="md-form ">
+                    <textarea type="text" id="messageCustomer" disabled autosize class="md-textarea form-control"> {{message.message}}</textarea>
+                    <p class="newMessage">{{message.messageDate}}</p>
+                    </div>
+                    <br>
+                </div>
+                <div class="md-form agentMessage" *ngIf="message.type=='agent'">
+                    <textarea type="text" id="messageAgent" disabled autosize class="md-textarea form-control ">{{message.message}}</textarea>
+                    <p>{{message.messageDate}}</p>
+                    <br>
+                </div>
             </div>
-            <br>
+            <div class="newMessage" [hidden]="newMessageHidden">
+                <hr>
+                <textarea class="textMessage" id="newMessage"></textarea>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="sendMessage()" >Send</button>
+                </div>
+            </div>
         </div>
-        <div class="md-form agentMessage" *ngIf="message.type=='agent'">
-            <textarea type="text" id="messageAgent" disabled autosize class="md-textarea form-control ">{{message.message}}</textarea>
-            <p>{{message.messageDate}}</p>
-            <br>
-        </div>
-    </div>
-    <div class="newMessage" [hidden]="newMessageHidden">
-        <hr>
-        <textarea class="textMessage" id="newMessage"></textarea>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="sendMessage()" >Send</button>
-        </div>
-    </div>
 </div>
-

@@ -8,6 +8,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../app.component';
 import {NotifierService} from 'angular-notifier';
 import {User} from '../model/user';
+import { UserService } from '../security/user.service';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -31,11 +32,13 @@ export class AdminHomePageComponent implements OnInit {
   loadContent = false;
 
   constructor(private adminHomePageService: AdminHomePageService, private domSanitizer: DomSanitizer, private modalService: NgbModal,
-              private appComponent: AppComponent, private notifierService: NotifierService) {
+              private appComponent: AppComponent, private notifierService: NotifierService, private userService: UserService) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
+
+    this.userService.getMyInfo();
     this.appComponent.role = localStorage.getItem('role');
     this.loadContent = true;
 

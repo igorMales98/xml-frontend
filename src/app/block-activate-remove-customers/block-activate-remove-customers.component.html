@@ -22,6 +22,7 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Activate/Block</th>
                         <th scope="col">Remove</th>
+                        <th scope="col">Permissions</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -35,15 +36,19 @@
                         <td> {{customer.phone}} </td>
                         <td>
                           <button class="btn btn-warning"
-                          *ngIf="customer.enabled"
+                          *ngIf="customer.enabled && customer.type == 'CUSTOMER'"
                           (click)="blockCustomer(customer.id)">Block</button>
                           <button class="btn btn-success"
-                          *ngIf="!customer.enabled"
+                          *ngIf="!customer.enabled && customer.type == 'CUSTOMER'"
                           (click)="activateCustomer(customer.id)">Activate</button>
                         </td>
                         <td>
-                          <button class="btn btn-danger"
+                          <button class="btn btn-danger" *ngIf="customer.type == 'CUSTOMER'"
                           (click)="openConfirmDeleteModal(confirmDeletePricelistModal, customer.id)">Remove </button>
+                        </td>
+                        <td>
+                          <button class="btn btn-primary"
+                          (click)="openPermissions(permissionsModal, customer.id)">Permissions </button>
                         </td>
                       </tr>
                       </tbody>
@@ -72,5 +77,28 @@
   <div class="modal-footer">
     <button type="submit" class="btn btn-danger" (click)=deleteCustomer()>Yes</button>
     <button type="button" class="btn btn-success" (click)="modal.dismiss()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #permissionsModal let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" id="editProfileLabel2">Permissions</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div>
+    <input type="checkbox" id="checkAd" [checked]="clickedCustomer.canPostAdvertisement"> Post advertisements
+    <br>
+    <input type="checkbox" id="checkPrice" [checked]="clickedCustomer.canCreatePricelist"> Create pricelist
+    <br>
+    <input type="checkbox" id="checkRent" [checked]="clickedCustomer.canRent"> Create rent request
+    <br>
+    <input type="checkbox" id="checkMessage" [checked]="clickedCustomer.canSendMessage"> Send message
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" (click)=grantPermissions()>Save</button>
   </div>
 </ng-template>
