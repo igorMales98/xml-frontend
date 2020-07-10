@@ -25,6 +25,7 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {PricelistComponent} from './pricelist/pricelist.component';
 import {CancelRequestComponent} from './customer-home-page/cancel-request/cancel-request.component';
 import {StatisticsComponent} from './statistics/statistics.component';
+import {ReportComponent} from './report/report.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -52,6 +53,7 @@ const routes: Routes = [
   {path: 'changePassword', component: ChangePasswordComponent},
   {path: 'pricelist', component: PricelistComponent},
   {path: 'cancelRequest', component: CancelRequestComponent},
+  {path: 'report', component: ReportComponent},
   {path: 'statistics', component: StatisticsComponent}
 
 ];

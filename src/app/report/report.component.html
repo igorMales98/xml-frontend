@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="container">
+  <h2 align="center">Create a report on completed rentals </h2>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Rent request</th>
+      <th scope="col">Advertisement</th>
+      <th scope="col">Report</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of allPaidRentRequests">
+      <td>{{request.reservedFrom.toString().split(',')[0] + '-' +
+      request.reservedFrom.toString().split(',')[1] + '-' + request.reservedFrom.toString().split(',')[2]
+        }} : {{request.reservedTo.toString().split(',')[0] + '-' +
+        request.reservedTo.toString().split(',')[1] + '-' + request.reservedTo.toString().split(',')[2]
+        }}
+      </td>
+      <td>
+    <tr *ngFor="let advertisement of request.advertisementsForRent">
+      {{advertisement.car.carBrand.name}} {{advertisement.car.carModel.name}}
+    </tr>
+    </td>
+    <td>
+      <tr *ngFor="let advertisement of request.advertisementsForRent">
+        <button *ngIf="!checkIfReportExists(request, advertisement)" class="btn-primary btn-block"
+                (click)="openMoreInfoModal(myModalMoreInfo, advertisement, request)">
+          Write report
+        </button>
+        <mat-label *ngIf="checkIfReportExists(request, advertisement)"> Report for this car already exists</mat-label>
+      </tr>
+    </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <ng-template #myModalMoreInfo let-modal class="myCustomModalClass modal-lg">
+
+    <div id="moreInfo">
+      <div class="row">
+        <div class="form-group col-lg-6">
+          <label for="carBrandInfo">Car Brand : </label>
+          <textarea id="carBrandInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.carBrand.name}}</textarea>
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="carModelInfo">Car Model : </label>
+          <textarea id="carModelInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.carModel.name}}</textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-lg-6">
+          <label for="carClassInfo">Car Class : </label>
+          <textarea id="carClassInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.carClass.name}}</textarea>
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="fuelTypeInfo">Fuel Type : </label>
+          <textarea id="fuelTypeInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.fuelType.name}}</textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-lg-6">
+          <label for="transmissionTypeInfo">Transmission Type : </label>
+          <textarea id="transmissionTypeInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.transmissionType.name}}</textarea>
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="mileageInfo">Mileage : </label>
+          <textarea id="mileageInfo" disabled
+                    class="md-textarea form-control">{{advertisement.car.mileage + ' km'}}</textarea>
+        </div>
+      </div>
+
+      <form [formGroup]="infoForm">
+
+        <div class="row">
+          <div class="form-group col-lg-6">
+            <label for="km">Distance during rent (km): </label>
+            <textarea id="km" formControlName="km"
+                      class="md-textarea form-control" required></textarea>
+            <span style="color: red"
+                  *ngIf="fci.km.invalid && fci.km.touched">Km must be numbers</span>
+          </div>
+          <div class="form-group col-lg-6 ">
+            <label for="additionalInformation">Additional Information : </label>
+            <textarea id="additionalInformation" formControlName="additionalInformation"
+                      class="md-textarea form-control"></textarea>
+          </div>
+          <span style="color: red"
+                *ngIf="fci.additionalInformation.invalid && fci.additionalInformation.touched"></span>
+        </div>
+      </form>
+
+      <div class="text-center">
+        <button class="btn btn-success" (click)="createReport()" [hidden]="infoForm.invalid"> Write</button>
+      </div>
+
+    </div>
+
+  </ng-template>
+</div>
+
+</body>
+</html>
