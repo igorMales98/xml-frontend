@@ -42,6 +42,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import {ChartsModule, MDBBootstrapModule} from 'angular-bootstrap-md';
+import { AgmCoreModule } from '@agm/core';
 
 /**
  * Custom angular notifier options
@@ -133,6 +134,9 @@ const customNotifierOptions: NotifierOptions = {
     MatTableModule,
     MatSlideToggleModule,
     ChartsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4'
+    }),
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},

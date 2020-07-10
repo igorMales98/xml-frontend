@@ -256,6 +256,10 @@
                 <fa-icon [icon]="faInfo"></fa-icon>
               </button>
             </td>
+            <button *ngIf="advertisement.car.hasAndroid" class="btn-outline-info btn-sm-sm "
+              (click)="showLocation(modalLocation,advertisement.car)">
+              <fa-icon [icon]="faLocation"></fa-icon>
+            </button>
           </tr>
         </table>
       </div>
@@ -479,3 +483,13 @@
     </div>
   </ng-template>
 </div>
+
+<ng-template #modalLocation let-modal>
+
+  
+  <agm-map [zoom]="13" [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  </agm-map>
+
+
+</ng-template>

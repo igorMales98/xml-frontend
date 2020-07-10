@@ -1,7 +1,8 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble, faLocationArrow} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
+import {Car} from '../../model/car'
 import {CustomerAdvertisementsService} from './customer-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +13,7 @@ import {DatePipe} from '@angular/common';
 import {NotifierService} from 'angular-notifier';
 import {RentRequest} from '../../model/rentRequest';
 import {Router} from '@angular/router';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-customer-advertisements',
@@ -19,6 +21,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./customer-advertisements.component.css']
 })
 export class CustomerAdvertisementsComponent implements OnInit {
+
+  lat: number;
+  lng: number;
 
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
@@ -49,6 +54,10 @@ export class CustomerAdvertisementsComponent implements OnInit {
   physicalRent = false;
   notifier: NotifierService;
   bundle = true;
+
+  modalOpen: boolean = false;
+  faLocation = faLocationArrow;
+
 
   constructor(private customerAdvertisementsService: CustomerAdvertisementsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private userService: UserService, private formBuilder: FormBuilder,
@@ -269,6 +278,32 @@ export class CustomerAdvertisementsComponent implements OnInit {
 
   check(a: string) {
     console.log(a);
+  }
+
+  showLocation(content: TemplateRef<any>, car: Car) {
+    console.log(car);
+    this.modalOpen = true;
+    const myNumber = interval(1000);
+    const sub = myNumber.subscribe(x => { // will execute every 30 seconds
+      if (this.modalOpen) {
+        this.customerAdvertisementsService.getLocation(car.androidToken).subscribe( data => {
+          this.lat = data.lat;
+          this.lng = data.lng;
+          console.log(data);
+      });
+      }
+    });    
+    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalOpen = false;
+      sub.unsubscribe();
+      this.customerAdvertisementsService.resetSeconds().subscribe();
+      console.log("resetovao");
+    });
+    
   }
 
 }

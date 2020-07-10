@@ -21,10 +21,11 @@ export class CreateAdvertisements {
   discount: string;
   advertiserId: string;
   userRole: string;
+  hasAndroid: boolean;
 
   constructor(carBrand: CarBrand, carModel: CarModel, carClass: CarClass, fuelType: FuelType, transmissionType: TransmissionType,
               pricelist: Pricelist, availableFrom: Date, availableTo: Date, mileage: number, childSeats: number, hasACDW: boolean,
-              allowedDistance: number, discount: string, advertiserId: string, userRole: string) {
+              allowedDistance: number, discount: string, advertiserId: string, userRole: string, hasAndroid: boolean) {
     this.carBrand = carBrand;
     this.carModel = carModel;
     this.carClass = carClass;
@@ -40,5 +41,6 @@ export class CreateAdvertisements {
     this.discount = discount;
     this.advertiserId = advertiserId;
     this.userRole = userRole;
+    this.hasAndroid = hasAndroid;
   }
 }
