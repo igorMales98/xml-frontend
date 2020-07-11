@@ -17,7 +17,6 @@
                       <table id="table" class="table table-bordered table-striped table-hover">
                         <thead class="thead-dark">
                         <tr>
-                          <th scope="col" style="text-align:center">Requested Car/Cars</th>
                           <th scope="col" style="text-align:center">Customer Name</th>
                           <th scope="col" style="text-align:center">Customer Lastname</th>
                           <th scope="col" style="text-align:center">Customer Phone</th>
@@ -31,7 +30,6 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let request of allRequests">
-                          <td align="center"><button class="btn btn-info">Informations</button></td>
                           <td>{{request.customer.firstName}}</td>
                           <td>{{request.customer.lastName}}</td>
                           <td>{{request.customer.phone}}</td>
@@ -44,7 +42,7 @@
                             (click)="acceptRentRequest(request.id)">Accept</button>
                           </td>
                           <td align="center">
-                            <button class="btn btn-danger"  
+                            <button class="btn btn-danger"
                             (click)="openConfirmDeleteModal(confirmRejectingRequestModal, request.id)"
                             >Reject </button>
                           </td>
