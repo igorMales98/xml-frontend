@@ -115,7 +115,7 @@ export class CreateAdvertisementComponent implements OnInit {
       this.role = localStorage.getItem('role');
       this.advertisementForm = this.formBuilder.group({
         mileage: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(1),
-          Validators.maxLength(10), Validators.min(0)]],
+          Validators.maxLength(7), Validators.min(0)]],
         childSeats: ['', [Validators.required, Validators.pattern(/^[0-5]*$/), Validators.max(5), Validators.min(0)]],
         allowedDistance: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.maxLength(6), Validators.minLength(1)]]
       });

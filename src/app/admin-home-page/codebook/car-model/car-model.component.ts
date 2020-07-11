@@ -44,8 +44,7 @@ export class CarModelComponent implements OnInit {
     });
     this.carModelService.getAllCarBrands().subscribe(data => {
       this.allCarBrands = data;
-    })
-    this.chosenBrand = null;
+    });
 
     this.editCarModelForm = this.formBuilder.group({
       id: [''],
