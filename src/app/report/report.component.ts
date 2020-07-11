@@ -22,13 +22,13 @@ export class ReportComponent implements OnInit {
   rentRequest: RentRequest;
   infoForm: FormGroup;
 
-  constructor(private createReportService: ReportService, private modalService: NgbModal, private router: Router,
+  constructor(private reportService: ReportService, private modalService: NgbModal, private router: Router,
               private notifierService: NotifierService, private formBuilder: FormBuilder) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
-    this.createReportService.getAllPaidRentRequests().subscribe(data => {
+    this.reportService.getAllPaidRentRequests().subscribe(data => {
       this.allPaidRentRequests = data;
     });
     this.infoForm = this.formBuilder.group({
@@ -72,7 +72,7 @@ export class ReportComponent implements OnInit {
   createReport() {
     const report = new Report(this.advertisement.car, this.infoForm.value.km, this.infoForm.value.additionalInformation, this.rentRequest);
 
-    this.createReportService.createReport(report).subscribe(data => {
+    this.reportService.createReport(report).subscribe(data => {
       this.showNotification('success', 'Successfully created report.');
     });
 
@@ -80,13 +80,15 @@ export class ReportComponent implements OnInit {
     this.router.navigate(['/agentHomePage']);
   }
 
-  checkIfReportExists(request: RentRequest, advertisement: Advertisement) {
-    for (const report of request.reports) {
-      if (report.car.id === advertisement.car.id) {
-        return true;
-      }
-    }
-    return false;
+  checkIfReportExists(request, advertisement) {
+    let exist = false;
+
+    request.reports.forEach(element => {
+      if(element.carId === advertisement.car.id)
+      exist = true;
+    });
+
+    return exist;
   }
 
 }

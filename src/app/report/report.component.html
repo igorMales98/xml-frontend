@@ -28,10 +28,10 @@
     <td>
       <tr *ngFor="let advertisement of request.advertisementsForRent">
         <button *ngIf="!checkIfReportExists(request, advertisement)" class="btn-primary btn-block"
-                (click)="openMoreInfoModal(myModalMoreInfo, advertisement, request)">
+        (click)="openMoreInfoModal(myModalMoreInfo, advertisement, request)">
           Write report
         </button>
-        <mat-label *ngIf="checkIfReportExists(request, advertisement)"> Report for this car already exists</mat-label>
+        
       </tr>
     </td>
     </tr>

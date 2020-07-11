@@ -43,6 +43,8 @@ import { CancelRequestComponent } from './customer-home-page/cancel-request/canc
 import { StatisticsComponent } from './statistics/statistics.component';
 import {ChartsModule, MDBBootstrapModule} from 'angular-bootstrap-md';
 import { ReportComponent } from './report/report.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 /**
  * Custom angular notifier options
@@ -135,6 +137,7 @@ const customNotifierOptions: NotifierOptions = {
     MatTableModule,
     MatSlideToggleModule,
     ChartsModule,
+    MatFormFieldModule,
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},

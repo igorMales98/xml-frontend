@@ -17,6 +17,11 @@ export class ReportService {
   }
 
   createReport(report: Report){
-    return this.httpClient.post('https://localhost:8443/rent-request-service/api/report', report);
+    console.log(report);
+    return this.httpClient.post('https://localhost:8443/rent-request-service/api/reports', report);
+  }
+
+  checkIfExist(requestId: String, carId: String){
+    return this.httpClient.get<boolean>(`https://localhost:8443/rent-request-service/api/reports/${requestId}/${carId}`);
   }
 }
