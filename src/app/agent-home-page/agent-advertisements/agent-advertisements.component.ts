@@ -1,7 +1,8 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble} from '@fortawesome/free-solid-svg-icons';
+import {faComments, faInfo, faCommentAlt, faUser, faCartPlus, faCheckDouble, faLocationArrow} from '@fortawesome/free-solid-svg-icons';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
+import {Car} from '../../model/car'
 import {AgentAdvertisementsService} from './agent-advertisements.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +12,8 @@ import {NotifierService} from 'angular-notifier';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {RentRequest} from '../../model/rentRequest';
-
+import { AgmCoreModule } from '@agm/core';
+import {interval} from 'rxjs';
 @Component({
   selector: 'app-agent-advertisements',
   templateUrl: './agent-advertisements.component.html',
@@ -19,11 +21,15 @@ import {RentRequest} from '../../model/rentRequest';
 })
 export class AgentAdvertisementsComponent implements OnInit {
 
+  lat: number;
+  lng: number;
+
   faInfo = faInfo;
   faCommentAlt = faCommentAlt;
   faUser = faUser;
   faCart = faCartPlus;
   faCartMinus = faCheckDouble;
+  faLocation = faLocationArrow;
 
   allAdvertisements: Advertisement[] = [];
   comments: Comment[] = [];
@@ -49,6 +55,8 @@ export class AgentAdvertisementsComponent implements OnInit {
   notifier: NotifierService;
   bundle = true;
 
+  modalOpen: boolean = false;
+
   constructor(private agentAdvertisementsService: AgentAdvertisementsService, private domSanitizer: DomSanitizer,
               private modalService: NgbModal, private userService: UserService, private datePipe: DatePipe,
               private notifierService: NotifierService, private formBuilder: FormBuilder) {
@@ -65,7 +73,7 @@ export class AgentAdvertisementsComponent implements OnInit {
 
     this.agentAdvertisementsService.getAllAgentAdvertisements(this.user.id).subscribe(data => {
       this.allAdvertisements = data;
-
+      console.log(data);
       for (const advertisement of this.allAdvertisements) {
         advertisement.image = [];
         const images = advertisement.img.toString();
@@ -268,5 +276,32 @@ export class AgentAdvertisementsComponent implements OnInit {
   check(a: string) {
     console.log(a);
   }
+
+  showLocation(content: TemplateRef<any>, car: Car) {
+    console.log(car);
+    this.modalOpen = true;
+    const myNumber = interval(1000);
+    const sub = myNumber.subscribe(x => { // will execute every 30 seconds
+      if (this.modalOpen) {
+        this.agentAdvertisementsService.getLocation(car.androidToken).subscribe( data => {
+          this.lat = data.lat;
+          this.lng = data.lng;
+          console.log(data);
+      });
+      }
+    });    
+    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.modalOpen = false;
+      sub.unsubscribe();
+      this.agentAdvertisementsService.resetSeconds().subscribe();
+      console.log("resetovao");
+    });
+    
+  }
+
 
 }

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Advertisement} from '../../model/advertisement';
 import {Comment} from '../../model/comment';
 import {RentRequest} from '../../model/rentRequest';
+import {Coordinates} from '../../model/coordinates';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,13 @@ export class CustomerAdvertisementsService {
 
   createRentRequest(rentRequest: RentRequest) {
     return this.httpClient.post('https://localhost:8443/rent-request-service/api/rent-requests', rentRequest);
+  }
+  getLocation(androidToken: string) {
+    return this.httpClient.get<Coordinates>('https://localhost:8443/location-service/api/locations/'+androidToken);
+  }
+
+  resetSeconds(){
+    return this.httpClient.put('https://localhost:8443/location-service/api/locations',null);
   }
 
 }

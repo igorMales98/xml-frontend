@@ -13,7 +13,6 @@
               <table id="table" class="table table-bordered table-striped table-hover">
                 <thead class="thead-dark">
                 <tr>
-                  <th scope="col" style="text-align:center">Requested Car/Cars</th>
                   <th scope="col" style="text-align:center">Customer Name</th>
                   <th scope="col" style="text-align:center">Customer Last Name</th>
                   <th scope="col" style="text-align:center">Customer Phone</th>
@@ -26,7 +25,6 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let request of rentRequests">
-                  <td align="center"><button class="btn btn-info">Information</button></td>
                   <td>{{request.customer.firstName}}</td>
                   <td>{{request.customer.lastName}}</td>
                   <td>{{request.customer.phone}}</td>

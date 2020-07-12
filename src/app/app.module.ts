@@ -45,6 +45,7 @@ import {ChartsModule, MDBBootstrapModule} from 'angular-bootstrap-md';
 import { ReportComponent } from './report/report.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
+import { AgmCoreModule } from '@agm/core';
 
 /**
  * Custom angular notifier options
@@ -138,6 +139,9 @@ const customNotifierOptions: NotifierOptions = {
     MatSlideToggleModule,
     ChartsModule,
     MatFormFieldModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4'
+    }),
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
