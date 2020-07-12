@@ -7,6 +7,8 @@ import { ReportService } from './report.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Report } from '../model/report';
+import { User } from '../model/user';
+import {UserService} from '../security/user.service';
 
 @Component({
   selector: 'app-report',
@@ -21,14 +23,18 @@ export class ReportComponent implements OnInit {
   closeResult: string;
   rentRequest: RentRequest;
   infoForm: FormGroup;
+  loggedInUser: User;
 
   constructor(private reportService: ReportService, private modalService: NgbModal, private router: Router,
-              private notifierService: NotifierService, private formBuilder: FormBuilder) {
+              private notifierService: NotifierService, private formBuilder: FormBuilder, private userService : UserService) {
     this.notifier = notifierService;
   }
 
   ngOnInit(): void {
-    this.reportService.getAllPaidRentRequests().subscribe(data => {
+    this.userService.getMyInfo();
+    this.loggedInUser = this.userService.currentUser;
+
+    this.reportService.getAdvertiserPaidRequests(this.loggedInUser.id).subscribe(data => {
       this.allPaidRentRequests = data;
     });
     this.infoForm = this.formBuilder.group({

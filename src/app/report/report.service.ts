@@ -12,8 +12,8 @@ export class ReportService {
   constructor(private httpClient: HttpClient, private router: Router) {
   }
 
-  getAllPaidRentRequests() {
-    return this.httpClient.get<RentRequest[]>('https://localhost:8443/rent-request-service/api/rent-requests/allPaid');
+  getAdvertiserPaidRequests(id: string) {
+    return this.httpClient.get<RentRequest[]>('https://localhost:8443/rent-request-service/api/rent-requests/allAdvertiserPaid/'+id);
   }
 
   createReport(report: Report){
