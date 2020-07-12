@@ -128,6 +128,12 @@
             Change Password</a>
         </li>
 
+        <li class="nav-item active" *ngIf="role == 'ROLE_AGENT' || role == 'ROLE_CUSTOMER'">
+          <a class="nav-link" routerLink="/report">
+            <fa-icon [icon]="faReport" class="mr-1"></fa-icon>
+            Report</a>
+        </li>
+
       </ul>
 
       <ul class="navbar-nav mr-0">

@@ -1,0 +1,10 @@
+.myCustomModalClass .modal-lg {
+    max-width: 70%;
+  }
+  
+#carBrandInfo, #carModelInfo, #carClassInfo, #fuelTypeInfo, #transmissionTypeInfo, #mileageInfo, #distanceDuringRent, #additionalInfo {
+    resize: none;
+    height: 35px;
+    overflow: hidden;
+  }
+  

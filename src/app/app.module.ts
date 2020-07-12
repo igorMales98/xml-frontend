@@ -42,6 +42,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CancelRequestComponent } from './customer-home-page/cancel-request/cancel-request.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import {ChartsModule, MDBBootstrapModule} from 'angular-bootstrap-md';
+import { ReportComponent } from './report/report.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { AgmCoreModule } from '@agm/core';
 
 /**
@@ -116,7 +119,8 @@ const customNotifierOptions: NotifierOptions = {
     ChangePasswordComponent,
     CancelRequestComponent,
     PricelistComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -134,6 +138,7 @@ const customNotifierOptions: NotifierOptions = {
     MatTableModule,
     MatSlideToggleModule,
     ChartsModule,
+    MatFormFieldModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcBUQxfS6JldNG0Ltoju5YxE_0-CKJsu4'
     }),
